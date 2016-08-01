@@ -1,0 +1,20 @@
+// -*- mode: c++; -*-
+#ifndef PLOTTING_STUDIES_MATCHLONLO_H_
+#define PLOTTING_STUDIES_MATCHLONLO_H_
+
+#include "Plotting/Studies/Template.h"
+#include <iostream>
+
+namespace plotting {
+namespace studies {
+class MatchLONLO : public plotting::studies::Template {
+ public:
+  virtual void execute();
+
+ protected:
+  FileContainer file_container_2_{};
+};
+}  // namespace studies
+}  // namespace plotting
+
+#endif  // PLOTTING_STUDIES_MATCHLONLO_H_
