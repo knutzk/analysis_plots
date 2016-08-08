@@ -2,6 +2,7 @@
 #ifndef PLOTTING_HISTHOLDERCONTAINER_H_
 #define PLOTTING_HISTHOLDERCONTAINER_H_
 
+#include <string>
 #include "Plotting/FileContainer.h"
 #include "Plotting/HistHolder.h"
 #include "Plotting/UniqueContainer.h"

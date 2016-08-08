@@ -1,10 +1,11 @@
 #include "Plotting/HistHolderContainer.h"
 
-#include "Plotting/FileContainer.h"
-#include "Plotting/HistHolder.h"
 #include <TH1D.h>
+#include <algorithm>
 #include <string>
 #include <iostream>
+#include "Plotting/FileContainer.h"
+#include "Plotting/HistHolder.h"
 
 namespace plotting {
 HistHolderContainer::HistHolderContainer(const FileContainer& file_container,

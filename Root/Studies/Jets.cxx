@@ -1,11 +1,11 @@
 #include "Plotting/Studies/Jets.h"
 
+#include <TH1D.h>
+#include <string>
+#include <vector>
 #include "Plotting/RatioPlotter.h"
 #include "Plotting/HistHolder.h"
 #include "Plotting/HistHolderContainer.h"
-#include <vector>
-#include <string>
-#include <TH1D.h>
 
 namespace plotting {
 namespace studies {

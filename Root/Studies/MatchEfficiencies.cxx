@@ -1,9 +1,9 @@
 #include "Plotting/Studies/MatchEfficiencies.h"
 
-#include "Plotting/HistHolderContainer.h"
-#include "Plotting/RatioPlotter.h"
 #include <string>
 #include <vector>
+#include "Plotting/HistHolderContainer.h"
+#include "Plotting/RatioPlotter.h"
 
 namespace plotting {
 namespace studies {

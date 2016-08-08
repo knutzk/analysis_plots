@@ -1,14 +1,14 @@
 #include "Plotting/Studies/MatchBtagPerf.h"
 
+#include <TColor.h>
+#include <TROOT.h>
+#include <iostream>
+#include <string>
+#include <vector>
 #include "Plotting/MatrixHolderContainer.h"
 #include "Plotting/HistHolderContainer.h"
 #include "Plotting/HistPlotter.h"
 #include "Plotting/MatrixPlotter.h"
-#include <TColor.h>
-#include <TROOT.h>
-#include <string>
-#include <vector>
-#include <iostream>
 
 namespace plotting {
 namespace studies {
