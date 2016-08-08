@@ -31,8 +31,8 @@ class MatrixHolder : public THolder<TH2D> {
    * WARNING: This transfers ownership to the MatrixHolder class.
    * @param Unique pointer to the TH2D object.
    */
-  explicit MatrixHolder(std::unique_ptr<TH2D>& matrix)
-      : THolder::THolder{matrix} {}
+  explicit MatrixHolder(std::unique_ptr<TH2D> matrix)
+      : THolder::THolder{std::move(matrix)} {}
 
   /*
    * Construct a new MatrixHolder from an existing one.

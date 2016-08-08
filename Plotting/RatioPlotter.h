@@ -77,8 +77,8 @@ class RatioPlotter : public HistPlotter {
    * @param HistHolderContainer containing the HistHolder objects
    *        to be used for the ratio pad.
    */
-  void adjustLabels(HistHolderContainer& hist_container,
-                    HistHolderContainer& ratio_container);
+  void adjustLabels(HistHolderContainer* hist_container,
+                    HistHolderContainer* ratio_container);
 
   /*
    * Adjust the markes (i.e. plotting style) of the histograms
@@ -86,7 +86,7 @@ class RatioPlotter : public HistPlotter {
    * @param HistHolderContainer containing the HistHolder objects
    *        to be used for the ratio pad.
    */
-  void adjustMarkers(HistHolderContainer& ratio_container);
+  void adjustMarkers(HistHolderContainer* ratio_container);
 
   /*
    * Initialise a new canvas (this function is inherited from the
@@ -94,8 +94,8 @@ class RatioPlotter : public HistPlotter {
    * @param Width of the canvas
    * @param Height of the canvas
    */
-  void initCanvas(const unsigned int& width = 600,
-                  const unsigned int& height = 600);
+  void initCanvas(unsigned const int& width = 600,
+                  unsigned const int& height = 600);
 
   /*
    * Reset the canvas managed by this class.

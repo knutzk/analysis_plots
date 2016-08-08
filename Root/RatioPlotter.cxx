@@ -7,8 +7,8 @@
 #include "Plotting/HistHolderContainer.h"
 
 namespace plotting {
-void RatioPlotter::adjustLabels(HistHolderContainer& hist_container,
-                                HistHolderContainer& ratio_container) {
+void RatioPlotter::adjustLabels(HistHolderContainer* hist_container,
+                                HistHolderContainer* ratio_container) {
   double size_old;
   double title_offset{1.7};
 
@@ -20,7 +20,7 @@ void RatioPlotter::adjustLabels(HistHolderContainer& hist_container,
   double ratio_width_wo_margins{1 - 0.21 * ratio_scaling};
   double ratio_height_wo_margins{1 - 0.16 * ratio_scaling};
 
-  for (auto& hist : hist_container) {
+  for (auto& hist : *hist_container) {
     auto&& xaxis = hist->getHist()->GetXaxis();
     auto&& yaxis = hist->getHist()->GetYaxis();
 
@@ -38,7 +38,7 @@ void RatioPlotter::adjustLabels(HistHolderContainer& hist_container,
     yaxis->SetTickLength(size_old / hist_height_wo_margins / 1.2);
   }
 
-  for (auto& hist : ratio_container) {
+  for (auto& hist : *ratio_container) {
     auto&& xaxis = hist->getHist()->GetXaxis();
     auto&& yaxis = hist->getHist()->GetYaxis();
 
@@ -61,19 +61,19 @@ void RatioPlotter::adjustLabels(HistHolderContainer& hist_container,
   }
 }
 
-void RatioPlotter::adjustMarkers(HistHolderContainer& ratio_container) {
+void RatioPlotter::adjustMarkers(HistHolderContainer* ratio_container) {
   // Make a copy of the first histogram because for the plotting we
   // need one histogram for the shaded errors and one for the black
   // reference line.
-  ratio_container.emplace_back(new HistHolder(*ratio_container.at(0)));
+  ratio_container->emplace_back(new HistHolder(*ratio_container->at(0)));
 
-  auto& error_area = ratio_container.front();
+  auto& error_area = ratio_container->front();
   error_area->getHist()->SetMarkerSize(0);
   error_area->getHist()->SetFillColor(kBlue);
   error_area->getHist()->SetFillStyle(3245);
   error_area->setDrawOptions("e2");
 
-  auto& hist = ratio_container.back();
+  auto& hist = ratio_container->back();
   hist->setDrawOptions("hist same");
   for (int bin = 0; bin < hist->getHist()->GetNbinsX() + 1; ++bin) {
     if (hist->getHist()->GetBinContent(bin) == 0) {

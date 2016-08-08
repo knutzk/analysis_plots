@@ -30,12 +30,12 @@ void Jets::execute() {
 
   for (const auto& name : hist_names) {
     hist_container.pullHistograms(file_container_, name.c_str());
-    setDrawing(hist_container);
+    setDrawing(&hist_container);
     ratio_container = hist_container;
     ratio_container.divideHistograms(*hist_container.at(0));
 
-    ratio_plotter.adjustLabels(hist_container, ratio_container);
-    ratio_plotter.adjustMarkers(ratio_container);
+    ratio_plotter.adjustLabels(&hist_container, &ratio_container);
+    ratio_plotter.adjustMarkers(&ratio_container);
     ratio_plotter.addToLegend(hist_container);
 
     ratio_plotter.switchToHistPad();
@@ -56,16 +56,16 @@ void Jets::execute() {
   }
 }
 
-void Jets::setDrawing(plotting::HistHolderContainer& hist_container) {
-  hist_container.at(0)->setDrawOptions("P E1");
-  hist_container.at(0)->setLegendTitle("t#bar{t}, kWP");
-  hist_container.at(0)->getHist()->SetLineColor(1);
-  hist_container.at(0)->getHist()->SetMarkerColor(1);
+void Jets::setDrawing(plotting::HistHolderContainer* hist_container) {
+  hist_container->at(0)->setDrawOptions("P E1");
+  hist_container->at(0)->setLegendTitle("t#bar{t}, kWP");
+  hist_container->at(0)->getHist()->SetLineColor(1);
+  hist_container->at(0)->getHist()->SetMarkerColor(1);
 
-  hist_container.at(1)->setDrawOptions("P E1 SAME");
-  hist_container.at(1)->setLegendTitle("t#bar{t}Z, kWP");
-  hist_container.at(1)->getHist()->SetLineColor(2);
-  hist_container.at(1)->getHist()->SetMarkerColor(2);
+  hist_container->at(1)->setDrawOptions("P E1 SAME");
+  hist_container->at(1)->setLegendTitle("t#bar{t}Z, kWP");
+  hist_container->at(1)->getHist()->SetLineColor(2);
+  hist_container->at(1)->getHist()->SetMarkerColor(2);
 }
 }  // namespace studies
 }  // namespace plotting

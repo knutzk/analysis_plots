@@ -31,7 +31,7 @@ class THolder {
    * WARNING: This transfers ownership to the THolder class.
    * @param Unique pointer of the T object
    */
-  explicit THolder(std::unique_ptr<T>& hist) : hist_{std::move(hist)} {}
+  explicit THolder(std::unique_ptr<T> hist) : hist_{std::move(hist)} {}
 
   /*
    * Construct a THolder object from an existing one.
