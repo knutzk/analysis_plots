@@ -1,4 +1,5 @@
 /* -*- mode: c++; -*- */
+// Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
 #ifndef PLOTTING_UNIQUECONTAINER_H_
 #define PLOTTING_UNIQUECONTAINER_H_
 

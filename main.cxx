@@ -1,4 +1,5 @@
 // -*- mode: c++; -*-
+// Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
 
 #include <TDirectory.h>
 #include <TH1.h>
