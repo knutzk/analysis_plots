@@ -2,8 +2,8 @@
 #ifndef PLOTTING_STUDIES_MATCHLONLO_H_
 #define PLOTTING_STUDIES_MATCHLONLO_H_
 
-#include "Plotting/Studies/Template.h"
 #include <iostream>
+#include "Plotting/Studies/Template.h"
 
 namespace plotting {
 namespace studies {

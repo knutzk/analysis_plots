@@ -3,7 +3,8 @@
 #define PLOTTING_FILECONTAINER_H_
 
 #include <TFile.h>
-class string;
+#include <string>
+#include <vector>
 
 namespace plotting {
 class FileContainer : public std::vector<TFile*> {
@@ -11,13 +12,13 @@ class FileContainer : public std::vector<TFile*> {
   /*
    * Default constructor
    */
-  FileContainer() : std::vector<TFile*>(){};
+  FileContainer() : std::vector<TFile*>() {}
 
   /*
    * Constructor opening files from a string container
    * @param Vector of file names
    */
-  FileContainer(const std::vector<std::string>& name_container) {
+  explicit FileContainer(const std::vector<std::string>& name_container) {
     for (const auto& name : name_container) {
       push_back(TFile::Open(name.c_str()));
     }

@@ -25,7 +25,7 @@ class HistHolder : public THolder<TH1D> {
    * WARNING: This class takes ownership of the TH1D!
    * @param Pointer to the TH1D histogram.
    */
-  HistHolder(TH1D* hist) : THolder::THolder{hist} {
+  explicit HistHolder(TH1D* hist) : THolder::THolder{hist} {
     setIncludeXOverflow(true);
     setIncludeXUnderflow(true);
   }
@@ -36,7 +36,8 @@ class HistHolder : public THolder<TH1D> {
    * WARNING: This constructor moves ownership to the HistHolder object.
    * @param Unique pointer managing a TH1D histogram.
    */
-  HistHolder(std::unique_ptr<TH1D>& hist) : THolder::THolder{hist} {
+  explicit HistHolder(std::unique_ptr<TH1D>& hist)
+      : THolder::THolder{hist} {
     setIncludeXOverflow(true);
     setIncludeXUnderflow(true);
   }

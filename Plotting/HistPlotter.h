@@ -2,12 +2,13 @@
 #ifndef PLOTTING_HISTPLOTTER_H_
 #define PLOTTING_HISTPLOTTER_H_
 
-#include "Plotting/AtlasLabel.h"
-#include "Plotting/AtlasStyle.h"
 #include <TCanvas.h>
 #include <TError.h>
 #include <TLegend.h>
 #include <memory>
+#include <string>
+#include "Plotting/AtlasLabel.h"
+#include "Plotting/AtlasStyle.h"
 
 class string;
 namespace plotting {

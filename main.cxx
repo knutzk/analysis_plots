@@ -1,16 +1,17 @@
 // -*- mode: c++; -*-
 
+#include <TDirectory.h>
+#include <TH1.h>
+#include <iostream>
+#include <map>
+#include <memory>
+#include <string>
 #include "Plotting/Studies/Jets.h"
 #include "Plotting/Studies/Likelihood.h"
 #include "Plotting/Studies/MatchBtagPerf.h"
 #include "Plotting/Studies/MatchEfficiencies.h"
 #include "Plotting/Studies/MatchJetMatrices.h"
 #include "Plotting/Studies/MatchLONLO.h"
-#include <TDirectory.h>
-#include <TH1.h>
-#include <iostream>
-#include <map>
-#include <memory>
 
 using ProgMap = std::map<unsigned int, std::string>;
 

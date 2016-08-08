@@ -2,8 +2,8 @@
 #ifndef PLOTTING_RATIOPLOTTER_H_
 #define PLOTTING_RATIOPLOTTER_H_
 
-#include "Plotting/HistPlotter.h"
 #include <string>
+#include "Plotting/HistPlotter.h"
 
 /*
  * Class to produce ratio plots of histograms
@@ -25,7 +25,7 @@ class RatioPlotter : public HistPlotter {
    * @param Ratio value, i.e. ratio between the two pads used for
    * the histograms and the ratio plot).
    */
-  RatioPlotter(double ratio) : ratio_{ratio} {
+  explicit RatioPlotter(double ratio) : ratio_{ratio} {
     canvas_.reset(nullptr);
     initCanvas();
     atlas_label_.setLabelX(0.20);
@@ -125,36 +125,3 @@ class RatioPlotter : public HistPlotter {
 }  // namespace plotting
 
 #endif  // PLOTTING_RATIOPLOTTER_H_
-
-/* // Set specific draw option and some more cosmetics. */
-/* for (auto itr = 0; itr < ratioHist->GetNbinsX() + 1; ++itr) { */
-/*   if (ratioHist->GetBinContent(itr) == 0) { */
-/*     ratioHist->SetBinContent(itr, 1.); */
-/*   } */
-/* } */
-
-/* // Now initialise the pads. */
-/* TPad* ratioPad = new TPad("ratioPad", "ratioPad", 0, 0, 1, 0.32); */
-/* ratioPad->SetNumber(1); */
-/* ratioPad->SetTopMargin(0.1); */
-/* ratioPad->SetBottomMargin(0.45); */
-/* ratioPad->SetFrameFillStyle(4000); */
-/* ratioPad->Draw(); */
-/* TPad* histPad = new TPad("histPad", "histPad", 0, 0.3, 1, 1); */
-/* histPad->SetNumber(2); */
-/* histPad->SetBottomMargin(0.03); */
-/* histPad->SetFrameFillStyle(4000); */
-/* histPad->Draw(); */
-
-/* canvas_->cd(1); */
-/* ratioHist->GetYaxis()->SetRangeUser(ratioMin, ratioMax); */
-/* ratioHist->SetMarkerSize(0); */
-/* ratioHist->DrawCopy("hist"); */
-/* ratioHist->SetFillColor(kBlue); */
-/* ratioHist->SetFillStyle(3245); */
-/* ratioHist->Draw("e2 same"); */
-/* for (auto itr : *ratios) { */
-/*   if (itr != ratios->front()) { */
-/*     itr->Draw(); */
-/*   } */
-/* } */

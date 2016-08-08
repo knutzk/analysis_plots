@@ -22,4 +22,4 @@ class Template {
 }  // namespace studies
 }  // namespace plotting
 
-#endif
+#endif  // PLOTTING_STUDIES_TEMPLATE_H_

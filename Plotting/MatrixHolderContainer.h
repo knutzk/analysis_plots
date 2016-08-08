@@ -2,6 +2,7 @@
 #ifndef PLOTTING_MATRIXHOLDERCONTAINER_H_
 #define PLOTTING_MATRIXHOLDERCONTAINER_H_
 
+#include <string>
 #include "Plotting/FileContainer.h"
 #include "Plotting/MatrixHolder.h"
 #include "Plotting/UniqueContainer.h"

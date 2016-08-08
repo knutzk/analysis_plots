@@ -3,7 +3,7 @@
 #define PLOTTING_THOLDER_H_
 
 #include <memory>
-class string;
+#include <string>
 
 /*
  * Template class to hold (and manage) some sort of histogram objects.
@@ -22,7 +22,7 @@ class THolder {
    * WARNING: This takes over ownership of the corresponding memory.
    * @param Pointer to the T object.
    */
-  THolder(T* hist) : hist_{hist} {}
+  explicit THolder(T* hist) : hist_{hist} {}
 
   /*
    * Construct a THolder from a T object that is already
@@ -30,7 +30,7 @@ class THolder {
    * WARNING: This transfers ownership to the THolder class.
    * @param Unique pointer of the T object
    */
-  THolder(std::unique_ptr<T>& hist) : hist_{std::move(hist)} {}
+  explicit THolder(std::unique_ptr<T>& hist) : hist_{std::move(hist)} {}
 
   /*
    * Construct a THolder object from an existing one.

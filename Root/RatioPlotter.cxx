@@ -1,9 +1,9 @@
 #include "Plotting/RatioPlotter.h"
 
-#include "Plotting/HistHolder.h"
-#include "Plotting/HistHolderContainer.h"
 #include <TH1D.h>
 #include <iostream>
+#include "Plotting/HistHolder.h"
+#include "Plotting/HistHolderContainer.h"
 
 namespace plotting {
 void RatioPlotter::adjustLabels(HistHolderContainer& hist_container,

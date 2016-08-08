@@ -1,5 +1,7 @@
 #include "Plotting/MatrixHolderContainer.h"
 
+#include <string>
+
 namespace plotting {
 MatrixHolderContainer::MatrixHolderContainer(
     const FileContainer& file_container, const std::string& name) {

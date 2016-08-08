@@ -1,9 +1,9 @@
 #include "Plotting/Studies/MatchJetMatrices.h"
 
-#include "Plotting/MatrixHolderContainer.h"
-#include "Plotting/MatrixPlotter.h"
 #include <string>
 #include <vector>
+#include "Plotting/MatrixHolderContainer.h"
+#include "Plotting/MatrixPlotter.h"
 
 namespace plotting {
 namespace studies {

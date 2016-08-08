@@ -1,6 +1,6 @@
 /* -*- mode: c++; -*- */
-#ifndef PLOTTING_UNIQUE_CONTAINER_H_
-#define PLOTTING_UNIQUE_CONTAINER_H_
+#ifndef PLOTTING_UNIQUECONTAINER_H_
+#define PLOTTING_UNIQUECONTAINER_H_
 
 #include <memory>
 #include <vector>
@@ -46,4 +46,4 @@ UniqueContainer<T>& UniqueContainer<T>::operator=(
 }
 }  // namespace plotting
 
-#endif  // PLOTTING_UNIQUE_CONTAINER_H_
+#endif  // PLOTTING_UNIQUECONTAINER_H_

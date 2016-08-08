@@ -1,15 +1,15 @@
 #include "Plotting/Studies/MatchLONLO.h"
 
-#include "Plotting/MatrixHolderContainer.h"
-#include "Plotting/HistHolderContainer.h"
-#include "Plotting/HistPlotter.h"
-#include "Plotting/MatrixPlotter.h"
-#include "Plotting/RatioPlotter.h"
 #include <TColor.h>
 #include <TROOT.h>
 #include <string>
 #include <vector>
 #include <iostream>
+#include "Plotting/MatrixHolderContainer.h"
+#include "Plotting/HistHolderContainer.h"
+#include "Plotting/HistPlotter.h"
+#include "Plotting/MatrixPlotter.h"
+#include "Plotting/RatioPlotter.h"
 
 namespace {
 void setDrawing(plotting::HistHolderContainer& container) {
@@ -28,7 +28,7 @@ void setDrawing(plotting::HistHolderContainer& container) {
   container.at(2)->getHist()->SetLineColor(4);
   container.at(2)->getHist()->SetMarkerColor(4);
 }
-}
+}  // namespace
 
 namespace plotting {
 namespace studies {
