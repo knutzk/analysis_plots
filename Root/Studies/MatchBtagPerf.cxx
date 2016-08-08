@@ -38,7 +38,7 @@ void MatchBtagPerf::execute() {
   hist->SetMarkerStyle(23);
   hist->SetMarkerSize(1.5);
   hist->SetLineColor(kBlack);
-  
+
   hist_container.setOptimalMax();
   hist_container.draw();
   plotter.addToLegend(hist_container);
@@ -58,11 +58,13 @@ void MatchBtagPerf::execute() {
   matrixplotter.setCustomColorPalette();
 
   // Calculate the differences of the two histograms.
-  auto && diff_hist = new MatrixHolder(*matrix_container.at(0));
+  auto&& diff_hist = new MatrixHolder(*matrix_container.at(0));
   for (auto row = 1; row < diff_hist->getHist()->GetNbinsY(); ++row) {
-    for (auto column = 1; column < diff_hist->getHist()->GetNbinsX() + 1; ++column) {
+    for (auto column = 1; column < diff_hist->getHist()->GetNbinsX() + 1;
+         ++column) {
       const auto old = diff_hist->getHist()->GetBinContent(column, row);
-      const auto diff = old - matrix_container.at(1)->getHist()->GetBinContent(column, row);
+      const auto diff =
+          old - matrix_container.at(1)->getHist()->GetBinContent(column, row);
       diff_hist->getHist()->SetBinContent(column, row, diff * 100.);
     }
   }
@@ -86,7 +88,7 @@ void MatchBtagPerf::execute() {
     obj->GetZaxis()->SetTitleOffset(1.6);
     obj->SetMarkerSize(1.5);
     matrix->roundMatrix(3);
-    matrix->setDrawOptions("COLZ TEXT ERR"); 
+    matrix->setDrawOptions("COLZ TEXT ERR");
   }
 
   matrix_container.at(0)->draw();

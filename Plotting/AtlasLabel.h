@@ -7,7 +7,6 @@
 namespace plotting {
 class AtlasLabel {
  public:
-
   /*
    * Get the ATLAS label string, e.g. "simulation".
    * @return string

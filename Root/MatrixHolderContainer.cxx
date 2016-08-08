@@ -1,8 +1,8 @@
 #include "Plotting/MatrixHolderContainer.h"
 
 namespace plotting {
-MatrixHolderContainer::MatrixHolderContainer(const FileContainer& file_container,
-                                             const std::string& name) {
+MatrixHolderContainer::MatrixHolderContainer(
+    const FileContainer& file_container, const std::string& name) {
   for (const auto& file : file_container) {
     auto raw = static_cast<TH2D*>(file->Get(name.c_str()));
     std::unique_ptr<MatrixHolder> unique{new MatrixHolder(raw)};

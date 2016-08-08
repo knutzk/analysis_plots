@@ -25,4 +25,3 @@ void MatrixHolder::roundMatrix(const int& n_places) {
   }
 }
 }  // namespace plotting
-

@@ -15,7 +15,8 @@ void MatchEfficiencies::execute() {
   plotter.setOutputDir("$HOME/AnalysisPlots/Output/MatchEfficiencies/");
 
   plotting::HistHolderContainer hist_container_onshell;
-  hist_container_onshell.pullHistograms(file_container_, "h_andreacomp_onshell");
+  hist_container_onshell.pullHistograms(file_container_,
+                                        "h_andreacomp_onshell");
   hist_container_onshell.erase(hist_container_onshell.end() - 3,
                                hist_container_onshell.end());
 
@@ -80,7 +81,7 @@ void MatchEfficiencies::execute() {
   hist->SetMarkerStyle(0);
   hist->SetFillStyle(3354);
   gStyle->SetHatchesSpacing(0.5);
-  
+
   hist_container.setOptimalMax();
   hist_container.draw();
   // error_band->draw();

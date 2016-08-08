@@ -11,7 +11,7 @@ class FileContainer : public std::vector<TFile*> {
   /*
    * Default constructor
    */
-  FileContainer() : std::vector<TFile*>() {};
+  FileContainer() : std::vector<TFile*>(){};
 
   /*
    * Constructor opening files from a string container

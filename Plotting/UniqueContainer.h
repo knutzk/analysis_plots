@@ -12,7 +12,7 @@
 namespace plotting {
 template <typename T>
 class UniqueContainer : public std::vector<std::unique_ptr<T>> {
-public:
+ public:
   /*
    * Default constructor
    */
@@ -38,7 +38,8 @@ UniqueContainer<T>::UniqueContainer(const UniqueContainer<T>& cont) {
 }
 
 template <typename T>
-UniqueContainer<T>& UniqueContainer<T>::operator=(const UniqueContainer<T>& cont) {
+UniqueContainer<T>& UniqueContainer<T>::operator=(
+    const UniqueContainer<T>& cont) {
   for (const auto& element : cont) {
     this->emplace_back(new T(*element));
   }

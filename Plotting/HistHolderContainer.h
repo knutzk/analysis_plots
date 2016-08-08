@@ -37,7 +37,7 @@ class HistHolderContainer : public UniqueContainer<HistHolder> {
    * @param The name of the histograms in these files
    */
   void pullHistograms(const FileContainer& file_container,
-                 const std::string& name);
+                      const std::string& name);
 
   /*
    * Calculate the optimal maximal y value for the histograms and set

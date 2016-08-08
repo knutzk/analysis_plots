@@ -13,7 +13,7 @@ void Jets::execute() {
   if (file_container_.empty()) return;
 
   plotting::HistHolderContainer hist_container, ratio_container;
-  plotting::RatioPlotter ratio_plotter {0.3};
+  plotting::RatioPlotter ratio_plotter{0.3};
   ratio_plotter.setRatioTitle("t#bar{t}Z / t#bar{t}");
   ratio_plotter.setOutputDir("$HOME/AnalysisPlots/Output/Jets/");
 
@@ -47,7 +47,7 @@ void Jets::execute() {
     ratio_plotter.plotAtlasLabel();
     ratio_plotter.plotLegend();
     ratio_plotter.saveToFile(name.c_str());
-  
+
     hist_container.clear();
     ratio_container.clear();
     ratio_plotter.initCanvas();
@@ -60,7 +60,7 @@ void Jets::setDrawing(plotting::HistHolderContainer& hist_container) {
   hist_container.at(0)->setLegendTitle("t#bar{t}, kWP");
   hist_container.at(0)->getHist()->SetLineColor(1);
   hist_container.at(0)->getHist()->SetMarkerColor(1);
-  
+
   hist_container.at(1)->setDrawOptions("P E1 SAME");
   hist_container.at(1)->setLegendTitle("t#bar{t}Z, kWP");
   hist_container.at(1)->getHist()->SetLineColor(2);

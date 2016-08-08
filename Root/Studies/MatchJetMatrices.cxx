@@ -14,8 +14,10 @@ void MatchJetMatrices::execute() {
   plotting::MatrixHolderContainer matrix_container_onshell;
   plotting::MatrixHolderContainer matrix_container_offshell;
   matrix_container.pullHistograms(file_container_, "h_matchingMatrix");
-  matrix_container_onshell.pullHistograms(file_container_, "h_matchingMatrix_onshell");
-  matrix_container_offshell.pullHistograms(file_container_, "h_matchingMatrix_offshell");
+  matrix_container_onshell.pullHistograms(file_container_,
+                                          "h_matchingMatrix_onshell");
+  matrix_container_offshell.pullHistograms(file_container_,
+                                           "h_matchingMatrix_offshell");
 
   plotting::MatrixPlotter plotter;
   plotter.initCanvas(600, 600);
@@ -32,7 +34,7 @@ void MatchJetMatrices::execute() {
     obj->GetZaxis()->SetTitleOffset(1.6);
     obj->SetMarkerSize(1.5);
     matrix->roundMatrix(3);
-    matrix->setDrawOptions("COLZ TEXT ERR"); 
+    matrix->setDrawOptions("COLZ TEXT ERR");
 
     matrix->draw();
     plotter.plotAtlasLabel();
@@ -51,7 +53,7 @@ void MatchJetMatrices::execute() {
     obj->GetZaxis()->SetTitleOffset(1.6);
     obj->SetMarkerSize(1.5);
     matrix->roundMatrix(3);
-    matrix->setDrawOptions("COLZ TEXT ERR"); 
+    matrix->setDrawOptions("COLZ TEXT ERR");
 
     matrix->draw();
     plotter.plotAtlasLabel();
@@ -70,7 +72,7 @@ void MatchJetMatrices::execute() {
     obj->GetZaxis()->SetTitleOffset(1.6);
     obj->SetMarkerSize(1.5);
     matrix->roundMatrix(3);
-    matrix->setDrawOptions("COLZ TEXT ERR"); 
+    matrix->setDrawOptions("COLZ TEXT ERR");
 
     matrix->draw();
     plotter.plotAtlasLabel();
