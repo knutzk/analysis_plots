@@ -13,4 +13,4 @@ class MatchJetMatrices : public plotting::studies::Template {
 }  // namespace studies
 }  // namespace plotting
 
-#endif   // PLOTTING_STUDIES_MATCHJETMATRICES_H_
+#endif  // PLOTTING_STUDIES_MATCHJETMATRICES_H_

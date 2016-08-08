@@ -17,7 +17,7 @@ void setDrawing(plotting::HistHolderContainer& container) {
   container.at(0)->setLegendTitle("t#bar{t}");
   container.at(0)->getHist()->SetLineColor(1);
   container.at(0)->getHist()->SetMarkerColor(1);
-  
+
   container.at(1)->setDrawOptions("P E1 SAME");
   container.at(1)->setLegendTitle("t#bar{t}Z, LO");
   container.at(1)->getHist()->SetLineColor(2);
@@ -35,8 +35,10 @@ namespace studies {
 void MatchLONLO::execute() {
   std::cout << "Ignoring user input file ... " << std::endl;
   file_container_.clear();
-  file_container_.readFileList("/home/knut.zoch/AnalysisFiles/Matcher/files-MatchLONLO.txt");
-  file_container_2_.readFileList("/home/knut.zoch/AnalysisFiles/Reader/files-jets-LONLO.txt");
+  file_container_.readFileList(
+      "/home/knut.zoch/AnalysisFiles/Matcher/files-MatchLONLO.txt");
+  file_container_2_.readFileList(
+      "/home/knut.zoch/AnalysisFiles/Reader/files-jets-LONLO.txt");
 
   plotting::HistPlotter plotter;
   plotter.initCanvas(800, 600);
@@ -62,19 +64,19 @@ void MatchLONLO::execute() {
   temp_hist->SetMarkerSize(1.5);
   temp_hist->SetLineColor(kBlack);
   temp_hist->SetLineStyle(2);
-  
+
   hists.at(2)->setDrawOptions("HIST E1 SAME");
   hists.at(2)->setLegendTitle("kDedicated, NLO");
   hists.at(2)->setLegendOptions("PL");
   temp_hist = hists.at(2)->getHist();
   temp_hist->SetMarkerStyle(0);
   temp_hist->SetMarkerSize(1.5);
-  temp_hist->SetLineColor(kRed+2);
+  temp_hist->SetLineColor(kRed + 2);
 
   for (auto& hist : hists) {
     hist->getHist()->GetXaxis()->SetLabelSize(16);
   }
-  
+
   hists.setOptimalMax();
   hists.draw();
   plotter.addToLegend(hists);
@@ -107,9 +109,9 @@ void MatchLONLO::execute() {
   }
 
   // =======================================================
-  
+
   plotting::HistHolderContainer jet_hists, jet_ratios;
-  plotting::RatioPlotter ratio_plotter {0.3};
+  plotting::RatioPlotter ratio_plotter{0.3};
   ratio_plotter.setRatioTitle("t#bar{t}Z / t#bar{t}");
   ratio_plotter.setOutputDir("$HOME/AnalysisPlots/Output/MatchLONLO/");
   ratio_plotter.getAtlasLabel()->setChannel("(3)#mu+jets");
@@ -144,7 +146,7 @@ void MatchLONLO::execute() {
     ratio_plotter.plotAtlasLabel();
     ratio_plotter.plotLegend();
     ratio_plotter.saveToFile(name.c_str());
-  
+
     jet_hists.clear();
     jet_ratios.clear();
     ratio_plotter.initCanvas();

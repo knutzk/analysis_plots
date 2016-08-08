@@ -30,8 +30,7 @@ class MatrixPlotter : public HistPlotter {
    * @param Width of the canvas
    * @param Height of the canvas
    */
-  void initCanvas(unsigned const int& width,
-                  unsigned const int& height) {
+  void initCanvas(unsigned const int& width, unsigned const int& height) {
     HistPlotter::initCanvas(width, height);
     canvas_->SetRightMargin(0.18);
   }

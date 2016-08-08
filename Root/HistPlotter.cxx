@@ -26,7 +26,7 @@ void HistPlotter::addToLegend(const HistHolderContainer& hist_container) {
 }
 
 void HistPlotter::initCanvas(unsigned const int& width,
-                         unsigned const int& height) {
+                             unsigned const int& height) {
   resetCanvas();
   canvas_width_ = width;
   canvas_height_ = height;
@@ -37,8 +37,8 @@ void HistPlotter::initCanvas(unsigned const int& width,
   canvas_->SetBottomMargin(0.18);
 }
 
-void HistPlotter::initLegend(const double& x1, const double& y1, const double& x2,
-                             const double& y2) {
+void HistPlotter::initLegend(const double& x1, const double& y1,
+                             const double& x2, const double& y2) {
   resetLegend();
   legend_x1_ = x1;
   legend_y1_ = y1;

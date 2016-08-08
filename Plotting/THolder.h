@@ -43,8 +43,7 @@ class THolder {
         legend_options_{old.legend_options_},
         name_{old.name_},
         y1_{old.y1_},
-        y2_{old.y2_}
-  {}
+        y2_{old.y2_} {}
 
   /*
    * Assignment operator to assign a THolder to another one.
@@ -65,7 +64,6 @@ class THolder {
    */
   void draw();
 
-
   T* const getHist() { return hist_.get(); }
   T const* const getHist() const { return hist_.get(); }
 
@@ -77,7 +75,9 @@ class THolder {
   std::string getName() const { return name_; }
 
   void setDrawOptions(const std::string& options) { draw_options_ = options; }
-  void setLegendOptions(const std::string& options) { legend_options_ = options; }
+  void setLegendOptions(const std::string& options) {
+    legend_options_ = options;
+  }
   void setLegendTitle(const std::string& title) { legend_title_ = title; }
   void setName(const std::string& name) { name_ = name; }
   void setYRangeHigh(const double& high) { y2_ = high; }

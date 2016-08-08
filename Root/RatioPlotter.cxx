@@ -65,7 +65,7 @@ void RatioPlotter::adjustMarkers(HistHolderContainer& ratio_container) {
   // need one histogram for the shaded errors and one for the black
   // reference line.
   ratio_container.emplace_back(new HistHolder(*ratio_container.at(0)));
-  
+
   auto& error_area = ratio_container.front();
   error_area->getHist()->SetMarkerSize(0);
   error_area->getHist()->SetFillColor(kBlue);
@@ -88,7 +88,8 @@ void RatioPlotter::initCanvas(unsigned const int& width,
   canvas_height_ = height;
   canvas_.reset(new TCanvas("rcanvas", "rcanvas", width, height));
   if (do_verbose_) {
-    std::cout << "Created ratio-specific canvas with name 'rcanvas'" << std::endl;
+    std::cout << "Created ratio-specific canvas with name 'rcanvas'"
+              << std::endl;
   }
 
   double histPad_scaling{1. / (1 - ratio_)};

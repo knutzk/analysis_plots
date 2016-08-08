@@ -78,7 +78,7 @@ class HistPlotter {
 
   /*
    * Reset the canvas and the legend.
-   * 
+   *
    * REMARK: We need these reset functions to make sure that ROOT does
    * not conflict with the object ownership of the unique pointers
    * (these functions release the allocated memory, then let ROOT take
@@ -110,7 +110,6 @@ class HistPlotter {
    * @return Pointer to the TCanvas.
    */
   inline TCanvas* getCanvas() { return canvas_.get(); }
-
 
   void setDoVerbose(const bool& b = true) { do_verbose_ = b; }
   inline bool getDoVerbose() const { return do_verbose_; }

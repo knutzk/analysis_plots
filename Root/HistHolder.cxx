@@ -17,7 +17,7 @@ void HistHolder::setIncludeXOverflow(const bool& b) {
       hist_->SetBinContent(n_bins + 1, 0);
     }
   }
-  
+
   // If changed to false, remove overflow again.
   if (!include_x_overflow_) {
     const auto& n_bins = hist_->GetNbinsX();
@@ -43,7 +43,7 @@ void HistHolder::setIncludeXUnderflow(const bool& b) {
       hist_->SetBinContent(0, 0);
     }
   }
-  
+
   // If changed to false, remove underflow again.
   if (!include_x_underflow_) {
     const auto& old = hist_->GetBinContent(1);

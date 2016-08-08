@@ -8,7 +8,7 @@
 
 #include "TROOT.h"
 
-void SetAtlasStyle () {
+void SetAtlasStyle() {
   static TStyle* atlasStyle = 0;
   std::cout << "\nApplying ATLAS style settings...\n" << std::endl;
   if (atlasStyle == 0) atlasStyle = AtlasStyle();
@@ -17,7 +17,7 @@ void SetAtlasStyle () {
 }
 
 TStyle* AtlasStyle() {
-  TStyle *atlasStyle = new TStyle("ATLAS", "Atlas style");
+  TStyle* atlasStyle = new TStyle("ATLAS", "Atlas style");
 
   // use plain black on white colors
   Int_t icol = 0;  // WHITE
@@ -28,7 +28,8 @@ TStyle* AtlasStyle() {
   atlasStyle->SetPadBorderMode(icol);
   atlasStyle->SetPadColor(icol);
   atlasStyle->SetStatColor(icol);
-  // atlasStyle->SetFillColor(icol);  // don't use: white fill color for *all* objects
+  // atlasStyle->SetFillColor(icol);  // don't use: white fill color for *all*
+  // objects
 
   // set the paper & margin sizes
   atlasStyle->SetPaperSize(20, 26);

@@ -26,7 +26,7 @@ class MatrixHolderContainer : public UniqueContainer<MatrixHolder> {
    * @param The name of the histograms in these files
    */
   MatrixHolderContainer(const FileContainer& file_container,
-                      const std::string& name);
+                        const std::string& name);
 
   /*
    * A function to pull histograms called 'name' from a file container.
@@ -34,12 +34,11 @@ class MatrixHolderContainer : public UniqueContainer<MatrixHolder> {
    * @param The name of the histograms in these files
    */
   void pullHistograms(const FileContainer& file_container,
-                 const std::string& name);
+                      const std::string& name);
 
   /* Call the draw() function for all entries of this container.
    */
   void draw() const;
-
 };
 }  // namespace plotting
 

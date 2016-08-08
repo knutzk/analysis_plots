@@ -9,7 +9,7 @@ namespace plotting {
 namespace studies {
 void Likelihood::execute() {
   if (file_container_.empty()) return;
-  
+
   plotting::HistHolderContainer hist_container;
   hist_container.pullHistograms(file_container_, "h_likelihood");
 

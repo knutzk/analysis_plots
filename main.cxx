@@ -34,15 +34,28 @@ int main(int argc, char* argv[]) {
   std::cout << "Please choose: ";
   std::cin >> chosen;
 
-  std::unique_ptr<plotting::studies::Template> study {nullptr};
+  std::unique_ptr<plotting::studies::Template> study{nullptr};
   switch (chosen) {
-    case 1: study.reset(new plotting::studies::Jets()); break;
-    case 2: study.reset(new plotting::studies::Likelihood()); break;
-    case 3: study.reset(new plotting::studies::MatchEfficiencies()); break;
-    case 4: study.reset(new plotting::studies::MatchJetMatrices()); break;
-    case 5: study.reset(new plotting::studies::MatchBtagPerf()); break;
-    case 6: study.reset(new plotting::studies::MatchLONLO()); break;
-    default: return -1;
+    case 1:
+      study.reset(new plotting::studies::Jets());
+      break;
+    case 2:
+      study.reset(new plotting::studies::Likelihood());
+      break;
+    case 3:
+      study.reset(new plotting::studies::MatchEfficiencies());
+      break;
+    case 4:
+      study.reset(new plotting::studies::MatchJetMatrices());
+      break;
+    case 5:
+      study.reset(new plotting::studies::MatchBtagPerf());
+      break;
+    case 6:
+      study.reset(new plotting::studies::MatchLONLO());
+      break;
+    default:
+      return -1;
   }
 
   study->loadFiles(argv[1]);

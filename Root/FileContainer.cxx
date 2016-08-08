@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 
-namespace plotting{
+namespace plotting {
 void FileContainer::readFileList(const std::string &file_list) {
   std::ifstream file_input;
   file_input.open(file_list);

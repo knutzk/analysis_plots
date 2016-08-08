@@ -15,8 +15,7 @@ class HistHolder : public THolder<TH1D> {
   /*
    * Default constructor calling the base class' default constructor.
    */
-  HistHolder()
-      : THolder::THolder() {
+  HistHolder() : THolder::THolder() {
     setIncludeXOverflow(true);
     setIncludeXUnderflow(true);
   }
@@ -26,8 +25,7 @@ class HistHolder : public THolder<TH1D> {
    * WARNING: This class takes ownership of the TH1D!
    * @param Pointer to the TH1D histogram.
    */
-  HistHolder(TH1D* hist)
-      : THolder::THolder{hist} {
+  HistHolder(TH1D* hist) : THolder::THolder{hist} {
     setIncludeXOverflow(true);
     setIncludeXUnderflow(true);
   }
@@ -38,8 +36,7 @@ class HistHolder : public THolder<TH1D> {
    * WARNING: This constructor moves ownership to the HistHolder object.
    * @param Unique pointer managing a TH1D histogram.
    */
-  HistHolder(std::unique_ptr<TH1D>& hist)
-      : THolder::THolder{hist} {
+  HistHolder(std::unique_ptr<TH1D>& hist) : THolder::THolder{hist} {
     setIncludeXOverflow(true);
     setIncludeXUnderflow(true);
   }
@@ -71,7 +68,7 @@ class HistHolder : public THolder<TH1D> {
    * Return whether underflow is set to be included.
    * @return True if it is set to included.
    */
-  bool getIncludeXUnderflow() {return include_x_underflow_; }
+  bool getIncludeXUnderflow() { return include_x_underflow_; }
 
   /*
    * Set whether underflow shall be included or not.
