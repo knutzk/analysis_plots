@@ -14,7 +14,7 @@ namespace studies {
 class Jets : public plotting::studies::Template {
  public:
   virtual void execute();
-  virtual void setDrawing(plotting::HistHolderContainer& hist_container);
+  virtual void setDrawing(plotting::HistHolderContainer* hist_container);
 };
 }  // namespace studies
 }  // namespace plotting

@@ -13,21 +13,21 @@
 #include "Plotting/RatioPlotter.h"
 
 namespace {
-void setDrawing(plotting::HistHolderContainer& container) {
-  container.at(0)->setDrawOptions("P E1");
-  container.at(0)->setLegendTitle("t#bar{t}");
-  container.at(0)->getHist()->SetLineColor(1);
-  container.at(0)->getHist()->SetMarkerColor(1);
+void setDrawing(plotting::HistHolderContainer* container) {
+  container->at(0)->setDrawOptions("P E1");
+  container->at(0)->setLegendTitle("t#bar{t}");
+  container->at(0)->getHist()->SetLineColor(1);
+  container->at(0)->getHist()->SetMarkerColor(1);
 
-  container.at(1)->setDrawOptions("P E1 SAME");
-  container.at(1)->setLegendTitle("t#bar{t}Z, LO");
-  container.at(1)->getHist()->SetLineColor(2);
-  container.at(1)->getHist()->SetMarkerColor(2);
+  container->at(1)->setDrawOptions("P E1 SAME");
+  container->at(1)->setLegendTitle("t#bar{t}Z, LO");
+  container->at(1)->getHist()->SetLineColor(2);
+  container->at(1)->getHist()->SetMarkerColor(2);
 
-  container.at(2)->setDrawOptions("P E1 SAME");
-  container.at(2)->setLegendTitle("t#bar{t}Z, NLO");
-  container.at(2)->getHist()->SetLineColor(4);
-  container.at(2)->getHist()->SetMarkerColor(4);
+  container->at(2)->setDrawOptions("P E1 SAME");
+  container->at(2)->setLegendTitle("t#bar{t}Z, NLO");
+  container->at(2)->getHist()->SetLineColor(4);
+  container->at(2)->getHist()->SetMarkerColor(4);
 }
 }  // namespace
 
@@ -129,12 +129,12 @@ void MatchLONLO::execute() {
 
   for (const auto& name : hist_names) {
     jet_hists.pullHistograms(file_container_2_, name.c_str());
-    setDrawing(jet_hists);
+    setDrawing(&jet_hists);
     jet_ratios = jet_hists;
     jet_ratios.divideHistograms(*jet_hists.at(0));
 
-    ratio_plotter.adjustLabels(jet_hists, jet_ratios);
-    ratio_plotter.adjustMarkers(jet_ratios);
+    ratio_plotter.adjustLabels(&jet_hists, &jet_ratios);
+    ratio_plotter.adjustMarkers(&jet_ratios);
     ratio_plotter.addToLegend(jet_hists);
 
     ratio_plotter.switchToHistPad();
