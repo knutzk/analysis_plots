@@ -1,3 +1,4 @@
+// Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
 //
 // ATLAS Style, based on a style file from BaBar
 //

@@ -1,3 +1,4 @@
+// Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
 #include "Plotting/Studies/Jets.h"
 
 #include <TH1D.h>
