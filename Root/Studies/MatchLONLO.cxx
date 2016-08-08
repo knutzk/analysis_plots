@@ -51,28 +51,22 @@ void MatchLONLO::execute() {
   hists.at(0)->setDrawOptions("HIST BAR1");
   hists.at(0)->setLegendTitle("t#bar{t}");
   hists.at(0)->setLegendOptions("F");
-  auto&& temp_hist = hists.at(0)->getHist();
-  temp_hist->SetBarWidth(0.8);
-  temp_hist->SetBarOffset(0.1);
-  temp_hist->SetFillColor(92);
-  temp_hist->SetFillStyle(1001);
+  hists.at(0)->getHist()->SetBarWidth(0.8);
+  hists.at(0)->getHist()->SetBarOffset(0.1);
+  hists.at(0)->getHist()->SetFillColor(kGray);
+  hists.at(0)->getHist()->SetFillStyle(1001);
 
-  hists.at(1)->setDrawOptions("HIST E1 SAME");
+  hists.at(1)->setDrawOptions("P E1 SAME");
   hists.at(1)->setLegendTitle("kDedicated, LO");
   hists.at(1)->setLegendOptions("PL");
-  temp_hist = hists.at(1)->getHist();
-  temp_hist->SetMarkerStyle(0);
-  temp_hist->SetMarkerSize(1.5);
-  temp_hist->SetLineColor(kBlack);
-  temp_hist->SetLineStyle(2);
+  hists.at(1)->getHist()->SetMarkerColor(4);
+  hists.at(1)->getHist()->SetLineColor(4);
 
-  hists.at(2)->setDrawOptions("HIST E1 SAME");
+  hists.at(2)->setDrawOptions("P E1 SAME");
   hists.at(2)->setLegendTitle("kDedicated, NLO");
   hists.at(2)->setLegendOptions("PL");
-  temp_hist = hists.at(2)->getHist();
-  temp_hist->SetMarkerStyle(0);
-  temp_hist->SetMarkerSize(1.5);
-  temp_hist->SetLineColor(kRed + 2);
+  hists.at(2)->getHist()->SetMarkerColor(2);
+  hists.at(2)->getHist()->SetLineColor(2);
 
   for (auto& hist : hists) {
     hist->getHist()->GetXaxis()->SetLabelSize(16);
@@ -97,21 +91,20 @@ void MatchLONLO::execute() {
   matrixplotter.setCustomColorPalette();
 
   for (auto& matrix : matrices) {
-    auto&& obj = matrix->getHist();
-    obj->GetXaxis()->SetTitleOffset(1.6);
-    obj->GetYaxis()->SetTitleOffset(1.6);
-    obj->GetZaxis()->SetRangeUser(0, 0.8);
-    obj->GetZaxis()->SetTitleOffset(1.6);
-    obj->SetMarkerSize(900);
+    matrix->getHist()->GetXaxis()->SetTitleOffset(1.6);
+    matrix->getHist()->GetYaxis()->SetTitleOffset(1.6);
+    matrix->getHist()->GetZaxis()->SetRangeUser(0, 0.8);
+    matrix->getHist()->GetZaxis()->SetTitleOffset(1.6);
+    matrix->getHist()->SetMarkerSize(900);
     matrix->roundMatrix(3);
     matrix->setDrawOptions("COLZ TEXT ERR");
     matrix->draw();
+    matrixplotter.plotAtlasLabel();
     matrixplotter.saveToFile(matrix->getName().c_str());
   }
 
   // =======================================================
 
-  plotting::HistHolderContainer jet_hists, jet_ratios;
   plotting::RatioPlotter ratio_plotter{0.3};
   ratio_plotter.setRatioTitle("t#bar{t}Z / t#bar{t}");
   ratio_plotter.setOutputDir("$HOME/AnalysisPlots/Output/MatchLONLO/");
@@ -128,9 +121,10 @@ void MatchLONLO::execute() {
   hist_names.push_back("h_Njets");
 
   for (const auto& name : hist_names) {
+    plotting::HistHolderContainer jet_hists;
     jet_hists.pullHistograms(file_container_2_, name.c_str());
     setDrawing(&jet_hists);
-    jet_ratios = jet_hists;
+    auto jet_ratios = jet_hists;
     jet_ratios.divideHistograms(*jet_hists.at(0));
 
     ratio_plotter.adjustLabels(&jet_hists, &jet_ratios);
@@ -139,6 +133,8 @@ void MatchLONLO::execute() {
 
     ratio_plotter.switchToHistPad();
     jet_hists.setOptimalMax();
+    jet_hists.at(0)->setDrawOptions("hist");
+    jet_hists.at(0)->getHist()->SetFillColor(kGray);
     jet_hists.draw();
     ratio_plotter.switchToRatioPad();
     jet_ratios.setOptimalRatioRange();
@@ -148,8 +144,6 @@ void MatchLONLO::execute() {
     ratio_plotter.plotLegend();
     ratio_plotter.saveToFile(name.c_str());
 
-    jet_hists.clear();
-    jet_ratios.clear();
     ratio_plotter.initCanvas();
     ratio_plotter.initLegend();
   }
