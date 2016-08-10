@@ -33,20 +33,27 @@ void setDrawing(plotting::HistHolderContainer* container) {
 
 namespace plotting {
 namespace studies {
-void MatchLONLO::execute() {
-  std::cout << "Ignoring user input file ... " << std::endl;
-  file_container_.clear();
-  file_container_.readFileList(
-      "/home/knut.zoch/AnalysisFiles/Matcher/files-MatchLONLO.txt");
-  file_container_2_.readFileList(
-      "/home/knut.zoch/AnalysisFiles/Reader/files-jets-LONLO.txt");
+void MatchLONLO::loadFiles(char* input_list) {
+  file_container_.readFileList(input_list);
+  if (file_container_.size() != 6) {
+    std::cout << "\nERROR: expected six files in the input list. "
+              << "Aborting ... " << std::endl;
+    throw;
+  }
 
+  // Move the last three files to the other container.
+  for (int i : {3, 4, 5}) {
+    file_container_2_.push_back(file_container_.at(i));
+  }
+  file_container_.erase(file_container_.end() - 3, file_container_.end());
+}
+
+void MatchLONLO::execute() {
   plotting::HistPlotter plotter;
   plotter.initCanvas(800, 600);
   plotter.setOutputDir("$HOME/AnalysisPlots/Output/MatchLONLO/");
 
-  plotting::HistHolderContainer hists;
-  hists.pullHistograms(file_container_, "h_andreacomp");
+  plotting::HistHolderContainer hists{file_container_, "h_andreacomp"};
 
   hists.at(0)->setDrawOptions("HIST BAR1");
   hists.at(0)->setLegendTitle("t#bar{t}");
@@ -82,8 +89,8 @@ void MatchLONLO::execute() {
   plotter.resetLegend();
 
   // =======================================================
-  plotting::MatrixHolderContainer matrices;
-  matrices.pullHistograms(file_container_, "h_matchingMatrix");
+
+  plotting::MatrixHolderContainer matrices{file_container_, "h_matchingMatrix"};
 
   plotting::MatrixPlotter matrixplotter;
   matrixplotter.initCanvas(600, 600);
@@ -121,8 +128,7 @@ void MatchLONLO::execute() {
   hist_names.push_back("h_Njets");
 
   for (const auto& name : hist_names) {
-    plotting::HistHolderContainer jet_hists;
-    jet_hists.pullHistograms(file_container_2_, name.c_str());
+    plotting::HistHolderContainer jet_hists{file_container_2_, name.c_str()};
     setDrawing(&jet_hists);
     auto jet_ratios = jet_hists;
     jet_ratios.divideHistograms(*jet_hists.at(0));
