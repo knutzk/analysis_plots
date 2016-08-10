@@ -109,6 +109,8 @@ void MatchLONLO::execute() {
     matrixplotter.plotAtlasLabel();
     matrixplotter.saveToFile(matrix->getName().c_str());
   }
+  matrixplotter.resetCanvas();
+  matrixplotter.resetLegend();
 
   // =======================================================
 
