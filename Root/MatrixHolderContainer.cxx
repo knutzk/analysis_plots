@@ -9,6 +9,10 @@ MatrixHolderContainer::MatrixHolderContainer(
   for (const auto& file : file_container) {
     auto raw = static_cast<TH2D*>(file->Get(name.c_str()));
     std::unique_ptr<MatrixHolder> unique{new MatrixHolder(raw)};
+    std::string name = file->GetName();
+    name = name.substr(name.find_last_of("/") + 1, name.size());
+    name = name.substr(0, name.find_last_of("."));
+    unique->setName(name.c_str());
     this->push_back(std::move(unique));
   }
 }
