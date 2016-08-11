@@ -36,9 +36,7 @@ class HistPlotter {
   /*
    * Destructor
    */
-  virtual ~HistPlotter() {
-    canvas_.release();
-  }
+  virtual ~HistPlotter() { canvas_.release(); }
 
   /*
    * Add a histogram to the legend.
