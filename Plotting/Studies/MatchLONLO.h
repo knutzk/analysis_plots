@@ -10,9 +10,9 @@ namespace plotting {
 namespace studies {
 class MatchLONLO : public plotting::studies::Template {
  public:
-  virtual void execute() override;
+  void execute() override;
 
-  virtual void loadFiles(char* input_list) override;
+  void loadFiles(char* input_list) override;
 
  protected:
   FileContainer file_container_2_;
