@@ -12,26 +12,6 @@
 #include "Plotting/MatrixPlotter.h"
 #include "Plotting/RatioPlotter.h"
 
-namespace {
-void setDrawing(plotting::HistHolderContainer* container) {
-  container->at(0)->setDrawOptions("P E1");
-  container->at(0)->setLegendTitle("t#bar{t}");
-  container->at(0)->setLegendOptions("F");
-  container->at(0)->getHist()->SetLineColor(1);
-  container->at(0)->getHist()->SetMarkerColor(1);
-
-  container->at(1)->setDrawOptions("P E1 SAME");
-  container->at(1)->setLegendTitle("t#bar{t}Z, LO");
-  container->at(1)->getHist()->SetLineColor(2);
-  container->at(1)->getHist()->SetMarkerColor(2);
-
-  container->at(2)->setDrawOptions("P E1 SAME");
-  container->at(2)->setLegendTitle("t#bar{t}Z, NLO");
-  container->at(2)->getHist()->SetLineColor(4);
-  container->at(2)->getHist()->SetMarkerColor(4);
-}
-}  // namespace
-
 namespace plotting {
 namespace studies {
 void MatchLONLO::loadFiles(char* input_list) {
@@ -132,7 +112,24 @@ void MatchLONLO::execute() {
 
   for (const auto& name : hist_names) {
     plotting::HistHolderContainer jet_hists{file_container_2_, name.c_str()};
-    setDrawing(&jet_hists);
+    jet_hists.at(0)->setDrawOptions("P E1");
+    jet_hists.at(0)->setLegendTitle("t#bar{t}");
+    jet_hists.at(0)->setLegendOptions("F");
+    jet_hists.at(0)->getHist()->SetLineColor(1);
+    jet_hists.at(0)->getHist()->SetMarkerColor(1);
+    jet_hists.at(0)->getHist()->SetFillColor(kGray);
+    jet_hists.at(0)->setDrawOptions("hist");
+
+    jet_hists.at(1)->setDrawOptions("P E1 SAME");
+    jet_hists.at(1)->setLegendTitle("t#bar{t}Z, LO");
+    jet_hists.at(1)->getHist()->SetLineColor(2);
+    jet_hists.at(1)->getHist()->SetMarkerColor(2);
+
+    jet_hists.at(2)->setDrawOptions("P E1 SAME");
+    jet_hists.at(2)->setLegendTitle("t#bar{t}Z, NLO");
+    jet_hists.at(2)->getHist()->SetLineColor(4);
+    jet_hists.at(2)->getHist()->SetMarkerColor(4);
+
     auto jet_ratios = jet_hists;
     jet_ratios.divideHistograms(*jet_hists.at(0));
 
@@ -142,8 +139,6 @@ void MatchLONLO::execute() {
 
     ratio_plotter.switchToHistPad();
     jet_hists.setOptimalMax();
-    jet_hists.at(0)->setDrawOptions("hist");
-    jet_hists.at(0)->getHist()->SetFillColor(kGray);
     jet_hists.draw();
     ratio_plotter.switchToRatioPad();
     jet_ratios.setOptimalRatioRange();
