@@ -16,6 +16,7 @@ namespace {
 void setDrawing(plotting::HistHolderContainer* container) {
   container->at(0)->setDrawOptions("P E1");
   container->at(0)->setLegendTitle("t#bar{t}");
+  container->at(0)->setLegendOptions("F");
   container->at(0)->getHist()->SetLineColor(1);
   container->at(0)->getHist()->SetMarkerColor(1);
 
@@ -64,13 +65,13 @@ void MatchLONLO::execute() {
   hists.at(0)->getHist()->SetFillStyle(1001);
 
   hists.at(1)->setDrawOptions("P E1 SAME");
-  hists.at(1)->setLegendTitle("kDedicated, LO");
+  hists.at(1)->setLegendTitle("t#bar{t}Z, LO");
   hists.at(1)->setLegendOptions("PL");
   hists.at(1)->getHist()->SetMarkerColor(4);
   hists.at(1)->getHist()->SetLineColor(4);
 
   hists.at(2)->setDrawOptions("P E1 SAME");
-  hists.at(2)->setLegendTitle("kDedicated, NLO");
+  hists.at(2)->setLegendTitle("t#bar{t}Z, NLO");
   hists.at(2)->setLegendOptions("PL");
   hists.at(2)->getHist()->SetMarkerColor(2);
   hists.at(2)->getHist()->SetLineColor(2);
