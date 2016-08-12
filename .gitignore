@@ -1,7 +1,7 @@
-*.o
 *~
 .nfs*
-plot
 *.pdf
 *.png
 *.eps
+*.o
+bin/plot
