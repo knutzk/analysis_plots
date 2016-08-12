@@ -16,7 +16,7 @@ void Jets::execute() {
   plotting::HistHolderContainer hist_container, ratio_container;
   plotting::RatioPlotter ratio_plotter{0.3};
   ratio_plotter.setRatioTitle("t#bar{t}Z / t#bar{t}");
-  ratio_plotter.setOutputDir("$HOME/AnalysisPlots/Output/Jets/");
+  ratio_plotter.setOutputDir("$HOME/AnalysisPlots/plots/Jets/");
 
   std::vector<std::string> hist_names;
   hist_names.push_back("h_jetPt1");

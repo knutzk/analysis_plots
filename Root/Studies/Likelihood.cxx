@@ -27,7 +27,7 @@ void Likelihood::execute() {
   ratio_container.divideHistograms(*hist_container.at(0));
 
   plotting::RatioPlotter ratio_plotter{0.3};
-  ratio_plotter.setOutputDir("$HOME/AnalysisPlots/Output/Likelihood/");
+  ratio_plotter.setOutputDir("$HOME/AnalysisPlots/plots/Likelihood/");
   ratio_plotter.adjustLabels(&hist_container, &ratio_container);
   ratio_plotter.adjustMarkers(&ratio_container);
   ratio_plotter.addToLegend(hist_container);
