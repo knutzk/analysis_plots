@@ -65,19 +65,21 @@ void RatioPlotter::adjustMarkers(HistHolderContainer* ratio_container) {
   // Make a copy of the first histogram because for the plotting we
   // need one histogram for the shaded errors and one for the black
   // reference line.
-  ratio_container->emplace_back(new HistHolder(*ratio_container->at(0)));
+  // NOTE: It will be emplaced to the very front of the container,
+  // i.e. at(0) will be the error, at(1) the reference line.
+  ratio_container->emplace(ratio_container->begin(),
+                           new HistHolder(*ratio_container->at(0)));
 
-  auto& error_area = ratio_container->front();
-  error_area->getHist()->SetMarkerSize(0);
-  error_area->getHist()->SetFillColor(kBlue);
-  error_area->getHist()->SetFillStyle(3245);
-  error_area->setDrawOptions("e2");
+  ratio_container->at(0)->getHist()->SetMarkerSize(0);
+  ratio_container->at(0)->getHist()->SetFillColor(kBlue);
+  ratio_container->at(0)->getHist()->SetFillStyle(3245);
+  ratio_container->at(0)->setDrawOptions("e2");
 
-  auto& hist = ratio_container->back();
-  hist->setDrawOptions("hist same");
-  for (int bin = 0; bin < hist->getHist()->GetNbinsX() + 1; ++bin) {
-    if (hist->getHist()->GetBinContent(bin) == 0) {
-      hist->getHist()->SetBinContent(bin, 1);
+  ratio_container->at(1)->getHist()->SetFillStyle(0);
+  ratio_container->at(1)->setDrawOptions("hist same");
+  for (int bin = 0; bin < ratio_container->at(1)->getHist()->GetNbinsX() + 1; ++bin) {
+    if (ratio_container->at(1)->getHist()->GetBinContent(bin) == 0) {
+      ratio_container->at(1)->getHist()->SetBinContent(bin, 1);
     }
   }
 }
