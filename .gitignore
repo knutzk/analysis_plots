@@ -2,4 +2,6 @@
 *~
 .nfs*
 plot
-Output
+*.pdf
+*.png
+*.eps

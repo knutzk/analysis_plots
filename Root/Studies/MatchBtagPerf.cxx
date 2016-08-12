@@ -18,7 +18,7 @@ void MatchBtagPerf::execute() {
 
   plotting::HistPlotter plotter;
   plotter.initCanvas(800, 600);
-  plotter.setOutputDir("$HOME/AnalysisPlots/Output/MatchBtagPerf/");
+  plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchBtagPerf/");
 
   plotting::HistHolderContainer hist_container;
   hist_container.pullHistograms(file_container_, "h_andreacomp");
@@ -55,7 +55,7 @@ void MatchBtagPerf::execute() {
 
   plotting::MatrixPlotter matrixplotter;
   matrixplotter.initCanvas(600, 600);
-  matrixplotter.setOutputDir("$HOME/AnalysisPlots/Output/MatchBtagPerf/");
+  matrixplotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchBtagPerf/");
   matrixplotter.setCustomColorPalette();
 
   // Calculate the differences of the two histograms.

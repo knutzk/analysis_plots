@@ -13,7 +13,7 @@ void MatchEfficiencies::execute() {
 
   plotting::HistPlotter plotter;
   plotter.initCanvas(800, 600);
-  plotter.setOutputDir("$HOME/AnalysisPlots/Output/MatchEfficiencies/");
+  plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchEfficiencies/");
 
   plotting::HistHolderContainer hist_container_onshell;
   hist_container_onshell.pullHistograms(file_container_,

@@ -22,7 +22,7 @@ void MatchJetMatrices::execute() {
 
   plotting::MatrixPlotter plotter;
   plotter.initCanvas(600, 600);
-  plotter.setOutputDir("$HOME/AnalysisPlots/Output/MatchJetMatrices/");
+  plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchJetMatrices/");
   plotter.setCustomColorPalette();
 
   for (auto& matrix : matrix_container) {
@@ -42,7 +42,7 @@ void MatchJetMatrices::execute() {
     plotter.saveToFile(matrix->getName());
   }
 
-  plotter.setOutputDir("$HOME/AnalysisPlots/Output/MatchJetMatrices/onshell/");
+  plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchJetMatrices/onshell/");
 
   for (auto& matrix : matrix_container_onshell) {
     auto&& obj = matrix->getHist();
@@ -61,7 +61,7 @@ void MatchJetMatrices::execute() {
     plotter.saveToFile(matrix->getName());
   }
 
-  plotter.setOutputDir("$HOME/AnalysisPlots/Output/MatchJetMatrices/offshell/");
+  plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchJetMatrices/offshell/");
 
   for (auto& matrix : matrix_container_offshell) {
     auto&& obj = matrix->getHist();
