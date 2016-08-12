@@ -1,5 +1,5 @@
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#include "Plotting/MatrixHolderContainer.h"
+#include "MatrixHolderContainer.h"
 
 #include <string>
 

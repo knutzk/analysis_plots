@@ -1,12 +1,12 @@
 /* -*- mode: c++; -*- */
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#ifndef PLOTTING_MATRIXHOLDERCONTAINER_H_
-#define PLOTTING_MATRIXHOLDERCONTAINER_H_
+#ifndef MATRIXHOLDERCONTAINER_H_
+#define MATRIXHOLDERCONTAINER_H_
 
 #include <string>
-#include "Plotting/FileContainer.h"
-#include "Plotting/MatrixHolder.h"
-#include "Plotting/UniqueContainer.h"
+#include "FileContainer.h"
+#include "MatrixHolder.h"
+#include "UniqueContainer.h"
 
 /*
  * Definition of the MatrixHolderContainer class. This class represents
@@ -44,4 +44,4 @@ class MatrixHolderContainer : public UniqueContainer<MatrixHolder> {
 };
 }  // namespace plotting
 
-#endif  // PLOTTING_MATRIXHOLDERCONTAINER_H_
+#endif  // MATRIXHOLDERCONTAINER_H_

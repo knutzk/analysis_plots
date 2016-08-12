@@ -1,5 +1,5 @@
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#include "Plotting/AtlasLabel.h"
+#include "AtlasLabel.h"
 
 #include <TLatex.h>
 #include <TPad.h>

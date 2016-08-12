@@ -1,7 +1,7 @@
 // -*- mode: c++; -*-
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#ifndef PLOTTING_THOLDER_H_
-#define PLOTTING_THOLDER_H_
+#ifndef THOLDER_H_
+#define THOLDER_H_
 
 #include <memory>
 #include <string>
@@ -109,4 +109,4 @@ void THolder<T>::draw() {
 }
 }  // namespace plotting
 
-#endif  // PLOTTING_THOLDER_H_
+#endif  // THOLDER_H_

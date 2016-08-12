@@ -1,9 +1,9 @@
 /* -*- mode: c++; -*- */
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#ifndef PLOTTING_HISTHOLDER_H_
-#define PLOTTING_HISTHOLDER_H_
+#ifndef HISTHOLDER_H_
+#define HISTHOLDER_H_
 
-#include "Plotting/THolder.h"
+#include "THolder.h"
 #include <TH1D.h>
 
 /*
@@ -86,4 +86,4 @@ class HistHolder : public THolder<TH1D> {
 };
 }  // namespace plotting
 
-#endif  // PLOTTING_HISTHOLDER_H_
+#endif  // HISTHOLDER_H_

@@ -1,10 +1,10 @@
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#include "Plotting/Studies/Likelihood.h"
+#include "Studies/Likelihood.h"
 
 #include <string>
 #include <vector>
-#include "Plotting/HistHolderContainer.h"
-#include "Plotting/RatioPlotter.h"
+#include "HistHolderContainer.h"
+#include "RatioPlotter.h"
 
 namespace plotting {
 namespace studies {

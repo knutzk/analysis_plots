@@ -1,15 +1,15 @@
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#include "Plotting/Studies/MatchBtagPerf.h"
+#include "Studies/MatchBtagPerf.h"
 
 #include <TColor.h>
 #include <TROOT.h>
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Plotting/MatrixHolderContainer.h"
-#include "Plotting/HistHolderContainer.h"
-#include "Plotting/HistPlotter.h"
-#include "Plotting/MatrixPlotter.h"
+#include "MatrixHolderContainer.h"
+#include "HistHolderContainer.h"
+#include "HistPlotter.h"
+#include "MatrixPlotter.h"
 
 namespace plotting {
 namespace studies {

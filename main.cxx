@@ -7,12 +7,12 @@
 #include <map>
 #include <memory>
 #include <string>
-#include "Plotting/Studies/Jets.h"
-#include "Plotting/Studies/Likelihood.h"
-#include "Plotting/Studies/MatchBtagPerf.h"
-#include "Plotting/Studies/MatchEfficiencies.h"
-#include "Plotting/Studies/MatchJetMatrices.h"
-#include "Plotting/Studies/MatchLONLO.h"
+#include "Studies/Jets.h"
+#include "Studies/Likelihood.h"
+#include "Studies/MatchBtagPerf.h"
+#include "Studies/MatchEfficiencies.h"
+#include "Studies/MatchJetMatrices.h"
+#include "Studies/MatchLONLO.h"
 
 using ProgMap = std::map<unsigned int, std::string>;
 

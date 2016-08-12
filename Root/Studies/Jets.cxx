@@ -1,12 +1,12 @@
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#include "Plotting/Studies/Jets.h"
+#include "Studies/Jets.h"
 
 #include <TH1D.h>
 #include <string>
 #include <vector>
-#include "Plotting/RatioPlotter.h"
-#include "Plotting/HistHolder.h"
-#include "Plotting/HistHolderContainer.h"
+#include "RatioPlotter.h"
+#include "HistHolder.h"
+#include "HistHolderContainer.h"
 
 namespace plotting {
 namespace studies {

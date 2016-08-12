@@ -1,9 +1,9 @@
 // -*- mode: c++; -*-
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#ifndef PLOTTING_STUDIES_JETS_H_
-#define PLOTTING_STUDIES_JETS_H_
+#ifndef STUDIES_JETS_H_
+#define STUDIES_JETS_H_
 
-#include "Plotting/Studies/Template.h"
+#include "Studies/Template.h"
 
 namespace plotting {
 class HistHolderContainer;
@@ -19,4 +19,4 @@ class Jets : public plotting::studies::Template {
 }  // namespace studies
 }  // namespace plotting
 
-#endif  // PLOTTING_STUDIES_JETS_H_
+#endif  // STUDIES_JETS_H_

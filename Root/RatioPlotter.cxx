@@ -1,10 +1,10 @@
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#include "Plotting/RatioPlotter.h"
+#include "RatioPlotter.h"
 
 #include <TH1D.h>
 #include <iostream>
-#include "Plotting/HistHolder.h"
-#include "Plotting/HistHolderContainer.h"
+#include "HistHolder.h"
+#include "HistHolderContainer.h"
 
 namespace plotting {
 void RatioPlotter::adjustLabels(HistHolderContainer* hist_container,

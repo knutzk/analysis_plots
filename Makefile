@@ -2,7 +2,7 @@
 CC=g++
 
 # Set all flags
-CFLAGS=-I./ -I/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase/x86_64/root/6.04.14-x86_64-slc6-gcc49-opt/include
+CFLAGS=-I./Plotting -I/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase/x86_64/root/6.04.14-x86_64-slc6-gcc49-opt/include
 LDFLAGS=-L/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase/x86_64/root/6.04.14-x86_64-slc6-gcc49-opt/lib
 LIBS=-lCore -lRIO -lNet -lHist -lGraf -lGraf3d -lGpad -lTree -lRint -lPostscript -lMatrix -lPhysics -lMathCore -lThread -pthread -lm -ldl -rdynamic
 MISCFLAGS=-pthread -std=c++11 -Wno-deprecated-declarations -m64 -O0 -g2 -fdiagnostics-color=always
