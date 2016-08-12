@@ -1,15 +1,15 @@
 // -*- mode: c++; -*-
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#ifndef PLOTTING_HISTPLOTTER_H_
-#define PLOTTING_HISTPLOTTER_H_
+#ifndef HISTPLOTTER_H_
+#define HISTPLOTTER_H_
 
 #include <TCanvas.h>
 #include <TError.h>
 #include <TLegend.h>
 #include <memory>
 #include <string>
-#include "Plotting/AtlasLabel.h"
-#include "Plotting/AtlasStyle.h"
+#include "AtlasLabel.h"
+#include "AtlasStyle.h"
 
 class string;
 namespace plotting {
@@ -150,4 +150,4 @@ class HistPlotter {
 };
 }  // namespace plotting
 
-#endif  // PLOTTING_HISTPLOTTER_H_
+#endif  // HISTPLOTTER_H_

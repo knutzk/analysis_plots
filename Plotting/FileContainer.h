@@ -1,7 +1,7 @@
 /* -*- mode: c++; -*- */
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#ifndef PLOTTING_FILECONTAINER_H_
-#define PLOTTING_FILECONTAINER_H_
+#ifndef FILECONTAINER_H_
+#define FILECONTAINER_H_
 
 #include <TFile.h>
 #include <string>
@@ -42,4 +42,4 @@ class FileContainer : public std::vector<TFile*> {
 };
 }  // namespace plotting
 
-#endif  // PLOTTING_FILECONTAINER_H_
+#endif  // FILECONTAINER_H_

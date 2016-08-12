@@ -1,12 +1,12 @@
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#include "Plotting/HistHolderContainer.h"
+#include "HistHolderContainer.h"
 
 #include <TH1D.h>
 #include <algorithm>
 #include <string>
 #include <iostream>
-#include "Plotting/FileContainer.h"
-#include "Plotting/HistHolder.h"
+#include "FileContainer.h"
+#include "HistHolder.h"
 
 namespace plotting {
 HistHolderContainer::HistHolderContainer(const FileContainer& file_container,

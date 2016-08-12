@@ -1,12 +1,12 @@
 /* -*- mode: c++; -*- */
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#ifndef PLOTTING_HISTHOLDERCONTAINER_H_
-#define PLOTTING_HISTHOLDERCONTAINER_H_
+#ifndef HISTHOLDERCONTAINER_H_
+#define HISTHOLDERCONTAINER_H_
 
 #include <string>
-#include "Plotting/FileContainer.h"
-#include "Plotting/HistHolder.h"
-#include "Plotting/UniqueContainer.h"
+#include "FileContainer.h"
+#include "HistHolder.h"
+#include "UniqueContainer.h"
 
 class string;
 
@@ -66,4 +66,4 @@ class HistHolderContainer : public UniqueContainer<HistHolder> {
 };
 }  // namespace plotting
 
-#endif  // PLOTTING_HISTHOLDERCONTAINER_H_
+#endif  // HISTHOLDERCONTAINER_H_

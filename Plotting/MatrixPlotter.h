@@ -1,9 +1,9 @@
 /* -*- mode: c++; -*- */
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#ifndef PLOTTING_MATRIXPLOTTER_H_
-#define PLOTTING_MATRIXPLOTTER_H_
+#ifndef MATRIXPLOTTER_H_
+#define MATRIXPLOTTER_H_
 
-#include "Plotting/HistPlotter.h"
+#include "HistPlotter.h"
 
 /*
  * Class to plot matrix object (TH2D)
@@ -38,4 +38,4 @@ class MatrixPlotter : public HistPlotter {
 };
 }  // namespace plotting
 
-#endif  // PLOTTING_MATRIXPLOTTER_H_
+#endif  // MATRIXPLOTTER_H_

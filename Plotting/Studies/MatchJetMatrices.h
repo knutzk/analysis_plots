@@ -1,9 +1,9 @@
 /* -*- mode: c++; -*- */
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#ifndef PLOTTING_STUDIES_MATCHJETMATRICES_H_
-#define PLOTTING_STUDIES_MATCHJETMATRICES_H_
+#ifndef STUDIES_MATCHJETMATRICES_H_
+#define STUDIES_MATCHJETMATRICES_H_
 
-#include "Plotting/Studies/Template.h"
+#include "Studies/Template.h"
 
 namespace plotting {
 namespace studies {
@@ -14,4 +14,4 @@ class MatchJetMatrices : public plotting::studies::Template {
 }  // namespace studies
 }  // namespace plotting
 
-#endif  // PLOTTING_STUDIES_MATCHJETMATRICES_H_
+#endif  // STUDIES_MATCHJETMATRICES_H_

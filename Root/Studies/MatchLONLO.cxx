@@ -1,16 +1,16 @@
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#include "Plotting/Studies/MatchLONLO.h"
+#include "Studies/MatchLONLO.h"
 
 #include <TColor.h>
 #include <TROOT.h>
 #include <string>
 #include <vector>
 #include <iostream>
-#include "Plotting/MatrixHolderContainer.h"
-#include "Plotting/HistHolderContainer.h"
-#include "Plotting/HistPlotter.h"
-#include "Plotting/MatrixPlotter.h"
-#include "Plotting/RatioPlotter.h"
+#include "MatrixHolderContainer.h"
+#include "HistHolderContainer.h"
+#include "HistPlotter.h"
+#include "MatrixPlotter.h"
+#include "RatioPlotter.h"
 
 namespace plotting {
 namespace studies {

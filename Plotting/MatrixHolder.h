@@ -1,9 +1,9 @@
 /* -*- mode: c++; -*- */
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#ifndef PLOTTING_MATRIXHOLDER_H_
-#define PLOTTING_MATRIXHOLDER_H_
+#ifndef MATRIXHOLDER_H_
+#define MATRIXHOLDER_H_
 
-#include "Plotting/THolder.h"
+#include "THolder.h"
 #include <TH2D.h>
 
 /*
@@ -49,4 +49,4 @@ class MatrixHolder : public THolder<TH2D> {
 // using MatrixHolder = THolder<TH2D>;
 }  // namespace plotting
 
-#endif  // PLOTTING_MATRIXHOLDER_H_
+#endif  // MATRIXHOLDER_H_

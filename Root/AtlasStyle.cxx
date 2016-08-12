@@ -3,7 +3,7 @@
 // ATLAS Style, based on a style file from BaBar
 //
 
-#include "Plotting/AtlasStyle.h"
+#include "AtlasStyle.h"
 
 #include <iostream>
 

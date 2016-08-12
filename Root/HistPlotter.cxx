@@ -1,13 +1,13 @@
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#include "Plotting/HistPlotter.h"
+#include "HistPlotter.h"
 
 #include <TLegend.h>
 #include <TH1D.h>
 #include <iostream>
 #include <sstream>
 #include <string>
-#include "Plotting/HistHolder.h"
-#include "Plotting/HistHolderContainer.h"
+#include "HistHolder.h"
+#include "HistHolderContainer.h"
 
 namespace plotting {
 void HistPlotter::addToLegend(const HistHolder& hist) {

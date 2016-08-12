@@ -1,10 +1,10 @@
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#include "Plotting/Studies/MatchJetMatrices.h"
+#include "Studies/MatchJetMatrices.h"
 
 #include <string>
 #include <vector>
-#include "Plotting/MatrixHolderContainer.h"
-#include "Plotting/MatrixPlotter.h"
+#include "MatrixHolderContainer.h"
+#include "MatrixPlotter.h"
 
 namespace plotting {
 namespace studies {

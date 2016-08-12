@@ -1,7 +1,7 @@
 /* -*- mode: c++; -*- */
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#ifndef PLOTTING_ATLASLABEL_H_
-#define PLOTTING_ATLASLABEL_H_
+#ifndef ATLASLABEL_H_
+#define ATLASLABEL_H_
 
 #include <string>
 
@@ -160,4 +160,4 @@ class AtlasLabel {
 };
 }  // namespace plotting
 
-#endif  // PLOTTING_ATLASLABEL_H_
+#endif  // ATLASLABEL_H_

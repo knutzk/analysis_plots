@@ -1,7 +1,7 @@
 /* -*- mode: c++; -*- */
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#ifndef PLOTTING_UNIQUECONTAINER_H_
-#define PLOTTING_UNIQUECONTAINER_H_
+#ifndef UNIQUECONTAINER_H_
+#define UNIQUECONTAINER_H_
 
 #include <memory>
 #include <vector>
@@ -47,4 +47,4 @@ UniqueContainer<T>& UniqueContainer<T>::operator=(
 }
 }  // namespace plotting
 
-#endif  // PLOTTING_UNIQUECONTAINER_H_
+#endif  // UNIQUECONTAINER_H_

@@ -1,5 +1,5 @@
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#include "Plotting/FileContainer.h"
+#include "FileContainer.h"
 
 #include <string>
 #include <iostream>

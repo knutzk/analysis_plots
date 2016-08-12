@@ -1,10 +1,10 @@
 /* -*- mode: c++; -*- */
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#ifndef PLOTTING_RATIOPLOTTER_H_
-#define PLOTTING_RATIOPLOTTER_H_
+#ifndef RATIOPLOTTER_H_
+#define RATIOPLOTTER_H_
 
 #include <string>
-#include "Plotting/HistPlotter.h"
+#include "HistPlotter.h"
 
 /*
  * Class to produce ratio plots of histograms
@@ -125,4 +125,4 @@ class RatioPlotter : public HistPlotter {
 };
 }  // namespace plotting
 
-#endif  // PLOTTING_RATIOPLOTTER_H_
+#endif  // RATIOPLOTTER_H_

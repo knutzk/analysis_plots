@@ -1,5 +1,5 @@
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
-#include "Plotting/HistHolder.h"
+#include "HistHolder.h"
 
 namespace plotting {
 void HistHolder::setIncludeXOverflow(const bool& b) {
