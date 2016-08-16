@@ -3,8 +3,9 @@
 #ifndef RATIOPLOTTER_H_
 #define RATIOPLOTTER_H_
 
-#include <string>
 #include "HistPlotter.h"
+#include <string>
+#include <TPad.h>
 
 /*
  * Class to produce ratio plots of histograms
@@ -15,57 +16,44 @@ class RatioPlotter : public HistPlotter {
   /*
    * Default constructor
    */
-  RatioPlotter() {
-    canvas_.reset(nullptr);
-    initCanvas();
-    atlas_label_.setLabelX(0.20);
-  }
+  RatioPlotter();
 
   /*
    * Construct a ratio plotter with a certain ratio value
    * @param Ratio value, i.e. ratio between the two pads used for
    * the histograms and the ratio plot).
    */
-  explicit RatioPlotter(double ratio) : ratio_{ratio} {
-    canvas_.reset(nullptr);
-    initCanvas();
-    atlas_label_.setLabelX(0.20);
-  }
+  explicit RatioPlotter(const double& ratio);
 
   /*
    * Construct a ratio plotter form an existing one.
    * @param Reference to the old RatioPlotter object.
    */
-  RatioPlotter(const RatioPlotter& R) {}
-
-  /*
-   * Destructor
-   */
-  virtual ~RatioPlotter() {}
+  inline RatioPlotter(const RatioPlotter& R) {}
 
   /*
    * Set the ratio between the two pads handled by the class.
    * @param Ratio value
    */
-  void setRatio(const double& ratio) { ratio_ = ratio; }
+  inline void setRatio(const double& ratio) { ratio_ = ratio; }
 
   /*
    * Get the current value of the ratio between the two pads.
    * @return Ratio value
    */
-  double getRatio() { return ratio_; }
+  inline double getRatio() { return ratio_; }
 
   /*
    * Set the title of the ratio plot (displayed on the left).
    * @param String of the ratio title
    */
-  void setRatioTitle(const std::string& title) { ratio_title_ = title; }
+  inline void setRatioTitle(const std::string& title) { ratio_title_ = title; }
 
   /*
    * Get the current ratio title.
    * @return String with the current title
    */
-  std::string getRatioTitle() { return ratio_title_; }
+  inline std::string getRatioTitle() { return ratio_title_; }
 
   /*
    * Adjust the label sizes of the histograms that are meant to
@@ -81,8 +69,13 @@ class RatioPlotter : public HistPlotter {
                     HistHolderContainer* ratio_container);
 
   /*
-   * Adjust the markes (i.e. plotting style) of the histograms
-   * that are meant to be plotted with this RatioPlotter.
+   * Adjust the markes (i.e. plotting style) of the histograms that
+   * are meant to be plotted with this RatioPlotter.  Make a copy of
+   * the first histogram because for the plotting we need one
+   * histogram for the shaded errors and one for the black reference
+   * line.
+   * NOTE: It will be emplaced to the very front of the container,
+   * i.e. at(0) will be the error, at(1) the reference line.
    * @param HistHolderContainer containing the HistHolder objects
    *        to be used for the ratio pad.
    */
@@ -94,13 +87,12 @@ class RatioPlotter : public HistPlotter {
    * @param Width of the canvas
    * @param Height of the canvas
    */
-  void initCanvas(unsigned const int& width = 600,
-                  unsigned const int& height = 600);
+  void initCanvas(const int& width = 600, const int& height = 600) override;
 
   /*
    * Reset the canvas managed by this class.
    */
-  void resetCanvas();
+  void resetCanvas() override;
 
   /*
    * Switch to the histogram pad of this class.

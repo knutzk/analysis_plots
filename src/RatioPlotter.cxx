@@ -1,74 +1,67 @@
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
 #include "RatioPlotter.h"
 
-#include <TH1D.h>
 #include <iostream>
 #include "HistHolder.h"
 #include "HistHolderContainer.h"
 
 namespace plotting {
+RatioPlotter::RatioPlotter() {
+  canvas_.reset();
+  initCanvas();
+  atlas_label_->setLabelX(0.20);
+}
+
+RatioPlotter::RatioPlotter(const double& ratio) : ratio_{ratio} {
+  canvas_.reset();
+  initCanvas();
+  atlas_label_->setLabelX(0.20);
+}
+
 void RatioPlotter::adjustLabels(HistHolderContainer* hist_container,
                                 HistHolderContainer* ratio_container) {
   double size_old;
-  double title_offset{1.7};
+  const double title_offset{1.7};
 
-  double hist_scaling{1. / (1 - ratio_)};
-  double hist_width_wo_margins{1 - 0.21 * hist_scaling};
-  double hist_height_wo_margins{1 - 0.07 * hist_scaling};
+  const double hist_scaling{1. / (1 - ratio_)};
+  const double hist_width_wo_margins{1 - 0.21 * hist_scaling};
+  const double hist_height_wo_margins{1 - 0.07 * hist_scaling};
 
-  double ratio_scaling{1. / ratio_};
-  double ratio_width_wo_margins{1 - 0.21 * ratio_scaling};
-  double ratio_height_wo_margins{1 - 0.16 * ratio_scaling};
+  const double ratio_scaling{1. / ratio_};
+  const double ratio_width_wo_margins{1 - 0.21 * ratio_scaling};
+  const double ratio_height_wo_margins{1 - 0.16 * ratio_scaling};
 
   for (auto& hist : *hist_container) {
-    auto&& xaxis = hist->getHist()->GetXaxis();
-    auto&& yaxis = hist->getHist()->GetYaxis();
+    hist->getHist()->GetXaxis()->SetTitleOffset(50.00);
+    hist->getHist()->GetXaxis()->SetLabelOffset(50.00);
+    hist->getHist()->GetYaxis()->SetTitleOffset(title_offset);
 
-    xaxis->SetTitleOffset(50.00);
-    xaxis->SetLabelOffset(50.00);
-    size_old = xaxis->GetTickLength();
-    xaxis->SetTickLength(size_old / hist_width_wo_margins);
-
-    // size_old = yaxis->GetTitleSize();
-    // yaxis->SetTitleSize(size_old * hist_scaling);
-    yaxis->SetTitleOffset(title_offset);
-    // size_old = yaxis->GetLabelSize();
-    // yaxis->SetLabelSize(size_old * hist_scaling);
-    size_old = yaxis->GetTickLength();
-    yaxis->SetTickLength(size_old / hist_height_wo_margins / 1.2);
+    size_old = hist->getHist()->GetXaxis()->GetTickLength();
+    hist->getHist()->GetXaxis()->SetTickLength(size_old /
+                                               hist_width_wo_margins);
+    size_old = hist->getHist()->GetYaxis()->GetTickLength();
+    hist->getHist()->GetYaxis()->SetTickLength(size_old /
+                                               hist_height_wo_margins / 1.2);
   }
 
   for (auto& hist : *ratio_container) {
-    auto&& xaxis = hist->getHist()->GetXaxis();
-    auto&& yaxis = hist->getHist()->GetYaxis();
+    hist->getHist()->GetXaxis()->SetTitleOffset(5);
+    hist->getHist()->GetYaxis()->SetTitleOffset(title_offset);
+    hist->getHist()->GetYaxis()->SetNdivisions(502);
+    hist->getHist()->GetYaxis()->SetTitle(ratio_title_.c_str());
 
-    yaxis->SetTitle(ratio_title_.c_str());
-
-    // size_old = xaxis->GetLabelSize();
-    // xaxis->SetLabelSize(size_old * ratio_scaling);
-    // xaxis->SetTitleSize(size_old * ratio_scaling);
-    xaxis->SetTitleOffset(5);
-    size_old = xaxis->GetTickLength();
-    xaxis->SetTickLength(size_old / ratio_width_wo_margins);
-
-    // size_old = yaxis->GetTitleSize();
-    // yaxis->SetLabelSize(size_old * ratio_scaling);
-    // yaxis->SetTitleSize(size_old * ratio_scaling);
-    yaxis->SetTitleOffset(title_offset);
-    yaxis->SetNdivisions(502);
-    size_old = yaxis->GetTickLength();
-    yaxis->SetTickLength(size_old / ratio_height_wo_margins / 1.2);
+    size_old = hist->getHist()->GetXaxis()->GetTickLength();
+    hist->getHist()->GetXaxis()->SetTickLength(size_old /
+                                               ratio_width_wo_margins);
+    size_old = hist->getHist()->GetYaxis()->GetTickLength();
+    hist->getHist()->GetYaxis()->SetTickLength(size_old /
+                                               ratio_height_wo_margins / 1.2);
   }
 }
 
 void RatioPlotter::adjustMarkers(HistHolderContainer* ratio_container) {
-  // Make a copy of the first histogram because for the plotting we
-  // need one histogram for the shaded errors and one for the black
-  // reference line.
-  // NOTE: It will be emplaced to the very front of the container,
-  // i.e. at(0) will be the error, at(1) the reference line.
   ratio_container->emplace(ratio_container->begin(),
-                           new HistHolder(*ratio_container->at(0)));
+                           new HistHolder{*ratio_container->at(0)});
 
   ratio_container->at(0)->getHist()->SetMarkerSize(0);
   ratio_container->at(0)->getHist()->SetFillColor(kBlue);
@@ -77,28 +70,28 @@ void RatioPlotter::adjustMarkers(HistHolderContainer* ratio_container) {
 
   ratio_container->at(1)->getHist()->SetFillStyle(0);
   ratio_container->at(1)->setDrawOptions("hist same");
-  for (int bin = 0; bin < ratio_container->at(1)->getHist()->GetNbinsX() + 1; ++bin) {
+  for (int bin = 0; bin < ratio_container->at(1)->getHist()->GetNbinsX() + 1;
+       ++bin) {
     if (ratio_container->at(1)->getHist()->GetBinContent(bin) == 0) {
       ratio_container->at(1)->getHist()->SetBinContent(bin, 1);
     }
   }
 }
 
-void RatioPlotter::initCanvas(unsigned const int& width,
-                              unsigned const int& height) {
+void RatioPlotter::initCanvas(const int& width, const int& height) {
   resetCanvas();
   canvas_width_ = width;
   canvas_height_ = height;
-  canvas_.reset(new TCanvas("rcanvas", "rcanvas", width, height));
+  canvas_.reset(new TCanvas{"rcanvas", "rcanvas", width, height});
   if (do_verbose_) {
     std::cout << "Created ratio-specific canvas with name 'rcanvas'"
               << std::endl;
   }
 
-  double histPad_scaling{1. / (1 - ratio_)};
-  double ratioPad_scaling{1. / ratio_};
+  const double histPad_scaling{1. / (1 - ratio_)};
+  const double ratioPad_scaling{1. / ratio_};
 
-  pad_hist_.reset(new TPad("histPad", "histPad", 0, ratio_, 1, 1));
+  pad_hist_.reset(new TPad{"histPad", "histPad", 0, ratio_, 1, 1});
   pad_hist_->SetNumber(1);
   pad_hist_->SetLeftMargin(0.16);
   pad_hist_->SetRightMargin(0.05);
@@ -110,7 +103,7 @@ void RatioPlotter::initCanvas(unsigned const int& width,
     std::cout << "Created histogram pad with name 'histPad'" << std::endl;
   }
 
-  pad_ratio_.reset(new TPad("ratioPad", "ratioPad", 0, 0, 1, ratio_));
+  pad_ratio_.reset(new TPad{"ratioPad", "ratioPad", 0, 0, 1, ratio_});
   pad_ratio_->SetNumber(2);
   pad_ratio_->SetLeftMargin(0.16);
   pad_ratio_->SetRightMargin(0.05);
@@ -124,15 +117,9 @@ void RatioPlotter::initCanvas(unsigned const int& width,
 }
 
 void RatioPlotter::resetCanvas() {
-  if (canvas_) {
-    if (pad_hist_) pad_hist_.release()->Close();
-    if (pad_ratio_) pad_ratio_.release()->Close();
-    if (do_verbose_) {
-      std::cout << " -- Releasing canvas and let ";
-      std::cout << "ROOT free the memory" << std::endl;
-    }
-    canvas_.release()->Close();
-  }
+  pad_hist_.reset();
+  pad_ratio_.reset();
+  HistPlotter::resetCanvas();
 }
 
 void RatioPlotter::switchToHistPad() const {

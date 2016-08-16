@@ -3,6 +3,7 @@
 
 #include <TColor.h>
 #include <TROOT.h>
+#include <TStyle.h>
 #include <iostream>
 #include <string>
 #include <vector>
