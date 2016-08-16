@@ -4,6 +4,7 @@
 #define MATRIXPLOTTER_H_
 
 #include "HistPlotter.h"
+#include <TLegend.h>
 
 /*
  * Class to plot matrix object (TH2D)
@@ -14,16 +15,7 @@ class MatrixPlotter : public HistPlotter {
   /*
    * Default constructor
    */
-  MatrixPlotter() : HistPlotter::HistPlotter{} {
-    const auto& ypos = atlas_label_.getLabelY();
-    atlas_label_.setChannelPosition(0.50, ypos);
-    atlas_label_.setTextScale(0.95);
-  }
-
-  /*
-   * Set a custom colour scheme for the ZCOL plotting option.
-   */
-  void setCustomColorPalette();
+  MatrixPlotter();
 
   /*
    * Initialise the canvas (this function is inherited from the
@@ -31,10 +23,12 @@ class MatrixPlotter : public HistPlotter {
    * @param Width of the canvas
    * @param Height of the canvas
    */
-  void initCanvas(unsigned const int& width, unsigned const int& height) {
-    HistPlotter::initCanvas(width, height);
-    canvas_->SetRightMargin(0.18);
-  }
+  void initCanvas(const int& width, const int& height) override;
+
+  /*
+   * Set a custom colour scheme for the ZCOL plotting option.
+   */
+  void setCustomColorPalette();
 };
 }  // namespace plotting
 

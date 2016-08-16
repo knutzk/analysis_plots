@@ -1,6 +1,7 @@
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
 #include "Studies/MatchEfficiencies.h"
 
+#include <TStyle.h>
 #include <string>
 #include <vector>
 #include "HistHolderContainer.h"

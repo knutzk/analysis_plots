@@ -1,10 +1,21 @@
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
 #include "MatrixPlotter.h"
 
-#include <TStyle.h>
 #include <TColor.h>
+#include <TStyle.h>
 
 namespace plotting {
+MatrixPlotter::MatrixPlotter() : HistPlotter::HistPlotter{} {
+  const auto& ypos = atlas_label_->getLabelY();
+  atlas_label_->setChannelPosition(0.50, ypos);
+  atlas_label_->setTextScale(0.95);
+}
+
+void MatrixPlotter::initCanvas(const int& width, const int& height) {
+  HistPlotter::initCanvas(width, height);
+  canvas_->SetRightMargin(0.18);
+}
+
 void MatrixPlotter::setCustomColorPalette() {
   const int NRGBs(3);
   const int NCont(255);
