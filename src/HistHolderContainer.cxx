@@ -14,9 +14,10 @@ HistHolderContainer::HistHolderContainer(const FileContainer& file_container,
   for (const auto& file : file_container) {
     auto raw = static_cast<TH1D*>(file->Get(name.c_str()));
     std::unique_ptr<HistHolder> unique{new HistHolder(raw)};
-    std::string name = file->GetName();
-    name = name.substr(name.find_last_of("/") + 1, name.size());
-    name = name.substr(0, name.find_last_of("."));
+    std::string file_name = file->GetName();
+    file_name = file_name.substr(file_name.find_last_of("/") + 1, file_name.size());
+    file_name = file_name.substr(0, file_name.find_last_of("."));
+    unique->setFileName(file_name.c_str());
     unique->setName(name.c_str());
     this->push_back(std::move(unique));
   }
@@ -27,9 +28,10 @@ void HistHolderContainer::pullHistograms(const FileContainer& file_container,
   for (const auto& file : file_container) {
     auto raw = static_cast<TH1D*>(file->Get(name.c_str()));
     std::unique_ptr<HistHolder> unique{new HistHolder(raw)};
-    std::string name = file->GetName();
-    name = name.substr(name.find_last_of("/") + 1, name.size());
-    name = name.substr(0, name.find_last_of("."));
+    std::string file_name = file->GetName();
+    file_name = file_name.substr(file_name.find_last_of("/") + 1, file_name.size());
+    file_name = file_name.substr(0, file_name.find_last_of("."));
+    unique->setFileName(file_name.c_str());
     unique->setName(name.c_str());
     this->push_back(std::move(unique));
   }

@@ -88,7 +88,7 @@ void MatchLONLO::execute() {
     matrix->setDrawOptions("COLZ TEXT ERR");
     matrix->draw();
     matrixplotter.plotAtlasLabel();
-    matrixplotter.saveToFile(matrix->getName().c_str());
+    matrixplotter.saveToFile(matrix->getFileName().c_str());
   }
   matrixplotter.resetCanvas();
   matrixplotter.resetLegend();

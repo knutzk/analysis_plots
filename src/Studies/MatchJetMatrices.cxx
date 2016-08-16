@@ -39,7 +39,7 @@ void MatchJetMatrices::execute() {
 
     matrix->draw();
     plotter.plotAtlasLabel();
-    plotter.saveToFile(matrix->getName());
+    plotter.saveToFile(matrix->getFileName());
   }
 
   plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchJetMatrices/onshell/");
@@ -58,7 +58,7 @@ void MatchJetMatrices::execute() {
 
     matrix->draw();
     plotter.plotAtlasLabel();
-    plotter.saveToFile(matrix->getName());
+    plotter.saveToFile(matrix->getFileName());
   }
 
   plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchJetMatrices/offshell/");
@@ -77,7 +77,7 @@ void MatchJetMatrices::execute() {
 
     matrix->draw();
     plotter.plotAtlasLabel();
-    plotter.saveToFile(matrix->getName());
+    plotter.saveToFile(matrix->getFileName());
   }
 }
 }  // namespace studies
