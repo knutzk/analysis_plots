@@ -23,7 +23,7 @@ class THolder {
    * WARNING: This takes over ownership of the corresponding memory.
    * @param Pointer to the T object.
    */
-  explicit THolder(T* hist) : hist_{hist} {}
+  explicit THolder(T* hist) : hist_{hist}, name_{hist->GetName()} {}
 
   /*
    * Construct a THolder from a T object that is already
@@ -40,6 +40,7 @@ class THolder {
   THolder(const THolder& old)
       : hist_{std::unique_ptr<T>(old.hist_ ? new T(*old.hist_) : nullptr)},
         draw_options_{old.draw_options_},
+        file_name_{old.file_name_},
         legend_title_{old.legend_title_},
         legend_options_{old.legend_options_},
         name_{old.name_},
@@ -71,11 +72,13 @@ class THolder {
   double getYRangeHigh() const { return y2_; }
   double getYRangeLow() const { return y1_; }
   std::string getDrawOptions() const { return draw_options_; }
+  std::string getFileName() const { return file_name_; }
   std::string getLegendOptions() const { return legend_options_; }
   std::string getLegendTitle() const { return legend_title_; }
   std::string getName() const { return name_; }
 
   void setDrawOptions(const std::string& options) { draw_options_ = options; }
+  void setFileName(const std::string& name) { file_name_ = name; }
   void setLegendOptions(const std::string& options) {
     legend_options_ = options;
   }
@@ -88,6 +91,7 @@ class THolder {
   double y1_{0};
   double y2_{0};
   std::string draw_options_{"P1 ERR"};
+  std::string file_name_{""};
   std::string legend_options_{"pel"};
   std::string legend_title_{"Legend title not set"};
   std::string name_{""};
