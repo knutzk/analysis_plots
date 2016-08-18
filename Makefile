@@ -30,6 +30,6 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.cxx
 
 clean:
 	@echo "   Cleaning...";
-	@echo "   rm $(TARGET)"; rm $(TARGET)
 	@echo "   rm $(BUILDDIR)/*.o"; rm $(BUILDDIR)/*.o
 	@echo "   rm $(BUILDDIR)/Studies/*.o"; rm $(BUILDDIR)/Studies/*.o
+	@echo "   rm $(TARGET)"; rm $(TARGET)

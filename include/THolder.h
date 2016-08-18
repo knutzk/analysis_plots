@@ -38,7 +38,7 @@ class THolder {
    * @param Reference of the existing THolder
    */
   THolder(const THolder& old)
-      : hist_{std::unique_ptr<T>(old.hist_ ? new T(*old.hist_) : nullptr)},
+      : hist_{std::unique_ptr<T>{old.hist_ ? new T{*old.hist_} : nullptr}},
         draw_options_{old.draw_options_},
         file_name_{old.file_name_},
         legend_title_{old.legend_title_},
@@ -51,14 +51,7 @@ class THolder {
    * Assignment operator to assign a THolder to another one.
    * @param THolder to be assigned
    */
-  THolder& operator=(const THolder& H) {
-    hist_(std::unique_ptr<T>(H.hist_ ? new T(*H.hist_) : nullptr));
-  }
-
-  /*
-   * Destructor
-   */
-  virtual ~THolder() {}
+  THolder& operator=(const THolder& H);
 
   /*
    * Call the draw function of the T object using the given
@@ -66,26 +59,30 @@ class THolder {
    */
   void draw();
 
-  T* const getHist() { return hist_.get(); }
-  T const* const getHist() const { return hist_.get(); }
+  inline T* const getHist() { return hist_.get(); }
+  inline const T* const getHist() const { return hist_.get(); }
 
-  double getYRangeHigh() const { return y2_; }
-  double getYRangeLow() const { return y1_; }
-  std::string getDrawOptions() const { return draw_options_; }
-  std::string getFileName() const { return file_name_; }
-  std::string getLegendOptions() const { return legend_options_; }
-  std::string getLegendTitle() const { return legend_title_; }
-  std::string getName() const { return name_; }
+  inline double getYRangeHigh() const { return y2_; }
+  inline double getYRangeLow() const { return y1_; }
+  inline std::string getDrawOptions() const { return draw_options_; }
+  inline std::string getFileName() const { return file_name_; }
+  inline std::string getLegendOptions() const { return legend_options_; }
+  inline std::string getLegendTitle() const { return legend_title_; }
+  inline std::string getName() const { return name_; }
 
-  void setDrawOptions(const std::string& options) { draw_options_ = options; }
-  void setFileName(const std::string& name) { file_name_ = name; }
-  void setLegendOptions(const std::string& options) {
+  inline void setDrawOptions(const std::string& options) {
+    draw_options_ = options;
+  }
+  inline void setFileName(const std::string& name) { file_name_ = name; }
+  inline void setLegendOptions(const std::string& options) {
     legend_options_ = options;
   }
-  void setLegendTitle(const std::string& title) { legend_title_ = title; }
-  void setName(const std::string& name) { name_ = name; }
-  void setYRangeHigh(const double& high) { y2_ = high; }
-  void setYRangeLow(const double& low) { y1_ = low; }
+  inline void setLegendTitle(const std::string& title) {
+    legend_title_ = title;
+  }
+  inline void setName(const std::string& name) { name_ = name; }
+  inline void setYRangeLow(const double& low) { y1_ = low; }
+  inline void setYRangeHigh(const double& high) { y2_ = high; }
 
  protected:
   double y1_{0};
@@ -99,16 +96,13 @@ class THolder {
 };
 
 template <typename T>
+THolder<T>& THolder<T>::operator=(const THolder<T>& H) {
+  hist_ = std::unique_ptr<T>{H.hist_ ? new T{*H.hist_} : nullptr};
+}
+
+template <typename T>
 void THolder<T>::draw() {
-  if (y1_ != y2_) {
-    hist_->GetYaxis()->SetRangeUser(y1_, y2_);
-  }
-  // hist_->SetFillColor(fill_color_);
-  // hist_->SetFillStyle(fill_style_);
-  // hist_->SetLineColor(line_color_);
-  // hist_->SetMarkerColor(marker_color_);
-  // hist_->SetMarkerSize(marker_size_);
-  // hist_->SetMarkerStyle(marker_style_);
+  if (y1_ != y2_) hist_->GetYaxis()->SetRangeUser(y1_, y2_);
   hist_->Draw(draw_options_.c_str());
 }
 }  // namespace plotting

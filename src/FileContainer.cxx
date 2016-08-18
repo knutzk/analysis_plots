@@ -2,11 +2,24 @@
 #include "FileContainer.h"
 
 #include <string>
-#include <iostream>
 #include <fstream>
+#include <iostream>
+#include <vector>
 
 namespace plotting {
-void FileContainer::readFileList(const std::string &file_list) {
+FileContainer::FileContainer(const std::vector<std::string>& name_container) {
+  for (const auto& name : name_container) {
+    push_back(TFile::Open(name.c_str()));
+  }
+}
+
+FileContainer::~FileContainer() {
+  for (auto& file : *this) {
+    file->Close();
+  }
+}
+
+void FileContainer::readFileList(const std::string& file_list) {
   std::ifstream file_input;
   file_input.open(file_list);
 

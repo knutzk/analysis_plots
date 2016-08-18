@@ -13,26 +13,18 @@ class FileContainer : public std::vector<TFile*> {
   /*
    * Default constructor
    */
-  FileContainer() : std::vector<TFile*>() {}
+  FileContainer() : std::vector<TFile*>{} {}
 
   /*
    * Constructor opening files from a string container
    * @param Vector of file names
    */
-  explicit FileContainer(const std::vector<std::string>& name_container) {
-    for (const auto& name : name_container) {
-      push_back(TFile::Open(name.c_str()));
-    }
-  }
+  explicit FileContainer(const std::vector<std::string>& name_container);
 
   /*
    * Destructor (close all files for memory clean-up)
    */
-  ~FileContainer() {
-    for (auto& file : *this) {
-      file->Close();
-    }
-  }
+  ~FileContainer();
 
   /*
    * Read a list of files from a text file

@@ -12,19 +12,19 @@ class AtlasLabel {
    * Get the ATLAS label string, e.g. "simulation".
    * @return string
    */
-  std::string getLabel() const { return string_label_; }
+  inline std::string getLabel() const { return string_label_; }
 
   /*
    * Get the energy string, e.g. "13 TeV"
    * @return string
    */
-  std::string getEnergy() const { return string_energy_; }
+  inline std::string getEnergy() const { return string_energy_; }
 
   /*
    * Get the channel string, e.g. "3mu + jets"
    * @return string
    */
-  std::string getChannel() const { return string_channel_; }
+  inline std::string getChannel() const { return string_channel_; }
 
   /*
    * Get the additional information string, e.g. "On-shell events only"
@@ -36,31 +36,31 @@ class AtlasLabel {
    * Get information whether "Work In Progress" is used
    * @return bool
    */
-  bool getIsWorkInProgress() const { return is_in_progress_; }
+  inline bool getIsWorkInProgress() const { return is_in_progress_; }
 
   /*
    * Get the x position of the ATLAS label
    * @return int position
    */
-  double getLabelX() const { return label_pos_x_; }
+  inline double getLabelX() const { return label_pos_x_; }
 
   /*
    * Get the y position of the ATLAS label
    * @return int position
    */
-  double getLabelY() const { return label_pos_y_; }
+  inline double getLabelY() const { return label_pos_y_; }
 
   /*
    * Get the x position of the channel label
    * @return int position
    */
-  double getChannelX() const { return channel_pos_x_; }
+  inline double getChannelX() const { return channel_pos_x_; }
 
   /*
    * Get the x position of the channel label
    * @return int position
    */
-  double getChannelY() const { return channel_pos_y_; }
+  inline double getChannelY() const { return channel_pos_y_; }
 
   /*
    * Get the label scaling factor
