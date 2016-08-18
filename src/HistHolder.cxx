@@ -2,6 +2,22 @@
 #include "HistHolder.h"
 
 namespace plotting {
+HistHolder::HistHolder() : THolder::THolder() {
+  setIncludeXOverflow(true);
+  setIncludeXUnderflow(true);
+}
+
+HistHolder::HistHolder(TH1D* hist) : THolder::THolder{hist} {
+  setIncludeXOverflow(true);
+  setIncludeXUnderflow(true);
+}
+
+HistHolder::HistHolder(std::unique_ptr<TH1D> hist)
+    : THolder::THolder{std::move(hist)} {
+  setIncludeXOverflow(true);
+  setIncludeXUnderflow(true);
+}
+
 void HistHolder::setIncludeXOverflow(const bool& b) {
   // Do nothing if set to the same value as before.
   if (b == include_x_overflow_) return;

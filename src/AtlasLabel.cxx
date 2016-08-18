@@ -15,8 +15,8 @@ void AtlasLabel::plot() {
   label.SetTextSize(20);
   label.DrawLatex(label_pos_x_, label_pos_y_, "ATLAS");
 
-  double delx = 0.145 * gPad->GetWh() / gPad->GetWw();
-  double dely = 0.05;
+  double delx{0.145 * gPad->GetWh() / gPad->GetWw()};
+  double dely{0.05};
 
   if (!channel_pos_is_custom_) {
     channel_pos_x_ = label_pos_x_;

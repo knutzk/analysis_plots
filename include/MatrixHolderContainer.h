@@ -19,7 +19,7 @@ class MatrixHolderContainer : public UniqueContainer<MatrixHolder> {
   /*
    * The standard constructor
    */
-  MatrixHolderContainer() : UniqueContainer<MatrixHolder>() {}
+  MatrixHolderContainer() : UniqueContainer<MatrixHolder>{} {}
 
   /*
    * A custom constructor that pulls histograms called 'name' from a

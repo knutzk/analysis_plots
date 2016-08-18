@@ -17,7 +17,7 @@ class UniqueContainer : public std::vector<std::unique_ptr<T>> {
   /*
    * Default constructor
    */
-  UniqueContainer() : std::vector<std::unique_ptr<T>>() {}
+  UniqueContainer() : std::vector<std::unique_ptr<T>>{} {}
 
   /*
    * Construct a new UniqueContainer using an existing one.
@@ -34,7 +34,7 @@ class UniqueContainer : public std::vector<std::unique_ptr<T>> {
 template <typename T>
 UniqueContainer<T>::UniqueContainer(const UniqueContainer<T>& cont) {
   for (const auto& element : cont) {
-    this->emplace_back(new T(*element));
+    this->emplace_back(new T{*element});
   }
 }
 
@@ -42,7 +42,7 @@ template <typename T>
 UniqueContainer<T>& UniqueContainer<T>::operator=(
     const UniqueContainer<T>& cont) {
   for (const auto& element : cont) {
-    this->emplace_back(new T(*element));
+    this->emplace_back(new T{*element});
   }
 }
 }  // namespace plotting

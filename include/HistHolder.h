@@ -16,20 +16,14 @@ class HistHolder : public THolder<TH1D> {
   /*
    * Default constructor calling the base class' default constructor.
    */
-  HistHolder() : THolder::THolder() {
-    setIncludeXOverflow(true);
-    setIncludeXUnderflow(true);
-  }
+  HistHolder();
 
   /*
    * Contruct a HistHolder object from an existing TH1D object.
    * WARNING: This class takes ownership of the TH1D!
    * @param Pointer to the TH1D histogram.
    */
-  explicit HistHolder(TH1D* hist) : THolder::THolder{hist} {
-    setIncludeXOverflow(true);
-    setIncludeXUnderflow(true);
-  }
+  explicit HistHolder(TH1D* hist);
 
   /*
    * Construct a HistHolder object from an existing TH1D object which
@@ -37,11 +31,7 @@ class HistHolder : public THolder<TH1D> {
    * WARNING: This constructor moves ownership to the HistHolder object.
    * @param Unique pointer managing a TH1D histogram.
    */
-  explicit HistHolder(std::unique_ptr<TH1D> hist)
-      : THolder::THolder{std::move(hist)} {
-    setIncludeXOverflow(true);
-    setIncludeXUnderflow(true);
-  }
+  explicit HistHolder(std::unique_ptr<TH1D> hist);
 
   /*
    * Construct a new HistHolder object from an existing one.
@@ -50,27 +40,20 @@ class HistHolder : public THolder<TH1D> {
   HistHolder(const HistHolder& old)
       : THolder::THolder{old},
         include_x_overflow_{old.include_x_overflow_},
-        include_x_underflow_{old.include_x_underflow_} {
-    // do nothing
-  }
+        include_x_underflow_{old.include_x_underflow_} {}
 
   /*
    * Return whether overflow is set to be included.
    * @return True if it is set to included.
    */
-  bool getIncludeXOverflow() { return include_x_overflow_; }
+  inline bool getIncludeXOverflow() { return include_x_overflow_; }
+  inline bool getIncludeXUnderflow() { return include_x_underflow_; }
 
   /*
    * Set whether overflow shall be included or not.
    * @param Boolean
    */
   void setIncludeXOverflow(const bool& b);
-
-  /*
-   * Return whether underflow is set to be included.
-   * @return True if it is set to included.
-   */
-  bool getIncludeXUnderflow() { return include_x_underflow_; }
 
   /*
    * Set whether underflow shall be included or not.
