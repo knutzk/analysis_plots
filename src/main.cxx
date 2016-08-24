@@ -13,6 +13,7 @@
 #include "Studies/MatchEfficiencies.h"
 #include "Studies/MatchJetMatrices.h"
 #include "Studies/MatchLONLO.h"
+#include "Studies/MatchElMu.h"
 
 using ProgMap = std::map<unsigned int, std::string>;
 
@@ -30,6 +31,7 @@ int main(int argc, char* argv[]) {
   programs[4] = "MatchJetMatrices: produce ttz/tt jet matching matrices";
   programs[5] = "MatchBtagPerf: evaluate b-tagging performances";
   programs[6] = "MatchLONLO: evaluate LO and NLO samples";
+  programs[7] = "MatchElMu: evaluate ejets and mujets samples";
   printOptions(programs);
 
   int chosen{0};
@@ -55,6 +57,9 @@ int main(int argc, char* argv[]) {
       break;
     case 6:
       study.reset(new plotting::studies::MatchLONLO());
+      break;
+    case 7:
+      study.reset(new plotting::studies::MatchElMu());
       break;
     default:
       return -1;
