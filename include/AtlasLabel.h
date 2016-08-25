@@ -27,6 +27,12 @@ class AtlasLabel {
   std::string getChannel() const { return string_channel_; }
 
   /*
+   * Get the additional information string, e.g. "On-shell events only"
+   * @return string
+   */
+  std::string getAdditionalInfo() const { return string_additional_info_; }
+
+  /*
    * Get information whether "Work In Progress" is used
    * @return bool
    */
@@ -79,6 +85,12 @@ class AtlasLabel {
    * @param string
    */
   inline void setChannel(const std::string& text) { string_channel_ = text; }
+
+  /*
+   * Set the additional information, e.g. "On-shell events only"
+   * @param string
+   */
+  inline void setAdditionalInfo(const std::string& text) { string_additional_info_ = text; }
 
   /*
    * Set whether the plot should have a tag "Work In Progress"
@@ -157,6 +169,7 @@ class AtlasLabel {
   std::string string_channel_{"3#mu+jets"};
   std::string string_energy_{"13 TeV"};
   std::string string_label_{"Simulation"};
+  std::string string_additional_info_{""};
 };
 }  // namespace plotting
 

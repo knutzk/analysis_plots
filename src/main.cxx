@@ -14,6 +14,7 @@
 #include "Studies/MatchJetMatrices.h"
 #include "Studies/MatchLONLO.h"
 #include "Studies/MatchElMu.h"
+#include "Studies/MatchOnOff.h"
 
 using ProgMap = std::map<unsigned int, std::string>;
 
@@ -32,6 +33,7 @@ int main(int argc, char* argv[]) {
   programs[5] = "MatchBtagPerf: evaluate b-tagging performances";
   programs[6] = "MatchLONLO: evaluate LO and NLO samples";
   programs[7] = "MatchElMu: evaluate ejets and mujets samples";
+  programs[8] = "MatchOnOff: compare the matching of on, off and all events for on, off and combined LL";
   printOptions(programs);
 
   int chosen{0};
@@ -60,6 +62,8 @@ int main(int argc, char* argv[]) {
       break;
     case 7:
       study.reset(new plotting::studies::MatchElMu());
+    case 8:
+      study.reset(new plotting::studies::MatchOnOff());
       break;
     default:
       return -1;
