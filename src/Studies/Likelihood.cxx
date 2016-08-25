@@ -29,7 +29,6 @@ void Likelihood::execute() {
   plotting::RatioPlotter ratio_plotter{0.3};
   ratio_plotter.setOutputDir("$HOME/AnalysisPlots/plots/Likelihood/");
   ratio_plotter.adjustLabels(&hist_container, &ratio_container);
-  ratio_plotter.adjustMarkers(&ratio_container);
   ratio_plotter.addToLegend(hist_container);
 
   ratio_plotter.switchToHistPad();
@@ -57,7 +56,7 @@ void Likelihood::execute() {
   hist_container.draw();
 
   ratio_plotter.switchToRatioPad();
-  ratio_container.draw();
+  ratio_plotter.drawRatio(&ratio_container);
 
   ratio_plotter.switchToMainPad();
   ratio_plotter.plotAtlasLabel();

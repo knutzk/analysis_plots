@@ -134,15 +134,13 @@ void MatchLONLO::execute() {
     jet_ratios.divideHistograms(*jet_hists.at(0));
 
     ratio_plotter.adjustLabels(&jet_hists, &jet_ratios);
-    ratio_plotter.adjustMarkers(&jet_ratios);
     ratio_plotter.addToLegend(jet_hists);
 
     ratio_plotter.switchToHistPad();
     jet_hists.setOptimalMax();
     jet_hists.draw();
     ratio_plotter.switchToRatioPad();
-    jet_ratios.setOptimalRatioRange();
-    jet_ratios.draw();
+    ratio_plotter.drawRatio(&jet_ratios);
     ratio_plotter.switchToMainPad();
     ratio_plotter.plotAtlasLabel();
     ratio_plotter.plotLegend();

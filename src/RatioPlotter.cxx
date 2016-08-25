@@ -1,6 +1,7 @@
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
 #include "RatioPlotter.h"
 
+#include <TArrow.h>
 #include <iostream>
 #include "HistHolder.h"
 #include "HistHolderContainer.h"
@@ -59,7 +60,14 @@ void RatioPlotter::adjustLabels(HistHolderContainer* hist_container,
   }
 }
 
-void RatioPlotter::adjustMarkers(HistHolderContainer* ratio_container) {
+void RatioPlotter::drawRatio(HistHolderContainer* ratio_container) {
+  // Adjust the markers of the histograms that are meant to be plotted
+  // with this RatioPlotter. Make a copy of the first histogram
+  // because for the plotting we need one histogram for the shaded
+  // errors and one for the black reference line.
+  //NOTE: It will be emplaced to the very front of the container,
+  // i.e. at(0) will be the error, at(1) the reference line.
+
   ratio_container->emplace(ratio_container->begin(),
                            new HistHolder{*ratio_container->at(0)});
 
@@ -74,6 +82,84 @@ void RatioPlotter::adjustMarkers(HistHolderContainer* ratio_container) {
        ++bin) {
     if (ratio_container->at(1)->getHist()->GetBinContent(bin) == 0) {
       ratio_container->at(1)->getHist()->SetBinContent(bin, 1);
+    }
+  }
+
+  // Check the fraction of data points outside the chosen range and
+  // adjust it if necessary (desired: less than 25%).
+  double y_ratio_min{0.5};
+  double y_ratio_max{1.5};
+  while (true) {
+    int n_datapoints{0};
+    for (const auto& hist : *ratio_container) {
+      n_datapoints += hist->getHist()->GetNbinsX();
+    }
+
+    double fraction_out_of_range{0.};
+    for (const auto& hist : *ratio_container) {
+      const auto& n_bins = hist->getHist()->GetNbinsX();
+      for (int bin = 0; bin < n_bins; ++bin) {
+        const auto& bin_content = hist->getHist()->GetBinContent(bin);
+        if (bin_content > y_ratio_max) {
+          fraction_out_of_range += bin_content / n_datapoints;
+        }
+      }
+    }
+    if (fraction_out_of_range > 0.25) {
+      y_ratio_max += 0.5;
+    } else {
+      break;
+    }
+  }
+
+  // Now make sure that we don't have ranges such as 0.5 -- 2.0 which
+  // would cause the y axis to have weird labels. Adjust the lower
+  // value accordingly.
+  if (fmod(y_ratio_max - y_ratio_min, 1) != 0) {
+    y_ratio_min -= 0.5;
+  }
+
+  for (auto& hist : *ratio_container) {
+    hist->getHist()->GetYaxis()->SetRangeUser(y_ratio_min, y_ratio_max);
+    hist->getHist()->GetYaxis()->SetNdivisions(503, true);
+    hist->draw();
+
+    // If the bin is out of range, draw an arrow to indicate this
+    // (this part of the code has been 'borrowed' from TtHFitter).
+    const auto n_bins = hist->getHist()->GetNbinsX();
+    for (int i = 1; i < n_bins + 1; ++i) {
+      // Ignore empty bins.
+      if (hist->getHist()->GetBinContent(i) == 0) continue;
+
+      int is_out_of_range{0};
+      if (hist->getHist()->GetBinContent(i) > y_ratio_max) {
+        is_out_of_range = 1;
+      } else if (hist->getHist()->GetBinContent(i) < y_ratio_min) {
+        is_out_of_range = -1;
+      }
+
+      if (is_out_of_range != 0) {
+        TArrow *arrow;
+        if (is_out_of_range == 1) {
+          arrow = new TArrow(hist->getHist()->GetXaxis()->GetBinCenter(i),
+                             y_ratio_max - 0.05 * (y_ratio_max - y_ratio_min),
+                             hist->getHist()->GetXaxis()->GetBinCenter(i),
+                             y_ratio_max,
+                             0.022, "|>");
+        } else {
+          arrow = new TArrow(hist->getHist()->GetXaxis()->GetBinCenter(i),
+                             y_ratio_min + 0.05 * (y_ratio_max - y_ratio_min),
+                             hist->getHist()->GetXaxis()->GetBinCenter(i),
+                             y_ratio_min,
+                             0.022, "|>");
+        }
+        arrow->SetFillColor(10);
+        arrow->SetFillStyle(1001);
+        arrow->SetLineColor(hist->getHist()->GetLineColor());
+        arrow->SetLineWidth(2);
+        arrow->SetAngle(40);
+        arrow->Draw();
+      }
     }
   }
 }

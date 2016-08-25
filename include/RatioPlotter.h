@@ -69,17 +69,15 @@ class RatioPlotter : public HistPlotter {
                     HistHolderContainer* ratio_container);
 
   /*
-   * Adjust the markes (i.e. plotting style) of the histograms that
-   * are meant to be plotted with this RatioPlotter.  Make a copy of
-   * the first histogram because for the plotting we need one
-   * histogram for the shaded errors and one for the black reference
-   * line.
-   * NOTE: It will be emplaced to the very front of the container,
-   * i.e. at(0) will be the error, at(1) the reference line.
-   * @param HistHolderContainer containing the HistHolder objects
-   *        to be used for the ratio pad.
+   * Function to draw the ratio container as a ratio plot. This will
+   * place an object to the front of the ratio container in order to
+   * allow plotting of the shaded uncertainties as well as the black
+   * reference line. The optimal range of the ratio will be
+   * determined. If data points are out of range, an arrow indicates
+   * this.
+   * @param The container of the ratio histograms
    */
-  void adjustMarkers(HistHolderContainer* ratio_container);
+  void drawRatio(HistHolderContainer* ratio_container);
 
   /*
    * Initialise a new canvas (this function is inherited from the
