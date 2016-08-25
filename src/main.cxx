@@ -24,13 +24,12 @@ int main(int argc, char* argv[]) {
   TH1::AddDirectory(kFALSE);
 
   ProgMap programs;
-  programs[1] = "Jets: produce jet kinematics ratio plots";
-  programs[2] = "Likelihood: produce LL ratio plots";
-  programs[3] = "MatchEfficiencies: produce ttz/tt matching plots";
-  programs[5] = "MatchBtagPerf: evaluate b-tagging performances";
-  programs[6] = "MatchLONLO: evaluate LO and NLO samples";
-  programs[7] = "MatchElMu: evaluate ejets and mujets samples";
-  programs[8] = "MatchOnOff: compare the matching of on, off and all events for on, off and combined LL";
+  programs[1] = "MatchEfficiencies: evaluate different ttZ+ttbar running modes (matching -- 6 files)";
+  programs[2] = "MatchLONLO: evaluate ttbar, ttZ LO, ttZ NLO samples (matching, matrices, kinematics -- 6 files)";
+  programs[3] = "MatchElMu: evaluate performance of ejets and mujets samples (matching, matrices -- 2 files)";
+  programs[4] = "MatchOnOff: evaluate performance for on, off and combined LL (matching -- 3 files)";
+  programs[11] = "MatchBtagPerf (temporary): evaluate performances for fixed and kinematic-dep. b-tagging (2 files)";
+  programs[12] = "Likelihood (to be decided)";
 
   plotting::OptionReader option_reader;
   option_reader.addOption("mode m", "The running mode of the program");
@@ -57,24 +56,22 @@ int main(int argc, char* argv[]) {
   std::unique_ptr<plotting::studies::Template> study{nullptr};
   switch (mode) {
     case 1:
-      study.reset(new plotting::studies::Jets());
-      break;
-    case 2:
-      study.reset(new plotting::studies::Likelihood());
-      break;
-    case 3:
       study.reset(new plotting::studies::MatchEfficiencies());
       break;
-    case 5:
-      study.reset(new plotting::studies::MatchBtagPerf());
-      break;
-    case 6:
+    case 2:
       study.reset(new plotting::studies::MatchLONLO());
       break;
-    case 7:
+    case 3:
       study.reset(new plotting::studies::MatchElMu());
-    case 8:
+      break;
+    case 4:
       study.reset(new plotting::studies::MatchOnOff());
+      break;
+    case 11:
+      study.reset(new plotting::studies::MatchBtagPerf());
+      break;
+    case 12:
+      study.reset(new plotting::studies::Likelihood());
       break;
     default:
       std::cout << "Option " << mode
