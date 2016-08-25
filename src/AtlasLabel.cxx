@@ -9,11 +9,13 @@ namespace plotting {
 void AtlasLabel::plot() {
   if (string_label_.empty()) return;
 
-  TLatex label;
-  label.SetNDC();
-  label.SetTextFont(73);
-  label.SetTextSize(20);
-  label.DrawLatex(label_pos_x_, label_pos_y_, "ATLAS");
+  if (!is_thesis_) {
+    TLatex label;
+    label.SetNDC();
+    label.SetTextFont(73);
+    label.SetTextSize(20);
+    label.DrawLatex(label_pos_x_, label_pos_y_, "ATLAS");
+  }
 
   double delx{0.145 * gPad->GetWh() / gPad->GetWw()};
   double dely{0.05};
@@ -32,6 +34,7 @@ void AtlasLabel::plot() {
   other_info.SetTextSize(20);
 
   // 1) Draw the label, e.g. "Simulation"
+  if (is_thesis_) delx = 0;
   other_info.DrawLatex(label_pos_x_ + delx, label_pos_y_,
                        string_label_.c_str());
 
