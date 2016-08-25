@@ -51,26 +51,6 @@ void HistHolderContainer::setOptimalMax() {
   }
 }
 
-void HistHolderContainer::setOptimalRatioRange() {
-  double min{1.5};
-  double max{0.5};
-  for (const auto& hist : *this) {
-    if (hist->getHist()->GetMaximum() > max) {
-      max = hist->getHist()->GetMaximum();
-    }
-    if (hist->getHist()->GetMinimum() < min) {
-      min = hist->getHist()->GetMinimum();
-    }
-  }
-  min = round(10 * min - 1) / 10.;
-  max = round(10 * max + 1) / 10.;
-  if (min < 0) min = 0;
-  for (auto& hist : *this) {
-    hist->setYRangeLow(min);
-    hist->setYRangeHigh(max);
-  }
-}
-
 void HistHolderContainer::draw() const {
   for (const auto& hist : *this) {
     hist->draw();

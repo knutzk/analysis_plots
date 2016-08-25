@@ -48,11 +48,6 @@ class HistHolderContainer : public UniqueContainer<HistHolder> {
   void setOptimalMax();
 
   /*
-   * Calculate the optimal y values for a ratio plot.
-   */
-  void setOptimalRatioRange();
-
-  /*
    * Call the draw() function for all entries of this container.
    */
   void draw() const;

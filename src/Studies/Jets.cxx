@@ -35,15 +35,13 @@ void Jets::execute() {
     ratio_container.divideHistograms(*hist_container.at(0));
 
     ratio_plotter.adjustLabels(&hist_container, &ratio_container);
-    ratio_plotter.adjustMarkers(&ratio_container);
     ratio_plotter.addToLegend(hist_container);
 
     ratio_plotter.switchToHistPad();
     hist_container.setOptimalMax();
     hist_container.draw();
     ratio_plotter.switchToRatioPad();
-    ratio_container.setOptimalRatioRange();
-    ratio_container.draw();
+    ratio_plotter.drawRatio(&ratio_container);
     ratio_plotter.switchToMainPad();
     ratio_plotter.plotAtlasLabel();
     ratio_plotter.plotLegend();
