@@ -33,6 +33,12 @@ class AtlasLabel {
   std::string getAdditionalInfo() const { return string_additional_info_; }
 
   /*
+   * Get information whether this plot is intended for a thesis.
+   * @return bool
+   */
+  inline bool getIsThesis() const { return is_thesis_; }
+
+  /*
    * Get information whether "Work In Progress" is used
    * @return bool
    */
@@ -91,6 +97,13 @@ class AtlasLabel {
    * @param string
    */
   inline void setAdditionalInfo(const std::string& text) { string_additional_info_ = text; }
+
+  /*
+   * Set whether the plot is for a thesis. This will remove 'ATLAS'
+   * from the label.
+   * @param bool
+   */
+  inline void setIsThesis(const bool& t = true) { is_thesis_ = t; }
 
   /*
    * Set whether the plot should have a tag "Work In Progress"
@@ -160,6 +173,7 @@ class AtlasLabel {
 
  private:
   bool channel_pos_is_custom_{false};
+  bool is_thesis_{false};
   bool is_in_progress_{true};
   double channel_pos_x_{0};
   double channel_pos_y_{0};
