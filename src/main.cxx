@@ -11,7 +11,6 @@
 #include "Studies/Likelihood.h"
 #include "Studies/MatchBtagPerf.h"
 #include "Studies/MatchEfficiencies.h"
-#include "Studies/MatchJetMatrices.h"
 #include "Studies/MatchLONLO.h"
 #include "Studies/MatchElMu.h"
 #include "Studies/MatchOnOff.h"
@@ -29,7 +28,6 @@ int main(int argc, char* argv[]) {
   programs[1] = "Jets: produce jet kinematics ratio plots";
   programs[2] = "Likelihood: produce LL ratio plots";
   programs[3] = "MatchEfficiencies: produce ttz/tt matching plots";
-  programs[4] = "MatchJetMatrices: produce ttz/tt jet matching matrices";
   programs[5] = "MatchBtagPerf: evaluate b-tagging performances";
   programs[6] = "MatchLONLO: evaluate LO and NLO samples";
   programs[7] = "MatchElMu: evaluate ejets and mujets samples";
@@ -50,9 +48,6 @@ int main(int argc, char* argv[]) {
       break;
     case 3:
       study.reset(new plotting::studies::MatchEfficiencies());
-      break;
-    case 4:
-      study.reset(new plotting::studies::MatchJetMatrices());
       break;
     case 5:
       study.reset(new plotting::studies::MatchBtagPerf());

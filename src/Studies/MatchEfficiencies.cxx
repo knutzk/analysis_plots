@@ -5,189 +5,168 @@
 #include <string>
 #include <vector>
 #include "HistHolderContainer.h"
+#include "MatrixHolderContainer.h"
+#include "MatrixPlotter.h"
 #include "RatioPlotter.h"
+
+// Expected order of the files:
+//  1) ttz - kDedicated,  kWP
+//  2) ttz - kAmongThree, kWP
+//  3) ttz - kAmongThree, kNT
+//  4) ttz - kLeading,    kNT
+//  5) ttbar -            kWP
+//  6) ttbar -            kNT
 
 namespace plotting {
 namespace studies {
 void MatchEfficiencies::execute() {
   if (file_container_.empty()) return;
 
-  plotting::HistPlotter plotter;
-  plotter.initCanvas(800, 600);
+  HistPlotter plotter;
   plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchEfficiencies/");
+  plotter.getAtlasLabel()->setChannel("(3)#mu+jets");
+  plotter.initCanvas(800, 600);
+  plotter.initLegend(0.57, 0.70, 0.91, 0.92);
 
-  plotting::HistHolderContainer hist_container_onshell;
-  hist_container_onshell.pullHistograms(file_container_,
-                                        "h_andreacomp_onshell");
-  hist_container_onshell.erase(hist_container_onshell.end() - 3,
-                               hist_container_onshell.end());
+  HistHolderContainer ttz_container;
+  ttz_container.pullHistograms(file_container_, "h_andreacomp");
 
-  plotting::HistHolderContainer hist_container;
-  hist_container.pullHistograms(file_container_, "h_andreacomp");
+  HistHolderContainer ttbar_container;
+  ttbar_container.push_back(std::move(ttz_container.at(4)));
+  ttbar_container.push_back(std::move(ttz_container.at(5)));
+  ttz_container.erase(ttz_container.end() - 2, ttz_container.end());
 
-  hist_container.at(0)->setDrawOptions("HIST BAR1");
-  hist_container.at(0)->setLegendTitle("t#bar{t}Z, kDedicated, kWP");
-  hist_container.at(0)->setLegendOptions("F");
-  auto&& hist = hist_container.at(0)->getHist();
-  hist->SetBarWidth(0.8);
-  hist->SetBarOffset(0.1);
-  hist->SetFillColor(97);
-  hist->SetFillStyle(1001);
+  ttz_container.at(0)->setDrawOptions("HIST BAR1");
+  ttz_container.at(0)->setLegendTitle("t#bar{t}Z, kDedicated, kWP");
+  ttz_container.at(0)->getHist()->SetFillColor(97);
+  ttz_container.at(1)->setDrawOptions("HIST BAR1 SAME");
+  ttz_container.at(1)->setLegendTitle("t#bar{t}Z, kAmongThree, kWP");
+  ttz_container.at(1)->getHist()->SetFillColor(92);
+  ttz_container.at(2)->setDrawOptions("HIST BAR1 SAME");
+  ttz_container.at(2)->setLegendTitle("t#bar{t}Z, kAmongThree, kNT");
+  ttz_container.at(2)->getHist()->SetFillColor(5);
+  ttz_container.at(3)->setDrawOptions("HIST BAR1 SAME");
+  ttz_container.at(3)->setLegendTitle("t#bar{t}Z, kLeading, kNT");
+  ttz_container.at(3)->getHist()->SetFillColor(95);
+  for (auto& holder : ttz_container) {
+    holder->setLegendOptions("F");
+    holder->getHist()->SetBarWidth(0.8);
+    holder->getHist()->SetBarOffset(0.1);
+    holder->getHist()->SetFillStyle(1001);
+    holder->getHist()->GetXaxis()->SetLabelSize(16);
+  }
 
-  hist_container.at(1)->setDrawOptions("HIST BAR1 SAME");
-  hist_container.at(1)->setLegendTitle("t#bar{t}Z, kAmongThree, kWP");
-  hist_container.at(1)->setLegendOptions("F");
-  hist = hist_container.at(1)->getHist();
-  hist->SetBarWidth(0.8);
-  hist->SetBarOffset(0.1);
-  hist->SetFillColor(92);
-  hist->SetFillStyle(1001);
-
-  hist_container.at(2)->setDrawOptions("HIST BAR1 SAME");
-  hist_container.at(2)->setLegendTitle("t#bar{t}Z, kAmongThree, kNT");
-  hist_container.at(2)->setLegendOptions("F");
-  hist = hist_container.at(2)->getHist();
-  hist->SetBarWidth(0.8);
-  hist->SetBarOffset(0.1);
-  hist->SetFillColor(5);
-  hist->SetFillStyle(1001);
-
-  hist_container.at(3)->setDrawOptions("HIST BAR1 SAME");
-  hist_container.at(3)->setLegendTitle("t#bar{t}Z, kLeading, kNT");
-  hist_container.at(3)->setLegendOptions("F");
-  hist = hist_container.at(3)->getHist();
-  hist->SetBarWidth(0.8);
-  hist->SetBarOffset(0.1);
-  hist->SetFillColor(95);
-  hist->SetFillStyle(1001);
-
-  hist_container.at(4)->setDrawOptions("P E1 SAME");
-  hist_container.at(4)->setLegendTitle("t#bar{t}, kWP");
-  hist_container.at(4)->setLegendOptions("P");
-  hist = hist_container.at(4)->getHist();
-  hist->SetMarkerStyle(23);
-  hist->SetMarkerSize(1.5);
-  hist->SetLineColor(kBlack);
-
-  hist_container.at(5)->setDrawOptions("P E1 SAME");
-  hist_container.at(5)->setLegendTitle("t#bar{t}, kNT");
-  hist_container.at(5)->setLegendOptions("P");
-  hist = hist_container.at(5)->getHist();
-  hist->SetMarkerStyle(22);
-  hist->SetMarkerSize(1.5);
-  hist->SetLineColor(kBlack);
-
-  const auto& error_band = new HistHolder(*hist_container.at(0));
+  ttbar_container.at(0)->setLegendTitle("t#bar{t}, kWP");
+  ttbar_container.at(0)->getHist()->SetMarkerStyle(23);
+  ttbar_container.at(1)->setLegendTitle("t#bar{t}, kNT");
+  ttbar_container.at(1)->getHist()->SetMarkerStyle(22);
+  for (auto& holder : ttbar_container) {
+    holder->setDrawOptions("P E1 SAME");
+    holder->setLegendOptions("P");
+    holder->getHist()->SetMarkerSize(1.5);
+    holder->getHist()->SetLineColor(kBlack);
+    holder->getHist()->GetXaxis()->SetLabelSize(16);
+  }
+  const auto& error_band = new HistHolder(*ttz_container.at(0));
   error_band->setDrawOptions("E2 SAME");
-  hist = error_band->getHist();
-  hist->SetMarkerStyle(0);
-  hist->SetFillStyle(3354);
+  error_band->getHist()->SetMarkerStyle(0);
+  error_band->getHist()->SetFillStyle(3354);
   gStyle->SetHatchesSpacing(0.5);
 
-  hist_container.setOptimalMax();
-  hist_container.draw();
+  ttz_container.setOptimalMax();
+  ttz_container.draw();
+  ttbar_container.draw();
   // error_band->draw();
-  plotter.initLegend(0.57, 0.70, 0.91, 0.92);
-  plotter.addToLegend(hist_container);
+  plotter.addToLegend(ttz_container);
+  plotter.addToLegend(ttbar_container);
   plotter.plotAtlasLabel();
   plotter.plotLegend();
-  plotter.saveToFile("incl_ttbar");
-
-  plotting::HistHolderContainer hist_wo_leading;
-  hist_wo_leading.emplace_back(new HistHolder(*hist_container.at(0)));
-  hist_wo_leading.emplace_back(new HistHolder(*hist_container.at(1)));
-  hist_wo_leading.emplace_back(new HistHolder(*hist_container.at(2)));
-  hist_wo_leading.emplace_back(new HistHolder(*hist_container.at(4)));
-  hist_wo_leading.emplace_back(new HistHolder(*hist_container.at(5)));
-  plotter.initCanvas(800, 600);
-  plotter.initLegend(0.57, 0.74, 0.91, 0.92);
-  hist_wo_leading.draw();
-  plotter.addToLegend(hist_wo_leading);
-  plotter.plotAtlasLabel();
-  plotter.plotLegend();
-  plotter.saveToFile("incl_ttbar_no_leading");
-
-  plotting::HistHolderContainer hist_wp_only;
-  hist_wp_only.emplace_back(new HistHolder(*hist_container.at(0)));
-  hist_wp_only.emplace_back(new HistHolder(*hist_container.at(4)));
-  plotter.initCanvas(800, 600);
-  plotter.initLegend();
-  hist_wp_only.draw();
-  plotter.addToLegend(hist_wp_only);
-  plotter.plotAtlasLabel();
-  plotter.plotLegend();
-  plotter.saveToFile("incl_ttbar_wp_only");
-
-  plotting::HistHolderContainer hist_ttz;
-  hist_ttz.emplace_back(new HistHolder(*hist_container.at(0)));
-  hist_ttz.emplace_back(new HistHolder(*hist_container.at(1)));
-  hist_ttz.emplace_back(new HistHolder(*hist_container.at(2)));
-  hist_ttz.emplace_back(new HistHolder(*hist_container.at(3)));
-  plotter.initCanvas(800, 600);
-  plotter.initLegend();
-  hist_ttz.draw();
-  plotter.addToLegend(hist_ttz);
-  plotter.plotAtlasLabel();
-  plotter.plotLegend();
-  plotter.saveToFile("ttz_all");
-
-  plotting::HistHolderContainer hist_ttz_wo_leading;
-  hist_ttz_wo_leading.emplace_back(new HistHolder(*hist_container.at(0)));
-  hist_ttz_wo_leading.emplace_back(new HistHolder(*hist_container.at(1)));
-  hist_ttz_wo_leading.emplace_back(new HistHolder(*hist_container.at(2)));
-  plotter.initCanvas(800, 600);
-  plotter.initLegend();
-  hist_ttz_wo_leading.draw();
-  plotter.addToLegend(hist_ttz_wo_leading);
-  plotter.plotAtlasLabel();
-  plotter.plotLegend();
-  plotter.saveToFile("ttz_no_leading");
+  plotter.saveToFile("h_incl_ttbar");
 
   // =======================================================
-  hist_container_onshell.at(0)->setDrawOptions("HIST BAR1");
-  hist_container_onshell.at(0)->setLegendTitle("t#bar{t}Z, kDedicated, kWP");
-  hist_container_onshell.at(0)->setLegendOptions("F");
-  hist = hist_container_onshell.at(0)->getHist();
-  hist->SetBarWidth(0.8);
-  hist->SetBarOffset(0.1);
-  hist->SetFillColor(97);
-  hist->SetFillStyle(1001);
 
-  hist_container_onshell.at(1)->setDrawOptions("HIST BAR1 SAME");
-  hist_container_onshell.at(1)->setLegendTitle("t#bar{t}Z, kAmongThree, kWP");
-  hist_container_onshell.at(1)->setLegendOptions("F");
-  hist = hist_container_onshell.at(1)->getHist();
-  hist->SetBarWidth(0.8);
-  hist->SetBarOffset(0.1);
-  hist->SetFillColor(92);
-  hist->SetFillStyle(1001);
-
-  hist_container_onshell.at(2)->setDrawOptions("HIST BAR1 SAME");
-  hist_container_onshell.at(2)->setLegendTitle("t#bar{t}Z, kAmongThree, kNT");
-  hist_container_onshell.at(2)->setLegendOptions("F");
-  hist = hist_container_onshell.at(2)->getHist();
-  hist->SetBarWidth(0.8);
-  hist->SetBarOffset(0.1);
-  hist->SetFillColor(5);
-  hist->SetFillStyle(1001);
-
-  // hist_container_onshell.at(3)->setDrawOptions("HIST BAR1 SAME");
-  // hist_container_onshell.at(3)->setLegendTitle("t#bar{t}Z, kLeading, kNT");
-  // hist_container_onshell.at(3)->setLegendOptions("F");
-  // hist = hist_container_onshell.at(3)->getHist();
-  // hist->SetBarWidth(0.8);
-  // hist->SetBarOffset(0.1);
-  // hist->SetFillColor(95);
-  // hist->SetFillStyle(1001);
-
-  // plotter.initCanvas(800, 600);
-  plotter.initLegend();
-  hist_container_onshell.setOptimalMax();
-  hist_container_onshell.draw();
-  plotter.addToLegend(hist_container_onshell);
+  plotter.initCanvas(800, 600);
+  plotter.initLegend(0.57, 0.74, 0.91, 0.92);
+  std::vector<HistHolder*> incl_ttbar_no_leading;
+  incl_ttbar_no_leading.push_back(ttz_container.at(0).get());
+  incl_ttbar_no_leading.push_back(ttz_container.at(1).get());
+  incl_ttbar_no_leading.push_back(ttz_container.at(2).get());
+  incl_ttbar_no_leading.push_back(ttbar_container.at(0).get());
+  incl_ttbar_no_leading.push_back(ttbar_container.at(1).get());
+  for (const auto& holder : incl_ttbar_no_leading) {
+    holder->draw();
+    plotter.addToLegend(*holder);
+  }
   plotter.plotAtlasLabel();
   plotter.plotLegend();
-  plotter.saveToFile("ttz_onshell");
+  plotter.saveToFile("h_incl_ttbar_no_leading");
+
+  // =======================================================
+
+  plotter.initCanvas(800, 600);
+  plotter.initLegend(0.57, 0.74, 0.91, 0.92);
+  std::vector<HistHolder*> wp_only;
+  wp_only.push_back(ttz_container.at(0).get());
+  wp_only.push_back(ttz_container.at(1).get());
+  wp_only.push_back(ttbar_container.at(0).get());
+  for (const auto& holder : wp_only) {
+    holder->draw();
+    plotter.addToLegend(*holder);
+  }
+  plotter.plotAtlasLabel();
+  plotter.plotLegend();
+  plotter.saveToFile("h_wp_only");
+
+  // =======================================================
+
+  plotter.initCanvas(800, 600);
+  plotter.initLegend(0.57, 0.74, 0.91, 0.92);
+  for (const auto& holder : ttz_container) {
+    holder->draw();
+    plotter.addToLegend(*holder);
+  }
+  plotter.plotAtlasLabel();
+  plotter.plotLegend();
+  plotter.saveToFile("h_ttz_all");
+
+  // =======================================================
+
+  plotter.initCanvas(800, 600);
+  plotter.initLegend(0.57, 0.74, 0.91, 0.92);
+  for (const auto& holder : ttz_container) {
+    if (holder == ttz_container.back()) continue;
+    holder->draw();
+    plotter.addToLegend(*holder);
+  }
+  plotter.plotAtlasLabel();
+  plotter.plotLegend();
+  plotter.saveToFile("h_ttz_no_leading");
+
+  // =======================================================
+  // =======================================================
+  // =======================================================
+
+  MatrixPlotter matrix_plotter;
+  matrix_plotter.initCanvas(600, 600);
+  matrix_plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchEfficiencies/");
+  matrix_plotter.setCustomColorPalette();
+
+  MatrixHolderContainer matrix_container;
+  matrix_container.pullHistograms(file_container_, "h_matchingMatrix");
+
+  for (auto& matrix : matrix_container) {
+    matrix->getHist()->GetXaxis()->SetTitleOffset(1.6);
+    matrix->getHist()->GetYaxis()->SetTitleOffset(1.6);
+    matrix->getHist()->GetZaxis()->SetRangeUser(0, 0.8);
+    matrix->getHist()->GetZaxis()->SetTitleOffset(1.6);
+    matrix->getHist()->SetMarkerSize(900);
+    matrix->roundMatrix(3);
+    matrix->setDrawOptions("COLZ TEXT ERR");
+
+    matrix->draw();
+    matrix_plotter.plotAtlasLabel();
+    matrix_plotter.saveToFile(matrix->getFileName());
+  }
 }
 }  // namespace studies
 }  // namespace plotting
