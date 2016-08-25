@@ -142,7 +142,9 @@ void MatchEfficiencies::execute() {
   plotter.plotLegend();
   plotter.saveToFile("h_ttz_no_leading");
 
-  // =======================================================
+  plotter.resetCanvas();
+  plotter.resetLegend();
+
   // =======================================================
   // =======================================================
 
