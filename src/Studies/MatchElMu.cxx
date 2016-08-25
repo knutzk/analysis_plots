@@ -15,7 +15,7 @@
 
 namespace plotting {
 namespace studies {
-void MatchElMu::loadFiles(char* input_list) {
+void MatchElMu::loadFiles(const std::string& input_list) {
   file_container_.readFileList(input_list);
   if (file_container_.size() != 2) {
     std::cout << "\nERROR: expected two files in the input list. "

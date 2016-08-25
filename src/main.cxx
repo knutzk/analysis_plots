@@ -7,6 +7,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include "OptionReader.h"
 #include "Studies/Jets.h"
 #include "Studies/Likelihood.h"
 #include "Studies/MatchBtagPerf.h"
@@ -17,12 +18,10 @@
 
 using ProgMap = std::map<unsigned int, std::string>;
 
-bool checkArguments(const int& number);
 void printOptions(const ProgMap& programs);
 
 int main(int argc, char* argv[]) {
   TH1::AddDirectory(kFALSE);
-  if (!checkArguments(argc)) return -1;
 
   ProgMap programs;
   programs[1] = "Jets: produce jet kinematics ratio plots";
@@ -32,14 +31,31 @@ int main(int argc, char* argv[]) {
   programs[6] = "MatchLONLO: evaluate LO and NLO samples";
   programs[7] = "MatchElMu: evaluate ejets and mujets samples";
   programs[8] = "MatchOnOff: compare the matching of on, off and all events for on, off and combined LL";
-  printOptions(programs);
 
-  int chosen{0};
-  std::cout << "Please choose: ";
-  std::cin >> chosen;
+  plotting::OptionReader option_reader;
+  option_reader.addOption("mode m", "The running mode of the program");
+  option_reader.setMandatory("mode");
+  option_reader.setNumberOfMainArguments(1);
+  if (!option_reader.readCommandLineArguments(argc, argv)) {
+    printOptions(programs);
+    return -1;
+  }
 
+  const auto& input_file = option_reader.getMainArgument(1);
+  const auto& mode_string = option_reader.getOption("mode");
+  unsigned int mode{0};
+  try {
+    mode = std::stoi(mode_string);
+  } catch (std::invalid_argument t) {
+    std::cout << "The running mode of the program has to be given as a positive integer. Please\n"
+              << "try again and choose from the options below."
+              << std::endl;
+    printOptions(programs);
+    return -1;
+  }
+  
   std::unique_ptr<plotting::studies::Template> study{nullptr};
-  switch (chosen) {
+  switch (mode) {
     case 1:
       study.reset(new plotting::studies::Jets());
       break;
@@ -61,27 +77,20 @@ int main(int argc, char* argv[]) {
       study.reset(new plotting::studies::MatchOnOff());
       break;
     default:
+      std::cout << "Option " << mode
+                << " is not known. Please choose from the options below."
+                << std::endl;
+      printOptions(programs);
       return -1;
   }
 
-  study->loadFiles(argv[1]);
+  study->loadFiles(input_file);
   study->execute();
   return 0;
 }
 
-bool checkArguments(const int& number) {
-  if (number < 2) {
-    std::cout << "Don't know which input file to use. Exiting" << std::endl;
-    std::cout << "Usage: plot [input-list]" << std::endl;
-  } else if (number > 2) {
-    std::cout << "Too many arguments. Exiting" << std::endl;
-    std::cout << "Usage: plot [input-list]" << std::endl;
-  } else {
-    return true;
-  }
-}
-
 void printOptions(const ProgMap& programs) {
+  std::cout << std::endl;
   std::cout << "Possible plotting options:" << std::endl;
   for (const auto& entry : programs) {
     std::cout << "  (" << entry.first;
