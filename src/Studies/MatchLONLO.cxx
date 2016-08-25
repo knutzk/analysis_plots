@@ -14,7 +14,7 @@
 
 namespace plotting {
 namespace studies {
-void MatchLONLO::loadFiles(char* input_list) {
+void MatchLONLO::loadFiles(const std::string& input_list) {
   file_container_.readFileList(input_list);
   if (file_container_.size() != 6) {
     std::cout << "\nERROR: expected six files in the input list. "

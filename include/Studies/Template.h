@@ -12,7 +12,7 @@ class Template {
   Template() {}
   virtual ~Template() {}
 
-  virtual void loadFiles(char* input_list) {
+  virtual void loadFiles(const std::string& input_list) {
     file_container_.readFileList(input_list);
   }
   virtual void execute() = 0;

@@ -15,7 +15,7 @@
 
 namespace plotting {
 namespace studies {
-void MatchOnOff::loadFiles(char* input_list) {
+void MatchOnOff::loadFiles(const std::string& input_list) {
   file_container_.readFileList(input_list);
   if (file_container_.size() != 3) {
     std::cout << "\nERROR: expected three files in the input list. "

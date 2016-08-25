@@ -12,7 +12,7 @@ class MatchLONLO : public plotting::studies::Template {
  public:
   void execute() override;
 
-  void loadFiles(char* input_list) override;
+  void loadFiles(const std::string& input_list) override;
 
  protected:
   FileContainer file_container_2_;
