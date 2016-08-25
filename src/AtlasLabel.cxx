@@ -50,5 +50,11 @@ void AtlasLabel::plot() {
     ostring << string_channel_;
   }
   other_info.DrawLatex(channel_pos_x_, channel_pos_y_, ostring.str().c_str());
+
+  // 4) Add additional info e.g. specific cuts applied
+  if (!string_additional_info_.empty()) {
+    other_info.DrawLatex(channel_pos_x_, channel_pos_y_ - dely,
+                         string_additional_info_.c_str());
+  }
 }
 }  // namespace plotting
