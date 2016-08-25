@@ -19,6 +19,7 @@
 using ProgMap = std::map<unsigned int, std::string>;
 
 void printOptions(const ProgMap& programs);
+void printWelcomeMessage();
 
 int main(int argc, char* argv[]) {
   TH1::AddDirectory(kFALSE);
@@ -30,6 +31,8 @@ int main(int argc, char* argv[]) {
   programs[4] = "MatchOnOff: evaluate performance for on, off and combined LL (matching -- 3 files)";
   programs[11] = "MatchBtagPerf (temporary): evaluate performances for fixed and kinematic-dep. b-tagging (2 files)";
   programs[12] = "Likelihood (to be decided)";
+
+  printWelcomeMessage();
 
   plotting::OptionReader option_reader;
   option_reader.addOption("mode m", "The running mode of the program");
@@ -93,4 +96,36 @@ void printOptions(const ProgMap& programs) {
     std::cout << "  (" << entry.first;
     std::cout << ") " << entry.second << std::endl;
   }
+}
+
+void printWelcomeMessage() {
+  std::cout
+      << "#                                          _.--\"\"\"--,                       #\n"
+      << "#                                        .'          `\\                     #\n"
+      << "#      .-\"\"\"\"\"\"-.                      .'              |                    #\n"
+      << "#     /          '.                   /            .-._/                    #\n"
+      << "#    |             `.                |             |                        #\n"
+      << "#     \\              \\          .-._ |          _   \\                       #\n"
+      << "#      `\"\"'-.         \\_.-.     \\   `          ( \\__/                       #\n"
+      << "#            |             )     '=.       .,   \\                           #\n"
+      << "#           /             (         \\     /  \\  /                           #\n"
+      << "#         /`               `\\        |   /    `'                            #\n"
+      << "#         '..-`\\        _.-. `\\ _.__/   .=.                                 #\n"
+      << "#              |  _    / \\  '.-`    `-.'  /                                 #\n"
+      << "#              \\_/ |  |   './ _     _  \\.'         W E L C O M E            #\n"
+      << "#                   '-'    | /       \\ |                                    #\n"
+      << "#                          |  .-. .-.  |              to  the               #\n"
+      << "#                          \\ / o| |o \\ /                                    #\n"
+      << "#                           |   / \\   |     A N A L Y S I S   P L O T S     #\n"
+      << "#                          / `\"`   `\"` \\           p a c k a g e            #\n"
+      << "#                         /             \\                                   #\n"
+      << "#                        | '._.'         \\                                  #\n"
+      << "#                        |  /             |                                 #\n"
+      << "#                         \\ |             |                                 #\n"
+      << "#      (c) 2016            ||    _    _   /                                 #\n"
+      << "#      Knut Zoch           /|\\  (_\\  /_) /                                  #\n"
+      << "#   <kzoch@cern.ch>        \\ \\'._  ` '_.'                                   #\n"
+      << "#                           `\"\"` `\"\"\"`                                      #\n"
+      << "# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #\n"
+      << std::endl;
 }
