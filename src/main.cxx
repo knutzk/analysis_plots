@@ -8,7 +8,6 @@
 #include <memory>
 #include <string>
 #include "OptionReader.h"
-#include "Studies/Jets.h"
 #include "Studies/Likelihood.h"
 #include "Studies/MatchBtagPerf.h"
 #include "Studies/MatchEfficiencies.h"
