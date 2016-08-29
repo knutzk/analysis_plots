@@ -112,6 +112,9 @@ void MatchLONLO::execute() {
 
   for (const auto& name : hist_names) {
     plotting::HistHolderContainer jet_hists{file_container_2_, name.c_str()};
+    for (auto& hist : jet_hists) {
+      hist->setIncludeXOverflow();
+    }
     jet_hists.at(0)->setDrawOptions("P E1");
     jet_hists.at(0)->setLegendTitle("t#bar{t}");
     jet_hists.at(0)->setLegendOptions("F");
