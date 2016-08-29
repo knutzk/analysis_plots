@@ -3,59 +3,26 @@
 #ifndef HISTHOLDERCONTAINER_H_
 #define HISTHOLDERCONTAINER_H_
 
-#include <string>
-#include "FileContainer.h"
 #include "HistHolder.h"
-#include "UniqueContainer.h"
+#include "THolderContainer.h"
 
-class string;
-
-/*
- * Definition of the HistHolderContainer class. This class represents
- * a vector of unique pointers to HistHolder objects. The HistHolder
- * objects themselves own TH1D objects.
- */
 namespace plotting {
-class HistHolderContainer : public UniqueContainer<HistHolder> {
+/**
+ * This class represents a vector of unique pointers to HistHolder
+ * objects (which themselves own TH1D objects).
+ */
+class HistHolderContainer : public THolderContainer<HistHolder> {
  public:
-  /*
-   * The standard constructor
-   */
-  HistHolderContainer() : UniqueContainer<HistHolder>() {}
+  //! Inherits constructors from THolderContainer.
+  using THolderContainer<HistHolder>::THolderContainer;
 
-  /*
-   * A custom constructor that pulls histograms called 'name' from a
-   * file container.
-   * @param The file container (vector with TFile objects)
-   * @param The name of the histograms in these files
-   */
-  HistHolderContainer(const FileContainer& file_container,
-                      const std::string& name);
-
-  /*
-   * A function to pull histograms called 'name' from a file container.
-   * The histograms are appended to this container.
-   * @param The file container (vector with TFile objects)
-   * @param The name of the histograms in these files
-   */
-  void pullHistograms(const FileContainer& file_container,
-                      const std::string& name);
-
-  /*
-   * Calculate the optimal maximal y value for the histograms and set
-   * the y range to this custom value.
-   */
+  //! Calculate and set the optimal maximal Y value.
   void setOptimalMax();
 
-  /*
-   * Call the draw() function for all entries of this container.
-   */
-  void draw() const;
-
-  /*
-   * A function to divide all histograms of the container by another
-   * histogram.
-   * @param The histogram used as denominator.
+  /**
+   * Divide all histograms of the container by another histogram.
+   *
+   * @param denom The histogram used as denominator.
    */
   void divideHistograms(const HistHolder& denom);
 };

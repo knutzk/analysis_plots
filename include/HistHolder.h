@@ -6,62 +6,78 @@
 #include "THolder.h"
 #include <TH1D.h>
 
-/*
- * Definition of the HistHolder class that holds and manages a TH1D
- * histogram object (via unique_ptr).
- */
 namespace plotting {
+/**
+ * A class that holds and manages a TH1D histogram object (via
+ * unique pointers).
+ */
 class HistHolder : public THolder<TH1D> {
  public:
-  /*
-   * Default constructor calling the base class' default constructor.
-   */
-  HistHolder();
+  //! Inherit constructors from the THolder template class.
+  using THolder<TH1D>::THolder;
 
-  /*
-   * Contruct a HistHolder object from an existing TH1D object.
-   * WARNING: This class takes ownership of the TH1D!
-   * @param Pointer to the TH1D histogram.
-   */
-  explicit HistHolder(TH1D* hist);
-
-  /*
-   * Construct a HistHolder object from an existing TH1D object which
-   * is already managed by a unique pointer.
-   * WARNING: This constructor moves ownership to the HistHolder object.
-   * @param Unique pointer managing a TH1D histogram.
-   */
-  explicit HistHolder(std::unique_ptr<TH1D> hist);
-
-  /*
-   * Construct a new HistHolder object from an existing one.
-   * @param Old HistHolder object.
+  /**
+   * Construct a new HistHolder object from an existing one. This
+   * constructor simply makes an exact copy of the old object.
+   *
+   * @param old The old HistHolder object
    */
   HistHolder(const HistHolder& old)
       : THolder::THolder{old},
         include_x_overflow_{old.include_x_overflow_},
-        include_x_underflow_{old.include_x_underflow_} {}
+        include_x_underflow_{old.include_x_underflow_},
+        y1_{old.y1_},
+        y2_{old.y2_} {}
 
-  /*
-   * Return whether overflow is set to be included.
-   * @return True if it is set to included.
-   */
+  //! Return whether overflow is set to be included.
   inline bool getIncludeXOverflow() { return include_x_overflow_; }
+
+  //! Return whether overflow is set to be include.
   inline bool getIncludeXUnderflow() { return include_x_underflow_; }
 
-  /*
-   * Set whether overflow shall be included or not.
-   * @param Boolean
-   */
-  void setIncludeXOverflow(const bool& b);
+  //! Get the upper value of the Y range.
+  inline double getYRangeHigh() const { return y2_; }
 
-  /*
-   * Set whether underflow shall be included or not.
-   * @param Boolean
+  //! Get the lower value of the Y range.
+  inline double getYRangeLow() const { return y1_; }
+
+  /**
+   * Set whether overflow shall be included or not.
+   *
+   * @param b Boolean whether to include overflow
    */
-  void setIncludeXUnderflow(const bool& b);
+  void setIncludeXOverflow(const bool& b = true);
+
+  /**
+   * Set whether underflow shall be included or not.
+   *
+   * @param b Boolean whether to include underflow
+   */
+  void setIncludeXUnderflow(const bool& b = true);
+
+  /**
+   * Set the upper range of the Y range.
+   *
+   * @param high The upper value of the Y range
+   */
+  inline void setYRangeHigh(const double& high) { y2_ = high; }
+
+  /**
+   * Set the lower range of the Y range.
+   *
+   * @param low The lower value of the Y range
+   */
+  inline void setYRangeLow(const double& low) { y1_ = low; }
+
+  //! Draw the histogram hold by this class.
+  inline void draw() const override {
+    if (y1_ != y2_) hist_->GetYaxis()->SetRangeUser(y1_, y2_);
+    THolder::draw();
+  }
 
  private:
+  double y1_{0};
+  double y2_{0};
   bool include_x_overflow_{false};
   bool include_x_underflow_{false};
   double overflow_content_{0.};

@@ -6,27 +6,36 @@
 #include <memory>
 #include <vector>
 
-/*
- * A template class called 'UniqueContainer' that corresponds
- * to a vector of unique pointer objects.
- */
 namespace plotting {
+/**
+ * A template class that corresponds to a vector of unique pointer
+ * objects. This is basically just a normal vector, but it takes care
+ * of making *deep* copies in order to ensure uniqueness of the memory
+ * managed by the unique pointers.
+ */
 template <typename T>
 class UniqueContainer : public std::vector<std::unique_ptr<T>> {
  public:
-  /*
-   * Default constructor
-   */
+  //! The default constructor
   UniqueContainer() : std::vector<std::unique_ptr<T>>{} {}
 
-  /*
-   * Construct a new UniqueContainer using an existing one.
+  /**
+   * Construct a new UniqueContainer using an existing one. This makes
+   * *deep* copies of the objects the unique pointers manage. This
+   * ensures their uniqueness and does not caus any problems at
+   * deletion time.
+   *
+   * @param cont The existing container
    */
   UniqueContainer(const UniqueContainer& cont);
 
-  /*
+  /**
    * Assignment operator to assign a UniqueContainer to another one.
-   * @param UniqueContainer to be assigned.
+   * This makes *deep* copies of the objects the unique pointers
+   * manage. This ensures their uniqueness and does not caus any
+   * problems at deletion time.
+   *
+   * @param cont UniqueContainer to be assigned.
    */
   UniqueContainer& operator=(const UniqueContainer<T>& cont);
 };
