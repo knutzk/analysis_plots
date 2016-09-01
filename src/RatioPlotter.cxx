@@ -10,13 +10,13 @@ namespace plotting {
 RatioPlotter::RatioPlotter() {
   canvas_.reset();
   initCanvas();
-  atlas_label_->setLabelX(0.20);
+  getAtlasLabel()->setLabelX(0.20);
 }
 
 RatioPlotter::RatioPlotter(const double& ratio) : ratio_{ratio} {
   canvas_.reset();
   initCanvas();
-  atlas_label_->setLabelX(0.20);
+  getAtlasLabel()->setLabelX(0.20);
 }
 
 void RatioPlotter::adjustLabels(HistHolderContainer* hist_container,
@@ -65,7 +65,7 @@ void RatioPlotter::drawRatio(HistHolderContainer* ratio_container) {
   // with this RatioPlotter. Make a copy of the first histogram
   // because for the plotting we need one histogram for the shaded
   // errors and one for the black reference line.
-  //NOTE: It will be emplaced to the very front of the container,
+  // NOTE: It will be emplaced to the very front of the container,
   // i.e. at(0) will be the error, at(1) the reference line.
 
   ratio_container->emplace(ratio_container->begin(),
@@ -139,19 +139,17 @@ void RatioPlotter::drawRatio(HistHolderContainer* ratio_container) {
       }
 
       if (is_out_of_range != 0) {
-        TArrow *arrow;
+        TArrow* arrow;
         if (is_out_of_range == 1) {
           arrow = new TArrow(hist->getHist()->GetXaxis()->GetBinCenter(i),
                              y_ratio_max - 0.05 * (y_ratio_max - y_ratio_min),
                              hist->getHist()->GetXaxis()->GetBinCenter(i),
-                             y_ratio_max,
-                             0.022, "|>");
+                             y_ratio_max, 0.022, "|>");
         } else {
           arrow = new TArrow(hist->getHist()->GetXaxis()->GetBinCenter(i),
                              y_ratio_min + 0.05 * (y_ratio_max - y_ratio_min),
                              hist->getHist()->GetXaxis()->GetBinCenter(i),
-                             y_ratio_min,
-                             0.022, "|>");
+                             y_ratio_min, 0.022, "|>");
         }
         arrow->SetFillColor(10);
         arrow->SetFillStyle(1001);
@@ -166,9 +164,10 @@ void RatioPlotter::drawRatio(HistHolderContainer* ratio_container) {
 
 void RatioPlotter::initCanvas(const int& width, const int& height) {
   resetCanvas();
-  canvas_width_ = width;
-  canvas_height_ = height;
-  canvas_.reset(new TCanvas{"rcanvas", "rcanvas", width, height});
+  HistPlotter::initCanvas(width, height);
+  // canvas_width_ = width;
+  // canvas_height_ = height;
+  // canvas_.reset(new TCanvas{"rcanvas", "rcanvas", width, height});
   if (do_verbose_) {
     std::cout << "Created ratio-specific canvas with name 'rcanvas'"
               << std::endl;

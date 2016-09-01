@@ -87,7 +87,6 @@ void MatchElMu::execute() {
   }
   matrixplotter.resetCanvas();
   matrixplotter.resetLegend();
-
 }
 }  // namespace studies
 }  // namespace plotting

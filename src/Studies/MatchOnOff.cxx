@@ -40,11 +40,9 @@ void MatchOnOff::execute() {
 
     if (container.at(0)->getName() == "h_andreacomp_onshell") {
       plotter.getAtlasLabel()->setAdditionalInfo("On-shell events only");
-    }
-    else if (container.at(0)->getName() == "h_andreacomp_offshell") {
+    } else if (container.at(0)->getName() == "h_andreacomp_offshell") {
       plotter.getAtlasLabel()->setAdditionalInfo("Off-shell events only");
-    }
-    else if (container.at(0)->getName() == "h_andreacomp") {
+    } else if (container.at(0)->getName() == "h_andreacomp") {
       plotter.getAtlasLabel()->setAdditionalInfo("All events");
     }
 
@@ -59,8 +57,8 @@ void MatchOnOff::execute() {
         container.at(i)->getHist()->SetMarkerColor(kRed);
       } else if (i == 2) {
         container.at(i)->setLegendTitle("Combined LL, 0.882");
-        container.at(i)->getHist()->SetLineColor(kGreen+2);
-        container.at(i)->getHist()->SetMarkerColor(kGreen+2);
+        container.at(i)->getHist()->SetLineColor(kGreen + 2);
+        container.at(i)->getHist()->SetMarkerColor(kGreen + 2);
       }
       container.at(i)->setDrawOptions("P E1 SAME");
       container.at(i)->setLegendOptions("PL");

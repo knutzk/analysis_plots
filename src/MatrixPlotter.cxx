@@ -6,9 +6,9 @@
 
 namespace plotting {
 MatrixPlotter::MatrixPlotter() : HistPlotter::HistPlotter{} {
-  const auto& ypos = atlas_label_->getLabelY();
-  atlas_label_->setChannelPosition(0.50, ypos);
-  atlas_label_->setTextScale(0.95);
+  const auto& ypos = getAtlasLabel()->getLabelY();
+  getAtlasLabel()->setChannelPosition(0.50, ypos);
+  getAtlasLabel()->setTextScale(0.95);
 }
 
 void MatrixPlotter::initCanvas(const int& width, const int& height) {
