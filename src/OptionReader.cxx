@@ -1,3 +1,4 @@
+// Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
 #include "OptionReader.h"
 #include <iostream>
 #include <map>
@@ -5,7 +6,8 @@
 #include <vector>
 
 namespace plotting {
-void OptionReader::addFlag(const std::string& names, const std::string& description) {
+void OptionReader::addFlag(const std::string& names,
+                           const std::string& description) {
   // First register the flag as a normal option, then search for it
   // again and make sure that it does not take any arguments.
   addOption(names, description);
@@ -27,7 +29,9 @@ void OptionReader::addFlag(const std::string& names, const std::string& descript
   }
 }
 
-void OptionReader::addOption(const std::string& names, const std::string& desription, const std::string& def_argument) {
+void OptionReader::addOption(const std::string& names,
+                             const std::string& desription,
+                             const std::string& def_argument) {
   // It is possible to provide multiple names within the string
   // 'names' (i.e. aliases). In a first step, they have to be
   // disentangled. They are separately stored in a vector.
@@ -51,7 +55,7 @@ void OptionReader::addOption(const std::string& names, const std::string& desrip
   // pushed into the all_options container.
   std::unique_ptr<Option> option{new Option{strings.at(0)}};
   for (const auto& alias : strings) {
-    if (alias == strings.front()) continue;  /* skip the first */
+    if (alias == strings.front()) continue; /* skip the first */
     option->addAlias(alias);
   }
   option->setDescription(desription);
@@ -62,7 +66,7 @@ void OptionReader::addOption(const std::string& names, const std::string& desrip
 
 std::string OptionReader::getMainArgument(unsigned int i) const {
   if (i > 0 && i <= main_args_.size()) {
-    return main_args_.at(i-1);
+    return main_args_.at(i - 1);
   } else {
     return 0;
   }
@@ -107,12 +111,11 @@ void OptionReader::setMandatory(const std::string& name) {
   }
   if (!does_exist) {
     std::cout << "Tried to register option \"" << name << "\" as "
-              << "mandatory option, but it could not be found."
-              << std::endl;
+              << "mandatory option, but it could not be found." << std::endl;
   }
 }
 
-bool OptionReader::readCommandLineArguments(int n_args, char *args[]) {
+bool OptionReader::readCommandLineArguments(int n_args, char* args[]) {
   // First build a proper container, instead of using the crappy
   // C-style arrays that are painful to use.
   std::vector<std::string> bare_strings;
@@ -127,18 +130,18 @@ bool OptionReader::readCommandLineArguments(int n_args, char *args[]) {
     std::string option_type{""};
     std::string option_arg{""};
 
-    if (itr->substr(0,2) == "--") {
+    if (itr->substr(0, 2) == "--") {
       option_type = itr->substr(2, itr->size() - 2);
       if (option_type.size() < 2) is_fine = false;
-      const auto& next = std::next(itr);  /* check possible arguments */
+      const auto& next = std::next(itr); /* check possible arguments */
       if (next != bare_strings.end() && next->substr(0, 1) != "-") {
         option_arg = *next;
         ++itr;
       }
-    } else if (itr->substr(0,1) == "-") {
+    } else if (itr->substr(0, 1) == "-") {
       option_type = itr->substr(1, itr->size() - 1);
       if (option_type.size() != 1) is_fine = false;
-      const auto& next = std::next(itr);  /* check possible arguments */
+      const auto& next = std::next(itr); /* check possible arguments */
       if (next != bare_strings.end() && next->substr(0, 1) != "-") {
         option_arg = *next;
         ++itr;
@@ -150,14 +153,16 @@ bool OptionReader::readCommandLineArguments(int n_args, char *args[]) {
 
     if (!is_fine) {
       std::cout << "Something went wrong when trying to read"
-                << " the command line input. Please check if" << "\n"
+                << " the command line input. Please check if"
+                << "\n"
                 << "you have accidentally used double-dashed"
-                << " instead of single-dashed flags (or vice" << "\n"
-                << "versa) and try again."
-                << std::endl;
+                << " instead of single-dashed flags (or vice"
+                << "\n"
+                << "versa) and try again." << std::endl;
       return false;
     }
-    candidates.insert(std::pair<std::string, std::string>(option_type, option_arg));
+    candidates.insert(
+        std::pair<std::string, std::string>(option_type, option_arg));
   }
 
   // Now check all candidates against the registered options (also
@@ -171,16 +176,16 @@ bool OptionReader::readCommandLineArguments(int n_args, char *args[]) {
         if (is_known) break;
       }
       if (is_known) {
-        if (known->getIsSetByUser()) {  /* avoid double-setting */
+        if (known->getIsSetByUser()) { /* avoid double-setting */
           std::cout << "Option \"" << candidate.first << "\" was "
                     << "provided multiple times." << std::endl;
           return false;
         }
-        if (candidate.second != "") {  /* don't set empty args */
+        if (candidate.second != "") { /* don't set empty args */
           known->setArgument(candidate.second);
           known->setIsSetByUser(true);
         }
-        if (!known->getNeedsArguments()) {  /* for flags w/o args */
+        if (!known->getNeedsArguments()) { /* for flags w/o args */
           known->setIsSetByUser(true);
         }
         break;

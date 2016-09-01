@@ -6,28 +6,25 @@
 #include "HistPlotter.h"
 #include <TLegend.h>
 
-/*
- * Class to plot matrix object (TH2D)
- */
 namespace plotting {
+/**
+ * Class to plot matrix objects (TH2D).
+ */
 class MatrixPlotter : public HistPlotter {
  public:
-  /*
-   * Default constructor
-   */
+  //! Default constructor
   MatrixPlotter();
 
-  /*
-   * Initialise the canvas (this function is inherited from the
-   * base class, but has some modifications).
-   * @param Width of the canvas
-   * @param Height of the canvas
+  /**
+   * Initialise the canvas for matrix plots. This function is
+   * inherited from the base class, but has some modifications in it.
+   *
+   * @param width Desired width of the canvas
+   * @param height Desired height of the canvas
    */
   void initCanvas(const int& width, const int& height) override;
 
-  /*
-   * Set a custom colour scheme for the ZCOL plotting option.
-   */
+  //! Set a custom colour scheme for the ZCOL plotting option.
   void setCustomColorPalette();
 };
 }  // namespace plotting

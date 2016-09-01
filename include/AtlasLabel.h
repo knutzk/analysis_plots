@@ -6,169 +6,104 @@
 #include <string>
 
 namespace plotting {
+/**
+ * A class managing an ATLAS label to be printed on plots. This class
+ * is usually owned by a Plotter class and should not be used by the
+ * user directly. It allows changes of the displayed information,
+ * e.g. energy, channel, 'work in progress' etc.
+ */
 class AtlasLabel {
  public:
-  /*
-   * Get the ATLAS label string, e.g. "simulation".
-   * @return string
-   */
+  //! Get the ATLAS label string, e.g. "simulation".
   inline std::string getLabel() const { return string_label_; }
 
-  /*
-   * Get the energy string, e.g. "13 TeV"
-   * @return string
-   */
+  //! Get the energy string, e.g. "13 TeV".
   inline std::string getEnergy() const { return string_energy_; }
 
-  /*
-   * Get the channel string, e.g. "3mu + jets"
-   * @return string
-   */
+  //! Get the channel string, e.g. "3mu + jets".
   inline std::string getChannel() const { return string_channel_; }
 
-  /*
-   * Get the additional information string, e.g. "On-shell events only"
-   * @return string
-   */
-  std::string getAdditionalInfo() const { return string_additional_info_; }
+  //! Get the additional information string, e.g. "On-shell events only".
+  inline std::string getAdditionalInfo() const {
+    return string_additional_info_;
+  }
 
-  /*
-   * Get information whether this plot is intended for a thesis.
-   * @return bool
-   */
+  //! Get information whether this plot is intended for a thesis.
   inline bool getIsThesis() const { return is_thesis_; }
 
-  /*
-   * Get information whether "Work In Progress" is used
-   * @return bool
-   */
+  //! Get information whether "Work In Progress" is used.
   inline bool getIsWorkInProgress() const { return is_in_progress_; }
 
-  /*
-   * Get the x position of the ATLAS label
-   * @return int position
-   */
+  //! Get the x position of the ATLAS label.
   inline double getLabelX() const { return label_pos_x_; }
 
-  /*
-   * Get the y position of the ATLAS label
-   * @return int position
-   */
+  //! Get the y position of the ATLAS label.
   inline double getLabelY() const { return label_pos_y_; }
 
-  /*
-   * Get the x position of the channel label
-   * @return int position
-   */
+  //! Get the x position of the channel label.
   inline double getChannelX() const { return channel_pos_x_; }
 
-  /*
-   * Get the x position of the channel label
-   * @return int position
-   */
+  //! Get the x position of the channel label.
   inline double getChannelY() const { return channel_pos_y_; }
 
-  /*
-   * Get the label scaling factor
-   * @return double scaling factor
-   */
-  double getTextScale() const { return text_scale_; }
+  //! Get the label scaling factor.
+  inline double getTextScale() const { return text_scale_; }
 
-  /*
-   * Set the ATLAS label, e.g. "Simulation"
-   * @param string
-   */
+  //! Set the ATLAS label, e.g. "Simulation"
   inline void setLabel(const std::string& text) { string_label_ = text; }
 
-  /*
-   * Set the energy label, e.g. "13 TeV"
-   * @param string
-   */
+  //! Set the energy label, e.g. "13 TeV"
   inline void setEnergy(const std::string& text) { string_energy_ = text; }
 
-  /*
-   * Set the channel label, e.g. "3mu + jets"
-   * @param string
-   */
+  //! Set the channel label, e.g. "3mu + jets"
   inline void setChannel(const std::string& text) { string_channel_ = text; }
 
-  /*
-   * Set the additional information, e.g. "On-shell events only"
-   * @param string
-   */
-  inline void setAdditionalInfo(const std::string& text) { string_additional_info_ = text; }
+  //! Set the additional information, e.g. "On-shell events only"
+  inline void setAdditionalInfo(const std::string& text) {
+    string_additional_info_ = text;
+  }
 
-  /*
-   * Set whether the plot is for a thesis. This will remove 'ATLAS'
-   * from the label.
-   * @param bool
-   */
+  //! Set whether the plot is for a thesis. This will remove 'ATLAS'.
   inline void setIsThesis(const bool& t = true) { is_thesis_ = t; }
 
-  /*
-   * Set whether the plot should have a tag "Work In Progress"
-   * @param bool
-   */
+  //! Set whether the plot should have a tag "Work In Progress"
   inline void setIsWorkInProgress(const bool& t = true) { is_in_progress_ = t; }
 
-  /*
-   * Set the x position of the ATLAS label.
-   * @param int
-   */
+  //! Set the x position of the ATLAS label.
   inline void setLabelX(const double& x) { label_pos_x_ = x; }
 
-  /*
-   * Set the y position of the ATLAS label.
-   * @param int
-   */
+  //! Set the y position of the ATLAS label.
   inline void setLabelY(const double& y) { label_pos_y_ = y; }
 
-  /*
-   * Set both the x and y position of the ATLAS label.
-   * @param int
-   */
+  //! Set both the x and y position of the ATLAS label.
   inline void setLabelPosition(const double& x, const double& y) {
     label_pos_x_ = x;
     label_pos_y_ = y;
   }
 
-  /*
-   * Set the x position of the channel label.
-   * @param int
-   */
+  //! Set the x position of the channel label.
   inline void setChannelX(const double& x) {
     channel_pos_x_ = x;
     channel_pos_is_custom_ = true;
   }
 
-  /*
-   * Set the y position of the channel label.
-   * @param int
-   */
+  //! Set the y position of the channel label.
   inline void setChannelY(const double& y) {
     channel_pos_y_ = y;
     channel_pos_is_custom_ = true;
   }
 
-  /*
-   * Set both the x and y position of the channel label.
-   * @param int
-   */
+  //! Set both the x and y position of the channel label.
   inline void setChannelPosition(const double& x, const double& y) {
     channel_pos_x_ = x;
     channel_pos_y_ = y;
     channel_pos_is_custom_ = true;
   }
 
-  /*
-   * Set the text scaling factor
-   * @param double scale
-   */
-  void setTextScale(const double& scale) { text_scale_ = scale; }
+  //! Set the text scaling factor
+  inline void setTextScale(const double& scale) { text_scale_ = scale; }
 
-  /*
-   * Plot the ATLAS label with all settings.
-   */
+  //! Plot the ATLAS label with all settings.
   void plot();
 
  private:
