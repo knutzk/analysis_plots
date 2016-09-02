@@ -7,7 +7,15 @@
 
 namespace plotting {
 namespace studies {
+/**
+ * Make comparison plots of the KLFitter likelihood output (WIP).
+ */
 class Likelihood : public plotting::studies::Template {
+  /**
+   * Reimplementation of the execute() function from the Template
+   * class. This function contains the main code to be processed
+   * within this class.
+   */
   virtual void execute();
 };
 }  // namespace studies
