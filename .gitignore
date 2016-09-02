@@ -4,4 +4,7 @@
 *.png
 *.eps
 *.o
+*.css
+*.html
+*.js
 bin/plot
