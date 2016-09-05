@@ -2,34 +2,37 @@
 CC := g++
 
 # Set the directories
-BUILDDIR := build
-SRCDIR := src
-INCDIR := include
+COREDIR := core
+STUDIESDIR := studies
 TARGET := bin/plot
 
 # Set flags
-CFLAGS := -I./$(INCDIR) `root-config --cflags`
+CFLAGS := -I./ `root-config --cflags`
 LIBS := `root-config --libs`
 MISCFLAGS := -fdiagnostics-color=always
 DEBUGFLAGS := -O0 -g2
 
-SOURCES := $(shell find $(SRCDIR) -type f -name *.cxx)
-OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.cxx=.o))
+CORESRC := $(shell find $(COREDIR) -type f -name *.cc)
+COREOBJ := $(CORESRC:.cc=.o)
+
+STUDIESSRC := $(shell find $(STUDIESDIR) -type f -name *.cc)
+STUDIESOBJ := $(STUDIESSRC:.cc=.o)
 
 all: $(TARGET)
 
-$(TARGET): $(OBJECTS)
+$(TARGET): $(COREOBJ) $(STUDIESOBJ)
 	@echo "   Linking..."
 	@mkdir -p bin
 	@echo "   $(CC) $^ -o $(TARGET) $(LIBS)"; $(CC) $^ -o $(TARGET) $(LIBS)
 
-$(BUILDDIR)/%.o: $(SRCDIR)/%.cxx
-	@mkdir -p $(BUILDDIR)
-	@mkdir -p $(BUILDDIR)/Studies
+$(COREDIR)/%.o: $(COREDIR)/%.cc
+	@echo "   $(CC) $(CFLAGS) -c -o $@ $<"; $(CC) $(CFLAGS) -c -o $@ $<
+
+$(STUDIESDIR)/%.o: $(STUDIESDIR)/%.cc
 	@echo "   $(CC) $(CFLAGS) -c -o $@ $<"; $(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
 	@echo "   Cleaning...";
-	@echo "   rm $(BUILDDIR)/*.o"; rm $(BUILDDIR)/*.o
-	@echo "   rm $(BUILDDIR)/Studies/*.o"; rm $(BUILDDIR)/Studies/*.o
+	@echo "   find $(COREDIR) -type f -name "*.o" -exec rm {} \;"; find $(COREDIR) -type f -name "*.o" -exec rm {} \;
+	@echo "   find $(STUDIESDIR) -type f -name "*.o" -exec rm {} \;"; find $(STUDIESDIR) -type f -name "*.o" -exec rm {} \;
 	@echo "   rm $(TARGET)"; rm $(TARGET)
