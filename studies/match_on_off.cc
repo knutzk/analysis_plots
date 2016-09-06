@@ -2,7 +2,7 @@
 #include <TColor.h>
 #include <TROOT.h>
 #include <iostream>
-#include <list>
+#include <map>
 #include <string>
 #include <vector>
 #include "core/holders/hist_holder_container.h"
@@ -38,41 +38,38 @@ void MatchOnOff::execute() {
   plotting::HistHolderContainer hists_off{file_container_, "h_andreacomp_offshell"};
   plotting::HistHolderContainer hists_all{file_container_, "h_andreacomp"};
 
-  std::list<HistHolderContainer> hist_container_list = {hists_on, hists_off, hists_all}; 
+  std::map<HistHolderContainer*, std::string> hist_container_dictionary;
+  hist_container_dictionary.emplace(&hists_on, "On-shell events only");
+  hist_container_dictionary.emplace(&hists_off, "Off-shell events only");
+  hist_container_dictionary.emplace(&hists_all, "All events");
 
-  for (auto& container : hist_container_list) {
+  for (auto& element : hist_container_dictionary) {
     plotter.initCanvas(800, 600);
     plotter.initLegend();
+    plotter.getAtlasLabel()->setAdditionalInfo(element.second);
+    auto& container = element.first;
 
-    if (container.at(0)->getName() == "h_andreacomp_onshell") {
-      plotter.getAtlasLabel()->setAdditionalInfo("On-shell events only");
-    } else if (container.at(0)->getName() == "h_andreacomp_offshell") {
-      plotter.getAtlasLabel()->setAdditionalInfo("Off-shell events only");
-    } else if (container.at(0)->getName() == "h_andreacomp") {
-      plotter.getAtlasLabel()->setAdditionalInfo("All events");
-    }
+    container->at(0)->setLegendTitle("On-shell LL");
+    container->at(0)->getHist()->SetLineColor(kBlue);
+    container->at(0)->getHist()->SetMarkerColor(kBlue);
+    container->at(1)->setLegendTitle("Off-shell LL");
+    container->at(1)->getHist()->SetLineColor(kRed);
+    container->at(1)->getHist()->SetMarkerColor(kRed);
+    container->at(2)->setLegendTitle("Combined LL, 0.882");
+    container->at(2)->getHist()->SetLineColor(kGreen + 2);
+    container->at(2)->getHist()->SetMarkerColor(kGreen + 2);
 
-    container.at(0)->setLegendTitle("On-shell LL");
-    container.at(0)->getHist()->SetLineColor(kBlue);
-    container.at(0)->getHist()->SetMarkerColor(kBlue);
-    container.at(1)->setLegendTitle("Off-shell LL");
-    container.at(1)->getHist()->SetLineColor(kRed);
-    container.at(1)->getHist()->SetMarkerColor(kRed);
-    container.at(2)->setLegendTitle("Combined LL, 0.882");
-    container.at(2)->getHist()->SetLineColor(kGreen + 2);
-    container.at(2)->getHist()->SetMarkerColor(kGreen + 2);
-
-    for (auto& hist_holder : container) {
+    for (auto& hist_holder : *container) {
       hist_holder->setDrawOptions("P E1 SAME");
       hist_holder->setLegendOptions("PL");
       hist_holder->getHist()->GetXaxis()->SetLabelSize(16);
     }
-    container.setOptimalMax();
-    container.draw();
-    plotter.addToLegend(container);
+    container->setOptimalMax();
+    container->draw();
+    plotter.addToLegend(*container);
     plotter.plotAtlasLabel();
     plotter.plotLegend();
-    plotter.saveToFile(container.at(0)->getName());
+    plotter.saveToFile(container->at(0)->getName());
     plotter.resetCanvas();
     plotter.resetLegend();
   }
