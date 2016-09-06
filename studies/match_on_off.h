@@ -29,6 +29,10 @@ class MatchOnOff : public plotting::studies::Template {
    * cross check if the given numbers equals '3'.
   */
   void loadFiles(const std::string& input_list) override;
+
+ protected:
+  //! Second file container for the StudyJets files
+  FileContainer file_container_2_;
 };
 }  // namespace studies
 }  // namespace plotting

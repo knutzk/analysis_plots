@@ -16,17 +16,24 @@ namespace plotting {
 namespace studies {
 void MatchOnOff::loadFiles(const std::string& input_list) {
   file_container_.readFileList(input_list);
-  if (file_container_.size() != 3) {
-    std::cout << "\nERROR: expected three files in the input list. "
+  if (file_container_.size() != 6) {
+    std::cout << "\nERROR: expected six files in the input list. "
               << "Aborting ... " << std::endl;
     throw;
   }
+
+  // Move the last three files to the other container.
+  for (int i : {3, 4}) {
+    file_container_2_.push_back(file_container_.at(i));
+  }
+  file_container_.erase(file_container_.end() - 3, file_container_.end());
 }
 
 void MatchOnOff::execute() {
   plotting::HistPlotter plotter;
   plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchOnOff/");
 
+  // h_andreacomp histograms
   plotting::HistHolderContainer hists_on{file_container_, "h_andreacomp_onshell"};
   plotting::HistHolderContainer hists_off{file_container_, "h_andreacomp_offshell"};
   plotting::HistHolderContainer hists_all{file_container_, "h_andreacomp"};
@@ -45,23 +52,20 @@ void MatchOnOff::execute() {
       plotter.getAtlasLabel()->setAdditionalInfo("All events");
     }
 
-    for (int i = 0; i < 3; ++i) {
-      if (i == 0) {
-        container.at(i)->setLegendTitle("On-shell LL");
-        container.at(i)->getHist()->SetLineColor(kBlue);
-        container.at(i)->getHist()->SetMarkerColor(kBlue);
-      } else if (i == 1) {
-        container.at(i)->setLegendTitle("Off-shell LL");
-        container.at(i)->getHist()->SetLineColor(kRed);
-        container.at(i)->getHist()->SetMarkerColor(kRed);
-      } else if (i == 2) {
-        container.at(i)->setLegendTitle("Combined LL, 0.882");
-        container.at(i)->getHist()->SetLineColor(kGreen + 2);
-        container.at(i)->getHist()->SetMarkerColor(kGreen + 2);
-      }
-      container.at(i)->setDrawOptions("P E1 SAME");
-      container.at(i)->setLegendOptions("PL");
-      container.at(i)->getHist()->GetXaxis()->SetLabelSize(16);
+    container.at(0)->setLegendTitle("On-shell LL");
+    container.at(0)->getHist()->SetLineColor(kBlue);
+    container.at(0)->getHist()->SetMarkerColor(kBlue);
+    container.at(1)->setLegendTitle("Off-shell LL");
+    container.at(1)->getHist()->SetLineColor(kRed);
+    container.at(1)->getHist()->SetMarkerColor(kRed);
+    container.at(2)->setLegendTitle("Combined LL, 0.882");
+    container.at(2)->getHist()->SetLineColor(kGreen + 2);
+    container.at(2)->getHist()->SetMarkerColor(kGreen + 2);
+
+    for (auto& hist_holder : container) {
+      hist_holder->setDrawOptions("P E1 SAME");
+      hist_holder->setLegendOptions("PL");
+      hist_holder->getHist()->GetXaxis()->SetLabelSize(16);
     }
     container.setOptimalMax();
     container.draw();
@@ -71,6 +75,61 @@ void MatchOnOff::execute() {
     plotter.saveToFile(container.at(0)->getName());
     plotter.resetCanvas();
     plotter.resetLegend();
+  }
+
+  // Likelihood plots with ratios
+  plotting::RatioPlotter ratio_plotter{0.3};
+  ratio_plotter.setRatioTitle("LL/Onshell");
+  ratio_plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchOnOff/");
+  ratio_plotter.getAtlasLabel()->setChannel("(3)#mu+jets");
+
+  std::vector<std::string> hist_names;
+  hist_names.push_back("h_likelihood_onshell");
+  hist_names.push_back("h_likelihood_offshell");
+  hist_names.push_back("h_likelihood");
+
+  for (const auto& name : hist_names) {
+    plotting::HistHolderContainer likelihood_hists{file_container_2_, name.c_str()};
+    for (auto& hist : likelihood_hists) {
+      hist->setIncludeXOverflow();
+      hist->setIncludeXUnderflow();
+    }
+    likelihood_hists.at(0)->setDrawOptions("P E1");
+    likelihood_hists.at(0)->setLegendTitle("On-shell LL");
+    likelihood_hists.at(0)->setLegendOptions("F");
+    likelihood_hists.at(0)->getHist()->SetLineColor(1);
+    likelihood_hists.at(0)->getHist()->SetMarkerColor(1);
+    likelihood_hists.at(0)->getHist()->SetFillColor(kGray);
+    likelihood_hists.at(0)->setDrawOptions("hist");
+
+    likelihood_hists.at(1)->setDrawOptions("P E1 SAME");
+    likelihood_hists.at(1)->setLegendTitle("Off-shell LL");
+    likelihood_hists.at(1)->getHist()->SetLineColor(2);
+    likelihood_hists.at(1)->getHist()->SetMarkerColor(2);
+
+   //  likelihood_hists.at(2)->setDrawOptions("P E1 SAME");
+   //  likelihood_hists.at(2)->setLegendTitle("Comb. LL, 0.882");
+   //  likelihood_hists.at(2)->getHist()->SetLineColor(4);
+   //  likelihood_hists.at(2)->getHist()->SetMarkerColor(4);
+
+    auto likelihood_ratios = likelihood_hists;
+    likelihood_ratios.divideHistograms(*likelihood_hists.at(0));
+
+    ratio_plotter.adjustLabels(&likelihood_hists, &likelihood_ratios);
+    ratio_plotter.addToLegend(likelihood_hists);
+
+    ratio_plotter.switchToHistPad();
+    likelihood_hists.setOptimalMax();
+    likelihood_hists.draw();
+    ratio_plotter.switchToRatioPad();
+    ratio_plotter.drawRatio(&likelihood_ratios);
+    ratio_plotter.switchToMainPad();
+    ratio_plotter.plotAtlasLabel();
+    ratio_plotter.plotLegend();
+    ratio_plotter.saveToFile(name.c_str());
+
+    ratio_plotter.initCanvas();
+    ratio_plotter.initLegend();
   }
 }
 }  // namespace studies
