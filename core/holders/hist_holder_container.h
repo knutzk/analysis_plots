@@ -25,6 +25,10 @@ class HistHolderContainer : public THolderContainer<HistHolder> {
    * @param denom The histogram used as denominator.
    */
   void divideHistograms(const HistHolder& denom);
+
+ protected:
+  //! Second file container for the StudyJets files
+  FileContainer file_container_2_;
 };
 }  // namespace plotting
 
