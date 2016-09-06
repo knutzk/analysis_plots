@@ -22,7 +22,7 @@ class Template {
    *
    * @param input_list The name of the file containing the input list
    */
-  virtual void loadFiles(const std::string& input_list) {
+  inline virtual void loadFiles(const std::string& input_list) {
     file_container_.readFileList(input_list);
   }
 
