@@ -33,34 +33,12 @@ void Likelihood::execute() {
   ratio_plotter.switchToHistPad();
   hist_container.setOptimalMax();
   hist_container.draw();
-
   ratio_plotter.switchToRatioPad();
-  ratio_container.draw();
-
+  ratio_plotter.drawRatio(&ratio_container);
   ratio_plotter.switchToMainPad();
   ratio_plotter.plotAtlasLabel();
   ratio_plotter.plotLegend();
   ratio_plotter.saveToFile("likelihood");
-
-  for (auto& hist : hist_container) {
-    hist->getHist()->Rebin(3);
-  }
-  for (auto& hist : ratio_container) {
-    hist->getHist()->Rebin(3);
-  }
-
-  ratio_plotter.initCanvas();
-  ratio_plotter.switchToHistPad();
-  hist_container.setOptimalMax();
-  hist_container.draw();
-
-  ratio_plotter.switchToRatioPad();
-  ratio_plotter.drawRatio(&ratio_container);
-
-  ratio_plotter.switchToMainPad();
-  ratio_plotter.plotAtlasLabel();
-  ratio_plotter.plotLegend();
-  ratio_plotter.saveToFile("likelihood_rebin");
 }
 }  // namespace studies
 }  // namespace plotting
