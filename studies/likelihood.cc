@@ -14,11 +14,11 @@ void Likelihood::execute() {
   hist_container.pullHistograms(file_container_, "h_likelihood");
 
   hist_container.at(0)->setDrawOptions("P E1");
-  hist_container.at(0)->setLegendTitle("t#bar{t}Z");
+  hist_container.at(0)->setLegendTitle("diboson");
   hist_container.at(0)->getHist()->SetLineColor(1);
   hist_container.at(0)->getHist()->SetMarkerColor(1);
   hist_container.at(1)->setDrawOptions("P E1 SAME");
-  hist_container.at(1)->setLegendTitle("diboson");
+  hist_container.at(1)->setLegendTitle("t#bar{t}Z");
   hist_container.at(1)->getHist()->SetLineColor(2);
   hist_container.at(1)->getHist()->SetMarkerColor(2);
 
