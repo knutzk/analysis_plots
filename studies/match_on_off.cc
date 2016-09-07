@@ -55,7 +55,7 @@ void MatchOnOff::execute() {
     container->at(1)->setLegendTitle("Off-shell LL");
     container->at(1)->getHist()->SetLineColor(kRed);
     container->at(1)->getHist()->SetMarkerColor(kRed);
-    container->at(2)->setLegendTitle("Combined LL, 0.882");
+    container->at(2)->setLegendTitle("Combined LL, 0.869");
     container->at(2)->getHist()->SetLineColor(kGreen + 2);
     container->at(2)->getHist()->SetMarkerColor(kGreen + 2);
 
@@ -104,10 +104,10 @@ void MatchOnOff::execute() {
     likelihood_hists.at(1)->getHist()->SetLineColor(2);
     likelihood_hists.at(1)->getHist()->SetMarkerColor(2);
 
-   //  likelihood_hists.at(2)->setDrawOptions("P E1 SAME");
-   //  likelihood_hists.at(2)->setLegendTitle("Comb. LL, 0.882");
-   //  likelihood_hists.at(2)->getHist()->SetLineColor(4);
-   //  likelihood_hists.at(2)->getHist()->SetMarkerColor(4);
+    // likelihood_hists.at(2)->setDrawOptions("P E1 SAME");
+    // likelihood_hists.at(2)->setLegendTitle("Comb. LL, 0.869");
+    // likelihood_hists.at(2)->getHist()->SetLineColor(4);
+    // likelihood_hists.at(2)->getHist()->SetMarkerColor(4);
 
     auto likelihood_ratios = likelihood_hists;
     likelihood_ratios.divideHistograms(*likelihood_hists.at(0));
@@ -120,6 +120,56 @@ void MatchOnOff::execute() {
     likelihood_hists.draw();
     ratio_plotter.switchToRatioPad();
     ratio_plotter.drawRatio(&likelihood_ratios);
+    ratio_plotter.switchToMainPad();
+    ratio_plotter.plotAtlasLabel();
+    ratio_plotter.plotLegend();
+    ratio_plotter.saveToFile(name.c_str());
+
+    ratio_plotter.initCanvas();
+    ratio_plotter.initLegend();
+  }
+
+  // Probability plots with ratios
+  std::vector<std::string> hist_names2;
+  hist_names2.push_back("h_eventProb_onshell");
+  hist_names2.push_back("h_eventProb_offshell");
+  hist_names2.push_back("h_eventProb");
+
+  for (const auto& name : hist_names2) {
+    plotting::HistHolderContainer probability_hists{file_container_2_, name.c_str()};
+    for (auto& hist : probability_hists) {
+      hist->setIncludeXOverflow();
+      hist->setIncludeXUnderflow();
+    }
+    probability_hists.at(0)->setDrawOptions("P E1");
+    probability_hists.at(0)->setLegendTitle("On-shell LL");
+    probability_hists.at(0)->setLegendOptions("F");
+    probability_hists.at(0)->getHist()->SetLineColor(1);
+    probability_hists.at(0)->getHist()->SetMarkerColor(1);
+    probability_hists.at(0)->getHist()->SetFillColor(kGray);
+    probability_hists.at(0)->setDrawOptions("hist");
+
+    probability_hists.at(1)->setDrawOptions("P E1 SAME");
+    probability_hists.at(1)->setLegendTitle("Off-shell LL");
+    probability_hists.at(1)->getHist()->SetLineColor(2);
+    probability_hists.at(1)->getHist()->SetMarkerColor(2);
+
+    // probability_hists.at(2)->setDrawOptions("P E1 SAME");
+    // probability_hists.at(2)->setLegendTitle("Comb. LL, 0.869");
+    // probability_hists.at(2)->getHist()->SetLineColor(4);
+    // probability_hists.at(2)->getHist()->SetMarkerColor(4);
+
+    auto probability_ratios = probability_hists;
+    probability_ratios.divideHistograms(*probability_hists.at(0));
+
+    ratio_plotter.adjustLabels(&probability_hists, &probability_ratios);
+    ratio_plotter.addToLegend(probability_hists);
+
+    ratio_plotter.switchToHistPad();
+    probability_hists.setOptimalMax();
+    probability_hists.draw();
+    ratio_plotter.switchToRatioPad();
+    ratio_plotter.drawRatio(&probability_ratios);
     ratio_plotter.switchToMainPad();
     ratio_plotter.plotAtlasLabel();
     ratio_plotter.plotLegend();
