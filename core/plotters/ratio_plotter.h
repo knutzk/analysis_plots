@@ -67,6 +67,18 @@ class RatioPlotter : public HistPlotter {
                     HistHolderContainer* ratio_container);
 
   /**
+   * Calculate the separation of two histograms. This makes use of the
+   * separation calculation formula used within the TtHFitter
+   * programme, so no warranty!
+   *
+   * @param first_hist Reference of the first histogram that should be
+   * considered for the calculation
+   * @param second_hist Reference to the second histogram
+   */
+  double getSeparation(const HistHolder* first_hist,
+                       const HistHolder* second_hist);
+
+  /**
    * Draw the ratio container as a ratio plot. This will place an
    * object to the front of the ratio container in order to allow
    * plotting of the shaded uncertainties as well as the black

@@ -59,6 +59,35 @@ void RatioPlotter::adjustLabels(HistHolderContainer* hist_container,
   }
 }
 
+double RatioPlotter::getSeparation(const HistHolder* first_hist,
+                                   const HistHolder* second_hist) {
+  auto hist_bg = first_hist->getHist();
+  auto hist_sg = second_hist->getHist();
+
+  double separation{0};
+  int    n_bins = hist_sg->GetNbinsX();
+  double bin_width = (hist_sg->GetXaxis()->GetXmax() - hist_sg->GetXaxis()->GetXmin()) / n_bins;
+  double nS     = hist_sg->GetSumOfWeights() * bin_width;
+  double nB     = hist_bg->GetSumOfWeights() * bin_width;
+  if (nS > 0 && nB > 0) {
+    for (int bin = 0; bin <= n_bins + 1; ++bin) {
+      double sg_entry = hist_sg->GetBinContent(bin) / nS;
+      double bg_entry = hist_bg->GetBinContent(bin) / nB;
+      if (sg_entry + bg_entry > 0) {
+        const auto& abs = std::abs(sg_entry - bg_entry);
+        separation += 0.5 * std::pow(abs, 2) / (sg_entry + bg_entry);
+      }
+    }
+    separation *= bin_width;
+  }
+  else {
+    std::cout << "Error within the separation calculation" << std::endl;
+    separation = 0;
+  }
+
+  return round(separation * 1e4) / 100.;
+}
+
 void RatioPlotter::drawRatio(HistHolderContainer* ratio_container) {
   // Adjust the markers of the histograms that are meant to be plotted
   // with this RatioPlotter. Make a copy of the first histogram
