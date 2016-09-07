@@ -1,4 +1,5 @@
 // Copyright 2016 <Knut Zoch> <kzoch@cern.ch>
+#include <sstream>
 #include <string>
 #include <vector>
 #include "core/holders/hist_holder_container.h"
@@ -24,6 +25,12 @@ void Likelihood::execute() {
   hist_container.at(1)->setLegendTitle("t#bar{t}Z");
   hist_container.at(1)->getHist()->SetLineColor(2);
   hist_container.at(1)->getHist()->SetMarkerColor(2);
+
+  const auto& separation = ratio_plotter.getSeparation(hist_container.at(0).get(),
+                                                       hist_container.at(1).get());
+  std::ostringstream os;
+  os << "Separation: " << separation << "%";
+  ratio_plotter.getAtlasLabel()->setAdditionalInfo(os.str());
 
   auto ratio_container = hist_container;
   ratio_container.divideHistograms(*hist_container.at(0));
