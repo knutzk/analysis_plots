@@ -75,7 +75,6 @@ void TruthMass::execute() {
   plotter.plotAtlasLabel();
 
   plotter.saveToFile("mass_dist_20");
-
 }
 }  // namespace studies
 }  // namespace plotting
