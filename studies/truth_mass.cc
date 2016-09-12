@@ -41,6 +41,41 @@ void TruthMass::execute() {
   plotter.plotAtlasLabel();
 
   plotter.saveToFile("mass_dist");
+
+  // =================================================================
+
+  plotter.initCanvas();
+  plotter.initLegend();
+  plotter.getCanvas()->SetLogy();
+  plotter.getAtlasLabel()->setAdditionalInfo("p_{T}^{lep} > 20 GeV");
+
+  HistHolder mass_on_20{file, "mass_on_20"};
+  HistHolder mass_off_20{file, "mass_off_20"};
+
+  mass_on_20.getHist()->SetFillColor(kGray);
+  mass_on_20.getHist()->SetFillStyle(1001);
+  mass_off_20.getHist()->SetFillColor(kWhite);
+  mass_off_20.getHist()->SetFillStyle(1001);
+  mass_on_20.setLegendTitle("On-shell events");
+  mass_off_20.setLegendTitle("Off-shell events");
+  mass_on_20.setLegendOptions("F");
+  mass_off_20.setLegendOptions("F");
+
+  mass_on_20.getHist()->GetYaxis()->SetRangeUser(1e-4, 10.);
+  mass_on_20.getHist()->Draw("hist");
+
+  THStack stack2{};
+  stack2.Add(mass_off_20.getHist());
+  stack2.Add(mass_on_20.getHist());
+  stack2.Draw("hist same");
+
+  plotter.addToLegend(mass_on_20);
+  plotter.addToLegend(mass_off_20);
+  plotter.plotLegend();
+  plotter.plotAtlasLabel();
+
+  plotter.saveToFile("mass_dist_20");
+
 }
 }  // namespace studies
 }  // namespace plotting
