@@ -12,6 +12,7 @@ void TruthMass::execute() {
   HistPlotter plotter;
   plotter.initCanvas();
   plotter.getCanvas()->SetLogy();
+  plotter.getAtlasLabel()->setAdditionalInfo("All events");
   plotter.setOutputDir("$HOME/AnalysisPlots/plots/");
 
   auto& file = file_container_.at(0);
@@ -47,7 +48,7 @@ void TruthMass::execute() {
   plotter.initCanvas();
   plotter.initLegend();
   plotter.getCanvas()->SetLogy();
-  plotter.getAtlasLabel()->setAdditionalInfo("p_{T}^{lep} > 20 GeV");
+  plotter.getAtlasLabel()->setAdditionalInfo("Lepton cuts imposed");
 
   HistHolder mass_on_20{file, "mass_on_20"};
   HistHolder mass_off_20{file, "mass_off_20"};
