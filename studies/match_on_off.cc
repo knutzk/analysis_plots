@@ -30,20 +30,20 @@ void MatchOnOff::loadFiles(const std::string& input_list) {
 }
 
 void MatchOnOff::execute() {
-  plotting::HistPlotter plotter;
+  HistPlotter plotter;
   plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchOnOff/");
 
   // h_andreacomp histograms
-  plotting::HistHolderContainer hists_on{file_container_, "h_andreacomp_onshell"};
-  plotting::HistHolderContainer hists_off{file_container_, "h_andreacomp_offshell"};
-  plotting::HistHolderContainer hists_all{file_container_, "h_andreacomp"};
+  HistHolderContainer hists_on{file_container_, "h_andreacomp_onshell"};
+  HistHolderContainer hists_off{file_container_, "h_andreacomp_offshell"};
+  HistHolderContainer hists_all{file_container_, "h_andreacomp"};
 
-  std::map<HistHolderContainer*, std::string> hist_container_dictionary;
-  hist_container_dictionary.emplace(&hists_on, "On-shell events only");
-  hist_container_dictionary.emplace(&hists_off, "Off-shell events only");
-  hist_container_dictionary.emplace(&hists_all, "All events");
+  std::map<HistHolderContainer*, std::string> andreacomp_dictionary;
+  andreacomp_dictionary.emplace(&hists_on, "On-shell events only");
+  andreacomp_dictionary.emplace(&hists_off, "Off-shell events only");
+  andreacomp_dictionary.emplace(&hists_all, "All events");
 
-  for (auto& element : hist_container_dictionary) {
+  for (auto& element : andreacomp_dictionary) {
     plotter.initCanvas(800, 600);
     plotter.initLegend();
     plotter.getAtlasLabel()->setAdditionalInfo(element.second);
@@ -74,106 +74,124 @@ void MatchOnOff::execute() {
     plotter.resetLegend();
   }
 
-  // Likelihood plots with ratios
-  plotting::RatioPlotter ratio_plotter{0.3};
+  // =================================================================
+
+  RatioPlotter ratio_plotter{0.3};
   ratio_plotter.setRatioTitle("LL/Onshell");
   ratio_plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchOnOff/");
   ratio_plotter.getAtlasLabel()->setChannel("(3)#mu+jets");
 
-  std::vector<std::string> hist_names;
-  hist_names.push_back("h_likelihood_onshell");
-  hist_names.push_back("h_likelihood_offshell");
-  hist_names.push_back("h_likelihood");
+  HistHolderContainer like_on{file_container_2_, "h_likelihood_onshell"};
+  HistHolderContainer like_off{file_container_2_, "h_likelihood_offshell"};
+  HistHolderContainer like_all{file_container_2_, "h_likelihood"};
 
-  for (const auto& name : hist_names) {
-    plotting::HistHolderContainer likelihood_hists{file_container_2_, name.c_str()};
-    for (auto& hist : likelihood_hists) {
-      hist->setIncludeXOverflow();
-      hist->setIncludeXUnderflow();
-    }
-    likelihood_hists.at(0)->setDrawOptions("P E1");
-    likelihood_hists.at(0)->setLegendTitle("On-shell LL");
-    likelihood_hists.at(0)->setLegendOptions("F");
-    likelihood_hists.at(0)->getHist()->SetLineColor(1);
-    likelihood_hists.at(0)->getHist()->SetMarkerColor(1);
-    likelihood_hists.at(0)->getHist()->SetFillColor(kGray);
-    likelihood_hists.at(0)->setDrawOptions("hist");
+  std::map<HistHolderContainer*, std::string> likelihood_dictionary;
+  likelihood_dictionary.emplace(&like_on, "On-shell events only");
+  likelihood_dictionary.emplace(&like_off, "Off-shell events only");
+  likelihood_dictionary.emplace(&like_all, "All events");
 
-    likelihood_hists.at(1)->setDrawOptions("P E1 SAME");
-    likelihood_hists.at(1)->setLegendTitle("Off-shell LL");
-    likelihood_hists.at(1)->getHist()->SetLineColor(2);
-    likelihood_hists.at(1)->getHist()->SetMarkerColor(2);
-
-    // likelihood_hists.at(2)->setDrawOptions("P E1 SAME");
-    // likelihood_hists.at(2)->setLegendTitle("Comb. LL, 0.869");
-    // likelihood_hists.at(2)->getHist()->SetLineColor(4);
-    // likelihood_hists.at(2)->getHist()->SetMarkerColor(4);
-
-    auto likelihood_ratios = likelihood_hists;
-    likelihood_ratios.divideHistograms(*likelihood_hists.at(0));
-
-    ratio_plotter.adjustLabels(&likelihood_hists, &likelihood_ratios);
-    ratio_plotter.addToLegend(likelihood_hists);
-
-    ratio_plotter.switchToHistPad();
-    likelihood_hists.setOptimalMax();
-    likelihood_hists.draw();
-    ratio_plotter.switchToRatioPad();
-    ratio_plotter.drawRatio(&likelihood_ratios);
-    ratio_plotter.switchToMainPad();
-    ratio_plotter.plotAtlasLabel();
-    ratio_plotter.plotLegend();
-    ratio_plotter.saveToFile(name.c_str());
-
+  for (auto& element : likelihood_dictionary) {
     ratio_plotter.initCanvas();
     ratio_plotter.initLegend();
-  }
+    ratio_plotter.getAtlasLabel()->setAdditionalInfo(element.second);
 
-  // Probability plots with ratios
-  std::vector<std::string> hist_names2;
-  hist_names2.push_back("h_eventProb_onshell");
-  hist_names2.push_back("h_eventProb_offshell");
-  hist_names2.push_back("h_eventProb");
-
-  for (const auto& name : hist_names2) {
-    plotting::HistHolderContainer probability_hists{file_container_2_, name.c_str()};
-    for (auto& hist : probability_hists) {
+    auto& container = element.first;
+    for (auto& hist : *container) {
       hist->setIncludeXOverflow();
       hist->setIncludeXUnderflow();
     }
-    probability_hists.at(0)->setDrawOptions("P E1");
-    probability_hists.at(0)->setLegendTitle("On-shell LL");
-    probability_hists.at(0)->setLegendOptions("F");
-    probability_hists.at(0)->getHist()->SetLineColor(1);
-    probability_hists.at(0)->getHist()->SetMarkerColor(1);
-    probability_hists.at(0)->getHist()->SetFillColor(kGray);
-    probability_hists.at(0)->setDrawOptions("hist");
+    container->at(0)->setDrawOptions("P E1");
+    container->at(0)->setLegendTitle("On-shell LL");
+    container->at(0)->setLegendOptions("F");
+    container->at(0)->getHist()->SetLineColor(1);
+    container->at(0)->getHist()->SetMarkerColor(1);
+    container->at(0)->getHist()->SetFillColor(kGray);
+    container->at(0)->setDrawOptions("hist");
 
-    probability_hists.at(1)->setDrawOptions("P E1 SAME");
-    probability_hists.at(1)->setLegendTitle("Off-shell LL");
-    probability_hists.at(1)->getHist()->SetLineColor(2);
-    probability_hists.at(1)->getHist()->SetMarkerColor(2);
+    container->at(1)->setDrawOptions("P E1 SAME");
+    container->at(1)->setLegendTitle("Off-shell LL");
+    container->at(1)->getHist()->SetLineColor(2);
+    container->at(1)->getHist()->SetMarkerColor(2);
 
-    // probability_hists.at(2)->setDrawOptions("P E1 SAME");
-    // probability_hists.at(2)->setLegendTitle("Comb. LL, 0.869");
-    // probability_hists.at(2)->getHist()->SetLineColor(4);
-    // probability_hists.at(2)->getHist()->SetMarkerColor(4);
+    // container->at(2)->setDrawOptions("P E1 SAME");
+    // container->at(2)->setLegendTitle("Comb. LL, 0.869");
+    // container->at(2)->getHist()->SetLineColor(4);
+    // container->at(2)->getHist()->SetMarkerColor(4);
 
-    auto probability_ratios = probability_hists;
-    probability_ratios.divideHistograms(*probability_hists.at(0));
+    auto ratio_container = new HistHolderContainer{*container};
+    ratio_container->divideHistograms(*container->at(0));
 
-    ratio_plotter.adjustLabels(&probability_hists, &probability_ratios);
-    ratio_plotter.addToLegend(probability_hists);
+    ratio_plotter.adjustLabels(container, ratio_container);
+    ratio_plotter.addToLegend(*container);
 
     ratio_plotter.switchToHistPad();
-    probability_hists.setOptimalMax();
-    probability_hists.draw();
+    container->setOptimalMax();
+    container->draw();
     ratio_plotter.switchToRatioPad();
-    ratio_plotter.drawRatio(&probability_ratios);
+    ratio_plotter.drawRatio(ratio_container);
     ratio_plotter.switchToMainPad();
     ratio_plotter.plotAtlasLabel();
     ratio_plotter.plotLegend();
-    ratio_plotter.saveToFile(name.c_str());
+    ratio_plotter.saveToFile(container->at(0)->getName());
+    ratio_plotter.resetCanvas();
+    ratio_plotter.resetLegend();
+  }
+
+  // =================================================================
+
+  // Probability plots with ratios
+  HistHolderContainer event_prob_on{file_container_2_, "h_eventProb_onshell"};
+  HistHolderContainer event_prob_off{file_container_2_, "h_eventProb_offshell"};
+  HistHolderContainer event_prob_all{file_container_2_, "h_eventProb"};
+
+  std::map<HistHolderContainer*, std::string> event_prob_dictionary;
+  event_prob_dictionary.emplace(&event_prob_on, "On-shell events only");
+  event_prob_dictionary.emplace(&event_prob_off, "Off-shell events only");
+  event_prob_dictionary.emplace(&event_prob_all, "All events");
+
+  for (auto& element : event_prob_dictionary) {
+    ratio_plotter.initCanvas();
+    ratio_plotter.initLegend();
+    ratio_plotter.getAtlasLabel()->setAdditionalInfo(element.second);
+
+    auto& container = element.first;
+    for (auto& hist : *container) {
+      hist->setIncludeXOverflow();
+      hist->setIncludeXUnderflow();
+    }
+    container->at(0)->setDrawOptions("P E1");
+    container->at(0)->setLegendTitle("On-shell LL");
+    container->at(0)->setLegendOptions("F");
+    container->at(0)->getHist()->SetLineColor(1);
+    container->at(0)->getHist()->SetMarkerColor(1);
+    container->at(0)->getHist()->SetFillColor(kGray);
+    container->at(0)->setDrawOptions("hist");
+
+    container->at(1)->setDrawOptions("P E1 SAME");
+    container->at(1)->setLegendTitle("Off-shell LL");
+    container->at(1)->getHist()->SetLineColor(2);
+    container->at(1)->getHist()->SetMarkerColor(2);
+
+    // container->at(2)->setDrawOptions("P E1 SAME");
+    // container->at(2)->setLegendTitle("Comb. LL, 0.869");
+    // container->at(2)->getHist()->SetLineColor(4);
+    // container->at(2)->getHist()->SetMarkerColor(4);
+
+    auto ratio_container = new HistHolderContainer{*container};
+    ratio_container->divideHistograms(*container->at(0));
+
+    ratio_plotter.adjustLabels(container, ratio_container);
+    ratio_plotter.addToLegend(*container);
+
+    ratio_plotter.switchToHistPad();
+    container->setOptimalMax();
+    container->draw();
+    ratio_plotter.switchToRatioPad();
+    ratio_plotter.drawRatio(ratio_container);
+    ratio_plotter.switchToMainPad();
+    ratio_plotter.plotAtlasLabel();
+    ratio_plotter.plotLegend();
+    ratio_plotter.saveToFile(container->at(0)->getName());
 
     ratio_plotter.initCanvas();
     ratio_plotter.initLegend();
