@@ -48,6 +48,8 @@ void MatchOnOff::execute() {
     plotter.initLegend();
     plotter.getAtlasLabel()->setAdditionalInfo(element.second);
     auto& container = element.first;
+    auto short_name = container->at(0)->getName();
+    short_name.replace(0, 12, "comp_on-off");
 
     container->at(0)->setLegendTitle("On-shell LL");
     container->at(0)->getHist()->SetLineColor(kBlue);
@@ -69,7 +71,7 @@ void MatchOnOff::execute() {
     plotter.addToLegend(*container);
     plotter.plotAtlasLabel();
     plotter.plotLegend();
-    plotter.saveToFile(container->at(0)->getName());
+    plotter.saveToFile(short_name);
     plotter.resetCanvas();
     plotter.resetLegend();
   }
@@ -96,6 +98,9 @@ void MatchOnOff::execute() {
     ratio_plotter.getAtlasLabel()->setAdditionalInfo(element.second);
 
     auto& container = element.first;
+    auto short_name = container->at(0)->getName();
+    short_name.replace(0, 12, "comp_on-off-LL");
+
     for (auto& hist : *container) {
       hist->setIncludeXOverflow();
       hist->setIncludeXUnderflow();
@@ -132,7 +137,7 @@ void MatchOnOff::execute() {
     ratio_plotter.switchToMainPad();
     ratio_plotter.plotAtlasLabel();
     ratio_plotter.plotLegend();
-    ratio_plotter.saveToFile(container->at(0)->getName());
+    ratio_plotter.saveToFile(short_name);
     ratio_plotter.resetCanvas();
     ratio_plotter.resetLegend();
   }
@@ -155,6 +160,9 @@ void MatchOnOff::execute() {
     ratio_plotter.getAtlasLabel()->setAdditionalInfo(element.second);
 
     auto& container = element.first;
+    auto short_name = container->at(0)->getName();
+    short_name.replace(0, 11, "comp_on-off-evtprob");
+
     for (auto& hist : *container) {
       hist->setIncludeXOverflow();
       hist->setIncludeXUnderflow();
@@ -191,7 +199,7 @@ void MatchOnOff::execute() {
     ratio_plotter.switchToMainPad();
     ratio_plotter.plotAtlasLabel();
     ratio_plotter.plotLegend();
-    ratio_plotter.saveToFile(container->at(0)->getName());
+    ratio_plotter.saveToFile(short_name);
 
     ratio_plotter.initCanvas();
     ratio_plotter.initLegend();

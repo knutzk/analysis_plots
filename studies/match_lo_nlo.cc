@@ -64,7 +64,7 @@ void MatchLONLO::execute() {
   plotter.addToLegend(hists);
   plotter.plotAtlasLabel();
   plotter.plotLegend();
-  plotter.saveToFile("h_comparison");
+  plotter.saveToFile("comp_lo-nlo-ttbar");
   plotter.resetCanvas();
   plotter.resetLegend();
 
@@ -87,7 +87,7 @@ void MatchLONLO::execute() {
     matrix->setDrawOptions("COLZ TEXT ERR");
     matrix->draw();
     matrixplotter.plotAtlasLabel();
-    matrixplotter.saveToFile(matrix->getFileName().c_str());
+    matrixplotter.saveToFile("matrix_" + matrix->getFileName());
   }
   matrixplotter.resetCanvas();
   matrixplotter.resetLegend();
@@ -110,7 +110,9 @@ void MatchLONLO::execute() {
   hist_names.push_back("h_Njets");
 
   for (const auto& name : hist_names) {
-    plotting::HistHolderContainer jet_hists{file_container_2_, name.c_str()};
+    plotting::HistHolderContainer jet_hists{file_container_2_, name};
+    auto short_name = name.substr(2, name.size() - 2);
+
     for (auto& hist : jet_hists) {
       hist->setIncludeXOverflow();
     }
@@ -146,7 +148,7 @@ void MatchLONLO::execute() {
     ratio_plotter.switchToMainPad();
     ratio_plotter.plotAtlasLabel();
     ratio_plotter.plotLegend();
-    ratio_plotter.saveToFile(name.c_str());
+    ratio_plotter.saveToFile("kin_" + short_name);
 
     ratio_plotter.initCanvas();
     ratio_plotter.initLegend();
