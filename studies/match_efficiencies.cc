@@ -80,7 +80,7 @@ void MatchEfficiencies::execute() {
   plotter.addToLegend(ttbar_container);
   plotter.plotAtlasLabel();
   plotter.plotLegend();
-  plotter.saveToFile("h_incl_ttbar");
+  plotter.saveToFile("comp_incl-ttbar");
 
   // =======================================================
 
@@ -98,7 +98,7 @@ void MatchEfficiencies::execute() {
   }
   plotter.plotAtlasLabel();
   plotter.plotLegend();
-  plotter.saveToFile("h_incl_ttbar_no_leading");
+  plotter.saveToFile("comp_incl-ttbar-no-leading");
 
   // =======================================================
 
@@ -114,7 +114,7 @@ void MatchEfficiencies::execute() {
   }
   plotter.plotAtlasLabel();
   plotter.plotLegend();
-  plotter.saveToFile("h_wp_only");
+  plotter.saveToFile("comp_wp-only");
 
   // =======================================================
 
@@ -126,7 +126,7 @@ void MatchEfficiencies::execute() {
   }
   plotter.plotAtlasLabel();
   plotter.plotLegend();
-  plotter.saveToFile("h_ttz_all");
+  plotter.saveToFile("comp_ttz-all");
 
   // =======================================================
 
@@ -139,7 +139,7 @@ void MatchEfficiencies::execute() {
   }
   plotter.plotAtlasLabel();
   plotter.plotLegend();
-  plotter.saveToFile("h_ttz_no_leading");
+  plotter.saveToFile("comp_ttz-no-leading");
 
   plotter.resetCanvas();
   plotter.resetLegend();
@@ -166,7 +166,7 @@ void MatchEfficiencies::execute() {
 
     matrix->draw();
     matrix_plotter.plotAtlasLabel();
-    matrix_plotter.saveToFile(matrix->getFileName());
+    matrix_plotter.saveToFile("matrix_" + matrix->getFileName());
   }
 }
 }  // namespace studies
