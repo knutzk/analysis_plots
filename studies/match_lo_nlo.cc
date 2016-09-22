@@ -36,7 +36,7 @@ void MatchLONLO::execute() {
   plotting::HistHolderContainer hists{file_container_, "h_andreacomp"};
 
   hists.at(0)->setDrawOptions("HIST BAR1");
-  hists.at(0)->setLegendTitle("t#bar{t}");
+  hists.at(0)->setLegendTitle("t#bar{t}, NLO");
   hists.at(0)->setLegendOptions("F");
   hists.at(0)->getHist()->SetBarWidth(0.8);
   hists.at(0)->getHist()->SetBarOffset(0.1);
@@ -117,7 +117,7 @@ void MatchLONLO::execute() {
       hist->setIncludeXOverflow();
     }
     jet_hists.at(0)->setDrawOptions("P E1");
-    jet_hists.at(0)->setLegendTitle("t#bar{t}");
+    jet_hists.at(0)->setLegendTitle("t#bar{t}, NLO");
     jet_hists.at(0)->setLegendOptions("F");
     jet_hists.at(0)->getHist()->SetLineColor(1);
     jet_hists.at(0)->getHist()->SetMarkerColor(1);
