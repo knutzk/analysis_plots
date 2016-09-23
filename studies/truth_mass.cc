@@ -12,6 +12,7 @@ void TruthMass::execute() {
   HistPlotter plotter;
   plotter.initCanvas();
   plotter.getCanvas()->SetLogy();
+  plotter.getAtlasLabel()->setIsThesis();
   plotter.getAtlasLabel()->setAdditionalInfo("All events");
   plotter.setOutputDir("$HOME/AnalysisPlots/plots/");
 

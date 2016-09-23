@@ -32,6 +32,7 @@ void MatchOnOff::loadFiles(const std::string& input_list) {
 void MatchOnOff::execute() {
   HistPlotter plotter;
   plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchOnOff/");
+  plotter.getAtlasLabel()->setIsThesis();
 
   // h_andreacomp histograms
   HistHolderContainer hists_on{file_container_, "h_andreacomp_onshell"};
@@ -98,6 +99,7 @@ void MatchOnOff::execute() {
   RatioPlotter ratio_plotter{0.3};
   ratio_plotter.setRatioTitle("LL/Onshell");
   ratio_plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchOnOff/");
+  ratio_plotter.getAtlasLabel()->setIsThesis();
   ratio_plotter.getAtlasLabel()->setChannel("(3)#mu+jets");
 
   HistHolderContainer like_on{file_container_2_, "h_likelihood_onshell"};
