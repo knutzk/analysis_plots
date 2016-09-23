@@ -24,6 +24,7 @@ void MatchEfficiencies::execute() {
   HistPlotter plotter;
   plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchEfficiencies/");
   plotter.getAtlasLabel()->setChannel("(3)#mu+jets");
+  plotter.getAtlasLabel()->setIsThesis();
   plotter.initCanvas(800, 600);
   plotter.initLegend(0.57, 0.70, 0.91, 0.92);
 
@@ -150,6 +151,7 @@ void MatchEfficiencies::execute() {
   MatrixPlotter matrix_plotter;
   matrix_plotter.initCanvas(600, 600);
   matrix_plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchEfficiencies/");
+  matrix_plotter.getAtlasLabel()->setIsThesis();
   matrix_plotter.setCustomColorPalette();
 
   MatrixHolderContainer matrix_container;
