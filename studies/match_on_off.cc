@@ -22,8 +22,8 @@ void MatchOnOff::loadFiles(const std::string& input_list) {
     throw;
   }
 
-  // Move the last three files to the other container.
-  for (int i : {3, 4}) {
+  // Move the last two files to the other container.
+  for (int i : {4, 5}) {
     file_container_2_.push_back(file_container_.at(i));
   }
   file_container_.erase(file_container_.end() - 3, file_container_.end());
@@ -51,23 +51,40 @@ void MatchOnOff::execute() {
     auto short_name = container->at(0)->getName();
     short_name.replace(0, 12, "comp_on-off");
 
-    container->at(0)->setLegendTitle("On-shell LL");
-    container->at(0)->getHist()->SetLineColor(kBlue);
-    container->at(0)->getHist()->SetMarkerColor(kBlue);
-    container->at(1)->setLegendTitle("Off-shell LL");
-    container->at(1)->getHist()->SetLineColor(kRed);
-    container->at(1)->getHist()->SetMarkerColor(kRed);
-    container->at(2)->setLegendTitle("Combined LL, 0.869");
-    container->at(2)->getHist()->SetLineColor(kGreen + 2);
-    container->at(2)->getHist()->SetMarkerColor(kGreen + 2);
+    container->at(0)->setLegendTitle("Combined LL, 0.869");
+    container->at(0)->setDrawOptions("HIST BAR1");
+    container->at(0)->setLegendOptions("F");
+    container->at(0)->getHist()->SetFillColor(kGray);
+    container->at(0)->getHist()->SetBarWidth(0.8);
+    container->at(0)->getHist()->SetBarOffset(0.1);
+    container->at(0)->getHist()->SetFillStyle(1001);
 
-    for (auto& hist_holder : *container) {
-      hist_holder->setDrawOptions("P E1 SAME");
-      hist_holder->setLegendOptions("PL");
-      hist_holder->getHist()->GetXaxis()->SetLabelSize(16);
-    }
+    container->at(1)->setLegendTitle("On-shell LL");
+    container->at(1)->getHist()->SetLineColor(kBlue);
+    container->at(1)->getHist()->SetMarkerColor(kBlue);
+    container->at(2)->setLegendTitle("Off-shell LL");
+    container->at(2)->getHist()->SetLineColor(kRed);
+    container->at(2)->getHist()->SetMarkerColor(kRed);
+
     container->setOptimalMax();
-    container->draw();
+    for (auto& hist_holder : *container) {
+      if (hist_holder != container->at(0)) {
+        hist_holder->setDrawOptions("P E1 SAME");
+        hist_holder->setLegendOptions("PL");
+        hist_holder->getHist()->GetXaxis()->SetLabelSize(16);
+      }
+      hist_holder->draw();
+
+      // If we're at the first element, draw the shaded errors as well.
+      if (hist_holder == container->at(0)) {
+        auto shaded_errors = new HistHolder{*container->at(0)};
+        shaded_errors->getHist()->SetMarkerSize(0);
+        shaded_errors->getHist()->SetFillColor(kBlack);
+        shaded_errors->getHist()->SetFillStyle(3245);
+        shaded_errors->setDrawOptions("e2 same");
+        shaded_errors->draw();
+      }
+    }
     plotter.addToLegend(*container);
     plotter.plotAtlasLabel();
     plotter.plotLegend();
