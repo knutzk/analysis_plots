@@ -70,11 +70,11 @@ int main(int argc, char* argv[]) {
     case 4:
       study.reset(new plotting::studies::MatchOnOff());
       break;
+    case 5:
+      study.reset(new plotting::studies::Likelihood());
+      break;
     case 11:
       study.reset(new plotting::studies::MatchBtagPerf());
-      break;
-    case 12:
-      study.reset(new plotting::studies::Likelihood());
       break;
     case 13:
       study.reset(new plotting::studies::TruthMass());
