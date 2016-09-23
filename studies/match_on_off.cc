@@ -68,10 +68,10 @@ void MatchOnOff::execute() {
 
     container->setOptimalMax();
     for (auto& hist_holder : *container) {
+      hist_holder->getHist()->GetXaxis()->SetLabelSize(16);
       if (hist_holder != container->at(0)) {
         hist_holder->setDrawOptions("P E1 SAME");
         hist_holder->setLegendOptions("PL");
-        hist_holder->getHist()->GetXaxis()->SetLabelSize(16);
       }
       hist_holder->draw();
 
