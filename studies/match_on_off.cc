@@ -51,7 +51,7 @@ void MatchOnOff::execute() {
     auto short_name = container->at(0)->getName();
     short_name.replace(0, 12, "comp_on-off");
 
-    container->at(0)->setLegendTitle("Dedicated LL, 0.869");
+    container->at(0)->setLegendTitle("Dedicated LL, f_{on} = 0.869");
     container->at(0)->setDrawOptions("HIST BAR1");
     container->at(0)->setLegendOptions("F");
     container->at(0)->getHist()->SetFillColor(kGray);
