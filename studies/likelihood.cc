@@ -14,6 +14,7 @@ void Likelihood::execute() {
   plotting::RatioPlotter ratio_plotter{0.3};
   ratio_plotter.setOutputDir("$HOME/AnalysisPlots/plots/Likelihood/");
   ratio_plotter.getAtlasLabel()->setIsThesis();
+  ratio_plotter.getAtlasLabel()->setIsWorkInProgress(false);
 
   plotting::HistHolderContainer hist_container;
   hist_container.pullHistograms(file_container_, "h_likelihood");
