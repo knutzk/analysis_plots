@@ -17,7 +17,7 @@ class HistHolderContainer : public THolderContainer<HistHolder> {
   using THolderContainer<HistHolder>::THolderContainer;
 
   //! Calculate and set the optimal maximal Y value.
-  void setOptimalMax();
+  void setOptimalMax(const double& factor = 1.5);
 
   /**
    * Divide all histograms of the container by another histogram.
