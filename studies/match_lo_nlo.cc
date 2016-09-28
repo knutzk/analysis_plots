@@ -32,6 +32,7 @@ void MatchLONLO::execute() {
   plotting::HistPlotter plotter;
   plotter.initCanvas(800, 600);
   plotter.getAtlasLabel()->setIsThesis();
+  plotter.getAtlasLabel()->setIsWorkInProgress(false);
   plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchLONLO/");
 
   plotting::HistHolderContainer hists{file_container_, "h_andreacomp"};
@@ -77,6 +78,7 @@ void MatchLONLO::execute() {
   matrixplotter.initCanvas(600, 600);
   matrixplotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchLONLO/");
   matrixplotter.getAtlasLabel()->setIsThesis();
+  matrixplotter.getAtlasLabel()->setIsWorkInProgress(false);
   matrixplotter.setCustomColorPalette();
 
   for (auto& matrix : matrices) {
@@ -100,6 +102,7 @@ void MatchLONLO::execute() {
   ratio_plotter.setRatioTitle("t#bar{t}Z / t#bar{t}");
   ratio_plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchLONLO/");
   ratio_plotter.getAtlasLabel()->setIsThesis();
+  ratio_plotter.getAtlasLabel()->setIsWorkInProgress(false);
   ratio_plotter.getAtlasLabel()->setChannel("(3)#mu+jets");
 
   std::vector<std::string> hist_names;

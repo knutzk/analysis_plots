@@ -13,6 +13,7 @@ void TruthMass::execute() {
   plotter.initCanvas();
   plotter.getCanvas()->SetLogy();
   plotter.getAtlasLabel()->setIsThesis();
+  plotter.getAtlasLabel()->setIsWorkInProgress(false);
   plotter.getAtlasLabel()->setAdditionalInfo("All events");
   plotter.setOutputDir("$HOME/AnalysisPlots/plots/");
 
