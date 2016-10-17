@@ -31,12 +31,14 @@ void MatchLONLO::loadFiles(const std::string& input_list) {
 void MatchLONLO::execute() {
   plotting::HistPlotter plotter;
   plotter.initCanvas(800, 600);
+  plotter.getAtlasLabel()->setIsThesis();
+  plotter.getAtlasLabel()->setIsWorkInProgress(false);
   plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchLONLO/");
 
   plotting::HistHolderContainer hists{file_container_, "h_andreacomp"};
 
   hists.at(0)->setDrawOptions("HIST BAR1");
-  hists.at(0)->setLegendTitle("t#bar{t}");
+  hists.at(0)->setLegendTitle("t#bar{t}, NLO");
   hists.at(0)->setLegendOptions("F");
   hists.at(0)->getHist()->SetBarWidth(0.8);
   hists.at(0)->getHist()->SetBarOffset(0.1);
@@ -64,7 +66,7 @@ void MatchLONLO::execute() {
   plotter.addToLegend(hists);
   plotter.plotAtlasLabel();
   plotter.plotLegend();
-  plotter.saveToFile("h_comparison");
+  plotter.saveToFile("comp_lo-nlo-ttbar");
   plotter.resetCanvas();
   plotter.resetLegend();
 
@@ -75,6 +77,8 @@ void MatchLONLO::execute() {
   plotting::MatrixPlotter matrixplotter;
   matrixplotter.initCanvas(600, 600);
   matrixplotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchLONLO/");
+  matrixplotter.getAtlasLabel()->setIsThesis();
+  matrixplotter.getAtlasLabel()->setIsWorkInProgress(false);
   matrixplotter.setCustomColorPalette();
 
   for (auto& matrix : matrices) {
@@ -87,7 +91,7 @@ void MatchLONLO::execute() {
     matrix->setDrawOptions("COLZ TEXT ERR");
     matrix->draw();
     matrixplotter.plotAtlasLabel();
-    matrixplotter.saveToFile(matrix->getFileName().c_str());
+    matrixplotter.saveToFile("matrix_" + matrix->getFileName());
   }
   matrixplotter.resetCanvas();
   matrixplotter.resetLegend();
@@ -97,6 +101,8 @@ void MatchLONLO::execute() {
   plotting::RatioPlotter ratio_plotter{0.3};
   ratio_plotter.setRatioTitle("t#bar{t}Z / t#bar{t}");
   ratio_plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchLONLO/");
+  ratio_plotter.getAtlasLabel()->setIsThesis();
+  ratio_plotter.getAtlasLabel()->setIsWorkInProgress(false);
   ratio_plotter.getAtlasLabel()->setChannel("(3)#mu+jets");
 
   std::vector<std::string> hist_names;
@@ -110,12 +116,14 @@ void MatchLONLO::execute() {
   hist_names.push_back("h_Njets");
 
   for (const auto& name : hist_names) {
-    plotting::HistHolderContainer jet_hists{file_container_2_, name.c_str()};
+    plotting::HistHolderContainer jet_hists{file_container_2_, name};
+    auto short_name = name.substr(2, name.size() - 2);
+
     for (auto& hist : jet_hists) {
       hist->setIncludeXOverflow();
     }
     jet_hists.at(0)->setDrawOptions("P E1");
-    jet_hists.at(0)->setLegendTitle("t#bar{t}");
+    jet_hists.at(0)->setLegendTitle("t#bar{t}, NLO");
     jet_hists.at(0)->setLegendOptions("F");
     jet_hists.at(0)->getHist()->SetLineColor(1);
     jet_hists.at(0)->getHist()->SetMarkerColor(1);
@@ -146,7 +154,7 @@ void MatchLONLO::execute() {
     ratio_plotter.switchToMainPad();
     ratio_plotter.plotAtlasLabel();
     ratio_plotter.plotLegend();
-    ratio_plotter.saveToFile(name.c_str());
+    ratio_plotter.saveToFile("kin_" + short_name);
 
     ratio_plotter.initCanvas();
     ratio_plotter.initLegend();

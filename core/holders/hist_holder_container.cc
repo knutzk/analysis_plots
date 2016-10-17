@@ -3,7 +3,7 @@
 #include "core/holders/hist_holder_container.h"
 
 namespace plotting {
-void HistHolderContainer::setOptimalMax() {
+void HistHolderContainer::setOptimalMax(const double& factor) {
   double maximum{0};
   for (const auto& hist : *this) {
     if (hist->getHist()->GetMaximum() > maximum) {
@@ -11,7 +11,7 @@ void HistHolderContainer::setOptimalMax() {
     }
   }
   for (auto& hist : *this) {
-    hist->setYRangeHigh(maximum * 1.5);
+    hist->setYRangeHigh(maximum * factor);
   }
 }
 

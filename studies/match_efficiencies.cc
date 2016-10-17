@@ -24,6 +24,8 @@ void MatchEfficiencies::execute() {
   HistPlotter plotter;
   plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchEfficiencies/");
   plotter.getAtlasLabel()->setChannel("(3)#mu+jets");
+  plotter.getAtlasLabel()->setIsThesis();
+  plotter.getAtlasLabel()->setIsWorkInProgress(false);
   plotter.initCanvas(800, 600);
   plotter.initLegend(0.57, 0.70, 0.91, 0.92);
 
@@ -80,7 +82,7 @@ void MatchEfficiencies::execute() {
   plotter.addToLegend(ttbar_container);
   plotter.plotAtlasLabel();
   plotter.plotLegend();
-  plotter.saveToFile("h_incl_ttbar");
+  plotter.saveToFile("comp_incl-ttbar");
 
   // =======================================================
 
@@ -98,7 +100,7 @@ void MatchEfficiencies::execute() {
   }
   plotter.plotAtlasLabel();
   plotter.plotLegend();
-  plotter.saveToFile("h_incl_ttbar_no_leading");
+  plotter.saveToFile("comp_incl-ttbar-no-leading");
 
   // =======================================================
 
@@ -114,7 +116,7 @@ void MatchEfficiencies::execute() {
   }
   plotter.plotAtlasLabel();
   plotter.plotLegend();
-  plotter.saveToFile("h_wp_only");
+  plotter.saveToFile("comp_wp-only");
 
   // =======================================================
 
@@ -126,7 +128,7 @@ void MatchEfficiencies::execute() {
   }
   plotter.plotAtlasLabel();
   plotter.plotLegend();
-  plotter.saveToFile("h_ttz_all");
+  plotter.saveToFile("comp_ttz-all");
 
   // =======================================================
 
@@ -139,7 +141,7 @@ void MatchEfficiencies::execute() {
   }
   plotter.plotAtlasLabel();
   plotter.plotLegend();
-  plotter.saveToFile("h_ttz_no_leading");
+  plotter.saveToFile("comp_ttz-no-leading");
 
   plotter.resetCanvas();
   plotter.resetLegend();
@@ -150,6 +152,8 @@ void MatchEfficiencies::execute() {
   MatrixPlotter matrix_plotter;
   matrix_plotter.initCanvas(600, 600);
   matrix_plotter.setOutputDir("$HOME/AnalysisPlots/plots/MatchEfficiencies/");
+  matrix_plotter.getAtlasLabel()->setIsThesis();
+  matrix_plotter.getAtlasLabel()->setIsWorkInProgress(false);
   matrix_plotter.setCustomColorPalette();
 
   MatrixHolderContainer matrix_container;
@@ -166,7 +170,7 @@ void MatchEfficiencies::execute() {
 
     matrix->draw();
     matrix_plotter.plotAtlasLabel();
-    matrix_plotter.saveToFile(matrix->getFileName());
+    matrix_plotter.saveToFile("matrix_" + matrix->getFileName());
   }
 }
 }  // namespace studies

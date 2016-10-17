@@ -13,6 +13,7 @@
 #include "studies/match_el_mu.h"
 #include "studies/match_lo_nlo.h"
 #include "studies/match_on_off.h"
+#include "studies/truth_mass.h"
 
 using ProgMap = std::map<unsigned int, std::string>;
 
@@ -27,8 +28,9 @@ int main(int argc, char* argv[]) {
   programs[2] = "MatchLONLO: evaluate ttbar, ttZ LO, ttZ NLO samples (matching, matrices, kinematics -- 6 files)";
   programs[3] = "MatchElMu: evaluate performance of ejets and mujets samples (matching, matrices -- 2 files)";
   programs[4] = "MatchOnOff: evaluate performance for on, off and combined LL (matching -- 3 files)";
+  programs[5] = "Likelihood: evaluate likelihood output as potential separation variable (LL output -- 3 files)";
   programs[11] = "MatchBtagPerf (temporary): evaluate performances for fixed and kinematic-dep. b-tagging (2 files)";
-  programs[12] = "Likelihood (to be decided)";
+  programs[13] = "TruthMass: produce a plot of the truth-level Z masses";
 
   printWelcomeMessage();
 
@@ -68,11 +70,14 @@ int main(int argc, char* argv[]) {
     case 4:
       study.reset(new plotting::studies::MatchOnOff());
       break;
+    case 5:
+      study.reset(new plotting::studies::Likelihood());
+      break;
     case 11:
       study.reset(new plotting::studies::MatchBtagPerf());
       break;
-    case 12:
-      study.reset(new plotting::studies::Likelihood());
+    case 13:
+      study.reset(new plotting::studies::TruthMass());
       break;
     default:
       std::cout << "Option " << mode

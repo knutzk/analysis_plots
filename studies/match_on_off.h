@@ -11,8 +11,8 @@ namespace studies {
 /**
  * Check the performance of different KLFitter likelihoods for
  * on-shell, off-shell and all events. This class currently expects
- * three files: ttZ with on-shell likelihood, ttz with off-shell
- * likelihood, and a combined version of both.
+ * three files: ttZ processed with the combined likelihood, with the
+ * on-shell likelihood and with the off-shell likelihood.
  */
 class MatchOnOff : public plotting::studies::Template {
  public:
@@ -29,6 +29,10 @@ class MatchOnOff : public plotting::studies::Template {
    * cross check if the given numbers equals '3'.
   */
   void loadFiles(const std::string& input_list) override;
+
+ protected:
+  //! Second file container for the StudyJets files
+  FileContainer file_container_2_;
 };
 }  // namespace studies
 }  // namespace plotting

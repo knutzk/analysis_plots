@@ -30,10 +30,10 @@ class HistHolder : public THolder<TH1D> {
         y2_{old.y2_} {}
 
   //! Return whether overflow is set to be included.
-  inline bool getIncludeXOverflow() { return include_x_overflow_; }
+  inline bool getIncludeXOverflow() const { return include_x_overflow_; }
 
   //! Return whether overflow is set to be include.
-  inline bool getIncludeXUnderflow() { return include_x_underflow_; }
+  inline bool getIncludeXUnderflow() const { return include_x_underflow_; }
 
   //! Get the upper value of the Y range.
   inline double getYRangeHigh() const { return y2_; }

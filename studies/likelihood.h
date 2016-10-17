@@ -8,7 +8,10 @@
 namespace plotting {
 namespace studies {
 /**
- * Make comparison plots of the KLFitter likelihood output (WIP).
+ * Make comparison plots of the KLFitter likelihood output. This class
+ * expects three files: the likelihood output for diboson, ttbar and
+ * ttz samples. Comparison between dibson and ttbar with ttz will be
+ * produced.
  */
 class Likelihood : public plotting::studies::Template {
   /**

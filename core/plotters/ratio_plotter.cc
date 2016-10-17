@@ -59,6 +59,35 @@ void RatioPlotter::adjustLabels(HistHolderContainer* hist_container,
   }
 }
 
+double RatioPlotter::getSeparation(const HistHolder* first_hist,
+                                   const HistHolder* second_hist) {
+  auto hist_bg = first_hist->getHist();
+  auto hist_sg = second_hist->getHist();
+
+  double separation{0};
+  int    n_bins = hist_sg->GetNbinsX();
+  double bin_width = (hist_sg->GetXaxis()->GetXmax() - hist_sg->GetXaxis()->GetXmin()) / n_bins;
+  double nS     = hist_sg->GetSumOfWeights() * bin_width;
+  double nB     = hist_bg->GetSumOfWeights() * bin_width;
+  if (nS > 0 && nB > 0) {
+    for (int bin = 0; bin <= n_bins + 1; ++bin) {
+      double sg_entry = hist_sg->GetBinContent(bin) / nS;
+      double bg_entry = hist_bg->GetBinContent(bin) / nB;
+      if (sg_entry + bg_entry > 0) {
+        const auto& abs = std::abs(sg_entry - bg_entry);
+        separation += 0.5 * std::pow(abs, 2) / (sg_entry + bg_entry);
+      }
+    }
+    separation *= bin_width;
+  }
+  else {
+    std::cout << "Error within the separation calculation" << std::endl;
+    separation = 0;
+  }
+
+  return round(separation * 1e4) / 100.;
+}
+
 void RatioPlotter::drawRatio(HistHolderContainer* ratio_container) {
   // Adjust the markers of the histograms that are meant to be plotted
   // with this RatioPlotter. Make a copy of the first histogram
@@ -91,21 +120,37 @@ void RatioPlotter::drawRatio(HistHolderContainer* ratio_container) {
   while (true) {
     int n_datapoints{0};
     for (const auto& hist : *ratio_container) {
+      if (ratio_container->size() > 0 && hist == ratio_container->at(0)) continue;
+      if (ratio_container->size() > 1 && hist == ratio_container->at(1)) continue;
       n_datapoints += hist->getHist()->GetNbinsX();
     }
 
-    double fraction_out_of_range{0.};
+    double fraction_below_ymin{0.};
+    for (const auto& hist : *ratio_container) {
+      const auto& n_bins = hist->getHist()->GetNbinsX();
+      for (int bin = 0; bin < n_bins; ++bin) {
+        const auto& bin_content = hist->getHist()->GetBinContent(bin);
+        if (bin_content < y_ratio_min) {
+          fraction_below_ymin += 1. / n_datapoints;
+        }
+      }
+    }
+
+    double fraction_above_ymax{0.};
     for (const auto& hist : *ratio_container) {
       const auto& n_bins = hist->getHist()->GetNbinsX();
       for (int bin = 0; bin < n_bins; ++bin) {
         const auto& bin_content = hist->getHist()->GetBinContent(bin);
         if (bin_content > y_ratio_max) {
-          fraction_out_of_range += bin_content / n_datapoints;
+          fraction_above_ymax += 1. / n_datapoints;
         }
       }
     }
-    if (fraction_out_of_range > 0.25) {
+
+    if (fraction_above_ymax > 0.20) {
       y_ratio_max += 0.5;
+    } else if (fraction_below_ymin > 0.20) {
+      y_ratio_min -= 0.5;
     } else {
       break;
     }
@@ -115,7 +160,7 @@ void RatioPlotter::drawRatio(HistHolderContainer* ratio_container) {
   // would cause the y axis to have weird labels. Adjust the lower
   // value accordingly.
   if (fmod(y_ratio_max - y_ratio_min, 1) != 0) {
-    y_ratio_min -= 0.5;
+    y_ratio_max += 0.5;
   }
 
   for (auto& hist : *ratio_container) {
